@@ -1,0 +1,8 @@
+= pain-t-
+
+The chief project of CS 250: Object Oriented Programming.
+
+== Prerequisites
+
+You have to download link:https://gluonhq.com/products/javafx/[JavaFX],
+then extract the files to the appropriate directory.
