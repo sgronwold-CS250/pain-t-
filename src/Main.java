@@ -43,7 +43,8 @@ public class Main extends Application {
         menuButtons[1].setOnAction(menuButtons[0].getOnAction());
         
         canvas = new Canvas(500, 500);
-        grid.add(canvas, 0, 2);
+        // grid.add(item, col, row, col-span, row-span);
+        grid.add(canvas, 0, 2, menuButtons.length, 1);
 
         for(int i = 0; i < menuButtons.length; i++) {
             grid.add(menuButtons[i], i, 1);
@@ -51,7 +52,9 @@ public class Main extends Application {
 
         // title
         Label title = new Label("Let Pain (t) be a strictly increasing function. The value of Pain at any given value t exceeds expectations.");
-        grid.add(title, 0, 0);
+
+        // grid.add(item, col, row, col-span, row-span);
+        grid.add(title, 0, 0, menuButtons.length, 1);
 
         stage.show();
     }

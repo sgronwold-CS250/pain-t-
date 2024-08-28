@@ -65,6 +65,7 @@ public class MenuActionListener implements EventHandler<ActionEvent> {
             fc = new FileChooser();
             file = fc.showSaveDialog(scene.getWindow());
 
+            // begin stack overflow code to save image
             WritableImage writableImage = new WritableImage((int) canvas.getWidth(), (int) canvas.getHeight());
             canvas.snapshot(null, writableImage);
             RenderedImage renderedImage = SwingFXUtils.fromFXImage(writableImage, null);
@@ -73,6 +74,7 @@ public class MenuActionListener implements EventHandler<ActionEvent> {
             } catch (IOException e1) {
                 e1.printStackTrace();
             }
+            // end stack overflow code to save image
             break;
         }
 
