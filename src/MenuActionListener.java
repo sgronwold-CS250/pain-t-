@@ -1,3 +1,5 @@
+import java.io.File;
+
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Node;
@@ -7,8 +9,7 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.layout.GridPane;
-import javafx.scene.paint.Color;
-import javafx.scene.shape.ArcType;
+import javafx.stage.FileChooser;
 
 public class MenuActionListener implements EventHandler<ActionEvent> {
 
@@ -42,7 +43,16 @@ public class MenuActionListener implements EventHandler<ActionEvent> {
         }
 
         GraphicsContext gc = canvas.getGraphicsContext2D();
-        Image img = new Image("./hawks.png");
+
+        // prompt the user for a file path
+        FileChooser fc = new FileChooser();
+        File file = fc.showOpenDialog(scene.getWindow());
+
+        System.out.println(file.getAbsolutePath());
+
+        Image img = new Image("/mnt/c/Users/samue/Documents/GitHub/pain-t-/hawks.png");
+        canvas.setWidth(img.getWidth());
+        canvas.setHeight(img.getHeight());
         gc.drawImage(img, 0, 0);
 
     }
