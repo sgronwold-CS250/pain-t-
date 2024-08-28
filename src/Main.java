@@ -12,7 +12,7 @@ public class Main extends Application {
     GridPane grid;
     Canvas canvas;
 
-    Button menuButtons[] = new Button[1];
+    Button menuButtons[] = new Button[2];
 
     public static void main(String[] args) {
         System.out.println("Launching Pain(t)");
@@ -35,7 +35,12 @@ public class Main extends Application {
 
         // initialize buttons
         menuButtons[0] = new Button("Load image...");
+        menuButtons[0].setId("open");
         menuButtons[0].setOnAction(new MenuActionListener());
+
+        menuButtons[1] = new Button("Save As...");
+        menuButtons[1].setId("saveas");
+        menuButtons[1].setOnAction(menuButtons[0].getOnAction());
         
         canvas = new Canvas(500, 500);
         grid.add(canvas, 0, 2);

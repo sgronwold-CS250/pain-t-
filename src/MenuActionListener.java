@@ -1,5 +1,8 @@
 import java.io.File;
+import java.io.IOException;
+import java.awt.image.RenderedImage;
 
+import javafx.embed.swing.SwingFXUtils;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Node;
@@ -8,8 +11,10 @@ import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
+import javafx.scene.image.WritableImage;
 import javafx.scene.layout.GridPane;
 import javafx.stage.FileChooser;
+import javax.imageio.ImageIO;
 
 public class MenuActionListener implements EventHandler<ActionEvent> {
 
@@ -24,8 +29,6 @@ public class MenuActionListener implements EventHandler<ActionEvent> {
             return;
         }
 
-        // right now we only have one button
-        // TODO make a way to differentiate between the buttons... maybe their text?
         Scene scene = button.getScene();
 
         GridPane grid = (GridPane) scene.getRoot();
@@ -44,16 +47,35 @@ public class MenuActionListener implements EventHandler<ActionEvent> {
 
         GraphicsContext gc = canvas.getGraphicsContext2D();
 
-        // prompt the user for a file path
-        FileChooser fc = new FileChooser();
-        File file = fc.showOpenDialog(scene.getWindow());
+        switch(button.getId()) {
+            case "open":
+            // prompt the user for a file path
+            FileChooser fc = new FileChooser();
+            File file = fc.showOpenDialog(scene.getWindow());
 
-        System.out.println(file.getAbsolutePath());
+            Image img = new Image("file://"+file.getAbsolutePath());
 
-        Image img = new Image("/mnt/c/Users/samue/Documents/GitHub/pain-t-/hawks.png");
-        canvas.setWidth(img.getWidth());
-        canvas.setHeight(img.getHeight());
-        gc.drawImage(img, 0, 0);
+            canvas.setWidth(img.getWidth());
+            canvas.setHeight(img.getHeight());
+            gc.clearRect(0,0,img.getWidth(),img.getHeight());
+            gc.drawImage(img, 0, 0);
+            break;
+
+            case "saveas":
+            fc = new FileChooser();
+            file = fc.showSaveDialog(scene.getWindow());
+
+            WritableImage writableImage = new WritableImage((int) canvas.getWidth(), (int) canvas.getHeight());
+            canvas.snapshot(null, writableImage);
+            RenderedImage renderedImage = SwingFXUtils.fromFXImage(writableImage, null);
+            try {
+                ImageIO.write(renderedImage, "png", file);
+            } catch (IOException e1) {
+                e1.printStackTrace();
+            }
+            break;
+        }
+
 
     }
 
