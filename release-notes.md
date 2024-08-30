@@ -1,6 +1,6 @@
 # Pain (t) - Release notes
 
-## v0.0.1 (2024-08-29)
+## v0.0.1 (2024-08-30)
 
 ### New features
 
