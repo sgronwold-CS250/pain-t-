@@ -22,7 +22,7 @@ public class Main extends Application {
     @Override
     public void start(Stage stage) {
         // basic window things
-        stage.setTitle("Paint");
+        stage.setTitle("Pain (t)");
         stage.setWidth(1280);
         stage.setHeight(720);
 

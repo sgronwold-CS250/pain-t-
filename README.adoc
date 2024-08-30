@@ -1,3 +1,5 @@
+:icons: font
+
 = pain-t-
 
 The chief project of CS 250: Object Oriented Programming.
@@ -6,3 +8,6 @@ The chief project of CS 250: Object Oriented Programming.
 
 You have to download link:https://gluonhq.com/products/javafx/[JavaFX],
 then extract the files to the appropriate directory.
+
+NOTE: JavaFX versions other than 17 tend to not work very well. you should download JavaFX 17, even if your Java version
+_technically_ qualifies you for another JavaFX version.

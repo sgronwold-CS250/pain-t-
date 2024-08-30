@@ -9,6 +9,9 @@
 
 ### Known issues
 
+N/A
+
 ### Expected next version
 
+- Throw an error message if you open a non-image file.
 - Canvas scaling to window size
