@@ -52,6 +52,7 @@ public class Main extends Application {
 
         // title
         Label title = new Label("Let Pain (t) be a strictly increasing function. The value of Pain at any given value t exceeds expectations.");
+        title.setWrapText(true);
 
         // grid.add(item, col, row, col-span, row-span);
         grid.add(title, 0, 0, menuButtons.length, 1);

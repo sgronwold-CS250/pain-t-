@@ -65,12 +65,37 @@ public class MenuActionListener implements EventHandler<ActionEvent> {
             fc = new FileChooser();
             file = fc.showSaveDialog(scene.getWindow());
 
+            // getting the file extension
+            String fname = file.getName();
+            int i = fname.lastIndexOf(".");
+            System.out.println(i);
+            String extension;
+            if(i == -1) {
+                extension = "";
+            } else {
+                extension = fname.substring(i);
+            }
+            System.out.println(extension);
+            System.out.println(fname);
+
             // begin stack overflow code to save image
             WritableImage writableImage = new WritableImage((int) canvas.getWidth(), (int) canvas.getHeight());
             canvas.snapshot(null, writableImage);
             RenderedImage renderedImage = SwingFXUtils.fromFXImage(writableImage, null);
             try {
-                ImageIO.write(renderedImage, "png", file);
+                switch(extension.toLowerCase()) {
+                    case "bmp":
+                    ImageIO.write(renderedImage, "bmp", file);
+                    break;
+                    case "jpg":
+                    case "jpeg":
+                    ImageIO.write(renderedImage, "jpg", file);
+                    break;
+                    case "png":
+                    default:
+                    ImageIO.write(renderedImage, "png", file);
+                    break;
+                }
             } catch (IOException e1) {
                 e1.printStackTrace();
             }
