@@ -23,8 +23,8 @@ public class Main extends Application {
     public void start(Stage stage) {
         // basic window things
         stage.setTitle("Pain (t)");
-        stage.setWidth(1280);
-        stage.setHeight(720);
+        stage.setWidth(640);
+        stage.setHeight(480);
 
         // we setup the grid as we go
         grid = new GridPane();
