@@ -1,6 +1,7 @@
 import java.io.File;
 import java.io.IOException;
 import java.awt.Graphics;
+import java.awt.image.RenderedImage;
 import java.awt.image.BufferedImage;
 
 import javafx.embed.swing.SwingFXUtils;
@@ -75,17 +76,30 @@ public class MenuActionListener implements EventHandler<ActionEvent> {
                 extension = "png";
             } else {
                 extension = fname.substring(i);
+                switch(extension) {
+                    case "jpg":
+                    case "jpeg":
+                    case "png":
+                    case "bmp":
+                    // all of these are acceptable extensions, do nothing
+                    break;
+                    default:
+                    // if we have an unacceptable extension, just export a png
+                    extension = "png";
+                    break;
+                }
             }
             System.out.println(extension);
             System.out.println(fname);
 
             // begin stack overflow code to save image
-            WritableImage image = canvas.snapshot(null, null);
-            BufferedImage bImage = SwingFXUtils.fromFXImage(image, null);
+            WritableImage writableImage = new WritableImage((int) canvas.getWidth(), (int) canvas.getHeight());
+            canvas.snapshot(null, writableImage);
+            BufferedImage bi = new BufferedImage((int) canvas.getWidth(), (int) canvas.getHeight(), BufferedImage.TYPE_INT_RGB);
+            RenderedImage renderedImage = SwingFXUtils.fromFXImage(writableImage, bi);
             try {
-                ImageIO.write(bImage, extension, file);
+                ImageIO.write(renderedImage, extension, file);
             } catch (IOException e1) {
-                // Auto-generated catch block
                 e1.printStackTrace();
             }
             // end stack overflow code to save image
