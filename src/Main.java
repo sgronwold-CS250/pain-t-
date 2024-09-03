@@ -1,5 +1,4 @@
 import javafx.application.Application;
-import javafx.event.ActionEvent;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.control.Button;
@@ -12,7 +11,7 @@ public class Main extends Application {
     GridPane grid;
     Canvas canvas;
 
-    Button menuButtons[] = new Button[2];
+    Button menuButtons[] = new Button[3];
 
     public static void main(String[] args) {
         System.out.println("Launching Pain(t)");
@@ -41,6 +40,10 @@ public class Main extends Application {
         menuButtons[1] = new Button("Save As...");
         menuButtons[1].setId("saveas");
         menuButtons[1].setOnAction(menuButtons[0].getOnAction());
+
+        menuButtons[2] = new Button("Help...");
+        menuButtons[2].setId("help");
+        menuButtons[2].setOnAction(menuButtons[0].getOnAction());
         
         canvas = new Canvas(500, 500);
         // grid.add(item, col, row, col-span, row-span);

@@ -104,6 +104,9 @@ public class MenuActionListener implements EventHandler<ActionEvent> {
             }
             // end stack overflow code to save image
             break;
+            case "help":
+            new HelpScreen();
+            break;
         }
 
 
