@@ -1,6 +1,8 @@
 import java.io.File;
 import java.io.IOException;
+import java.awt.Graphics;
 import java.awt.image.RenderedImage;
+import java.awt.image.BufferedImage;
 
 import javafx.embed.swing.SwingFXUtils;
 import javafx.event.ActionEvent;
@@ -71,9 +73,21 @@ public class MenuActionListener implements EventHandler<ActionEvent> {
             System.out.println(i);
             String extension;
             if(i == -1) {
-                extension = "";
+                extension = "png";
             } else {
                 extension = fname.substring(i);
+                switch(extension) {
+                    case "jpg":
+                    case "jpeg":
+                    case "png":
+                    case "bmp":
+                    // all of these are acceptable extensions, do nothing
+                    break;
+                    default:
+                    // if we have an unacceptable extension, just export a png
+                    extension = "png";
+                    break;
+                }
             }
             System.out.println(extension);
             System.out.println(fname);
@@ -81,25 +95,17 @@ public class MenuActionListener implements EventHandler<ActionEvent> {
             // begin stack overflow code to save image
             WritableImage writableImage = new WritableImage((int) canvas.getWidth(), (int) canvas.getHeight());
             canvas.snapshot(null, writableImage);
-            RenderedImage renderedImage = SwingFXUtils.fromFXImage(writableImage, null);
+            BufferedImage bi = new BufferedImage((int) canvas.getWidth(), (int) canvas.getHeight(), BufferedImage.TYPE_INT_RGB);
+            RenderedImage renderedImage = SwingFXUtils.fromFXImage(writableImage, bi);
             try {
-                switch(extension.toLowerCase()) {
-                    case "bmp":
-                    ImageIO.write(renderedImage, "bmp", file);
-                    break;
-                    case "jpg":
-                    case "jpeg":
-                    ImageIO.write(renderedImage, "jpg", file);
-                    break;
-                    case "png":
-                    default:
-                    ImageIO.write(renderedImage, "png", file);
-                    break;
-                }
+                ImageIO.write(renderedImage, extension, file);
             } catch (IOException e1) {
                 e1.printStackTrace();
             }
             // end stack overflow code to save image
+            break;
+            case "help":
+            new HelpScreen();
             break;
         }
 
