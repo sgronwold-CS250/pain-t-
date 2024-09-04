@@ -1,6 +1,5 @@
 import java.io.File;
 import java.io.IOException;
-import java.awt.Graphics;
 import java.awt.image.RenderedImage;
 import java.awt.image.BufferedImage;
 
@@ -14,12 +13,13 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.WritableImage;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
+import javafx.scene.shape.Line;
 import javafx.stage.FileChooser;
 import javax.imageio.ImageIO;
 
 public class MenuActionListener implements EventHandler<ActionEvent> {
-
     @Override
     public void handle(ActionEvent e) {
         System.out.println("Button clicked");
@@ -35,17 +35,19 @@ public class MenuActionListener implements EventHandler<ActionEvent> {
 
         GridPane grid = (GridPane) scene.getRoot();
 
-        Canvas canvas = null;
+        Canvas canvasCandidate = null;
         for(Node child: grid.getChildren()) {
             if(child instanceof Canvas) {
-                canvas = (Canvas) child;
+                canvasCandidate = (Canvas) child;
             }
         }
 
-        if(canvas == null) {
+        if(canvasCandidate == null) {
             // then we don't have a canvas for some reason?
             return;
         }
+        // otherwise we have a final canvas
+        final Canvas canvas = canvasCandidate;
 
         GraphicsContext gc = canvas.getGraphicsContext2D();
 
@@ -103,6 +105,9 @@ public class MenuActionListener implements EventHandler<ActionEvent> {
                 e1.printStackTrace();
             }
             // end stack overflow code to save image
+            break;
+            case "drawline":
+            canvas.addEventHandler(MouseEvent.MOUSE_CLICKED, new LineDrawer(canvas));
             break;
             case "help":
             new HelpScreen();
