@@ -15,7 +15,6 @@ import javafx.scene.image.Image;
 import javafx.scene.image.WritableImage;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
-import javafx.scene.shape.Line;
 import javafx.stage.FileChooser;
 import javax.imageio.ImageIO;
 
