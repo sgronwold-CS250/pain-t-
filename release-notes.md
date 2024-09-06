@@ -6,20 +6,15 @@
 
 - Saves images to png, bmp, and jpeg file formats ("save as", and give your file the appropriate file extension. png, bmp, jpg, and jpeg save to the respective file format)
 - Added the help window
+- Added a line draw tool (customizable position, thickness, and color)
 
 ### Known issues
 
-#### Errors thrown that need handling
-
-- When the user opens an invalid file
-
-#### Misc items
-
-- If you click the draw line button multiple times without drawing a line in between, multiple identical lines will be drawn
+- When the user opens an invalid file an error is thrown
 
 ### Expected next version
 
-- Handling for many of the above errors
+- Error handling for the above errors
 
 
 ## v0.0.1 (2024-08-30)
