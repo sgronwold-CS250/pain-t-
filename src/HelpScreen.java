@@ -38,7 +38,7 @@ public class HelpScreen {
         grid.add(dropdown, 0, 1);
 
         // this is the body text where most of the text is going to be
-        String bodyText = "This is Pain (t)\n";
+        String bodyText = "This is Pain (t) v0.2.0\n";
         bodyText += "\"Line...\" draws a line.";
         bodyText += "Choose a thickness and color through the dialogs that get summoned.";
 
