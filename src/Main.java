@@ -91,9 +91,7 @@ public class Main extends Application implements ChangeListener<Number> {
         double newScaleY = availableCanvasHeight/canvas.getHeight();
 
         double newScale = Math.min(newScaleX, newScaleY);
-
-        System.out.println(availableCanvasHeight);
-
+        
         canvas.setScaleX(newScale);
         canvas.setScaleY(newScale);
 
