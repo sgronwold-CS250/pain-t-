@@ -1,14 +1,15 @@
 import javafx.scene.canvas.Canvas;
-import javafx.scene.control.Label;
+import javafx.scene.control.Labeled;
 import javafx.scene.input.MouseEvent;
 
 public class LineDrawer extends Drawer {
     double startX, startY, endX, endY;
-
     boolean gotStartPoint = false;
 
-    public LineDrawer(Canvas c, Label ilabel) {
+    public LineDrawer(Canvas c, Labeled ilabel) {
+
         super(c, ilabel);
+        instructionLabel.setText("Click where you want the line to start");
     }
 
     @Override
@@ -20,6 +21,7 @@ public class LineDrawer extends Drawer {
             startX = e.getX();
             startY = e.getY();
             gotStartPoint = true;
+            instructionLabel.setText("Click where you want the line to end");
         } else {
             // then we need to make the ending point of the line
             endX = e.getX();
@@ -31,6 +33,8 @@ public class LineDrawer extends Drawer {
 
             // deregister ourselves
             canvas.removeEventHandler(MouseEvent.MOUSE_CLICKED, this);
+
+            instructionLabel.setText("Line drawn!");
         }
     }   
 }

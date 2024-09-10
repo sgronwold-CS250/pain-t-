@@ -113,6 +113,9 @@ public class MenuActionListener implements EventHandler<ActionEvent> {
             case "drawline":
             canvas.addEventHandler(MouseEvent.MOUSE_CLICKED, new LineDrawer(canvas, instructionLabel));
             break;
+            case "drawtriangle":
+            canvas.addEventHandler(MouseEvent.MOUSE_CLICKED, new TriangleDrawer(canvas, instructionLabel));
+            break;
             case "help":
             new HelpScreen();
             break;
