@@ -65,6 +65,7 @@ public class Main extends Application implements ChangeListener<Number> {
 
         // title
         Label title = new Label("Let Pain (t) be a strictly increasing function. The value of Pain at any given value t exceeds expectations.");
+        title.setId("title");
         title.setWrapText(true);
 
         // grid.add(item, col, row, col-span, row-span);

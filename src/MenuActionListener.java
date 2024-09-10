@@ -11,6 +11,7 @@ import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.WritableImage;
 import javafx.scene.input.MouseEvent;
@@ -35,9 +36,13 @@ public class MenuActionListener implements EventHandler<ActionEvent> {
         GridPane grid = (GridPane) scene.getRoot();
 
         Canvas canvasCandidate = null;
+        Label instructionLabel = null;
         for(Node child: grid.getChildren()) {
             if(child instanceof Canvas) {
                 canvasCandidate = (Canvas) child;
+            }
+            if(child instanceof Label && child.getId().equals("title")) {
+                instructionLabel = (Label) child;
             }
         }
 
@@ -106,7 +111,7 @@ public class MenuActionListener implements EventHandler<ActionEvent> {
             // end stack overflow code to save image
             break;
             case "drawline":
-            canvas.addEventHandler(MouseEvent.MOUSE_CLICKED, new LineDrawer(canvas));
+            canvas.addEventHandler(MouseEvent.MOUSE_CLICKED, new LineDrawer(canvas, instructionLabel));
             break;
             case "help":
             new HelpScreen();
