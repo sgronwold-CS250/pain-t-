@@ -10,6 +10,8 @@ public class LineDrawer extends Drawer {
     public LineDrawer(Canvas c, Labeled ilabel) {
         super(c, ilabel);
         instructionLabel.setText("Click where you want the line to start");
+        
+        super.startCanvasListener();
     }
 
     @Override
@@ -38,8 +40,9 @@ public class LineDrawer extends Drawer {
         }
     }
 
+    @SuppressWarnings("unchecked")
     @Override
-    public EventType<MouseEvent> getEventType() {
-        return MouseEvent.MOUSE_CLICKED;
+    public EventType<MouseEvent>[] getEventType() {
+        return new EventType[] {MouseEvent.MOUSE_CLICKED};
     }   
 }

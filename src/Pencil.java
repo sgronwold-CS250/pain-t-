@@ -5,27 +5,45 @@ import javafx.scene.input.MouseEvent;
 
 public class Pencil extends Drawer {
     Canvas canvas;
-    Double x = null;
-    Double y = null;
+    Double oldX = null;
+    Double oldY = null;
 
     public Pencil(Canvas c, Labeled ilabel) {
         super(c, ilabel);
 
         canvas = c;
+
+        super.startCanvasListener();
     }
 
     @Override
     public void handle(MouseEvent e) {
-        System.out.println(e.isPrimaryButtonDown());
         if (e.isPrimaryButtonDown()) {
+            canvas.getGraphicsContext2D().setStroke(color);
+            canvas.getGraphicsContext2D().setLineWidth(thickness);
+
+
+            // if we don't have old coordinates then make them
+            if (oldX == null) oldX = e.getX();
+            if (oldY == null) oldY = e.getY();
+
             // ... then the mouse has been dragged and is clicked
             // so we put a dot on the canvas
-            canvas.getGraphicsContext2D().strokeLine(e.getX(), e.getY(), e.getX(), e.getY());
+            canvas.getGraphicsContext2D().strokeLine(oldX, oldY, e.getX(), e.getY());
+
+            // update the former coordinates
+            oldX = e.getX();
+            oldY = e.getY();
+        } else {
+            // otherwise we reset the old coordinates
+            oldX = null;
+            oldY = null;
         }
     }
 
+    @SuppressWarnings("unchecked")
     @Override
-    public EventType<MouseEvent> getEventType() {
-        return MouseEvent.MOUSE_DRAGGED;
+    public EventType<MouseEvent>[] getEventType() {
+        return new EventType[] {MouseEvent.MOUSE_DRAGGED, MouseEvent.MOUSE_CLICKED};
     }
 }

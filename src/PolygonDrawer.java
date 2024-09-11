@@ -19,6 +19,8 @@ public class PolygonDrawer extends Drawer {
         yCoords = new double[numSides];
 
         instructionLabel.setText("Click where you want Point #1 to be");
+
+        super.startCanvasListener();
     }
 
     @Override
@@ -46,9 +48,10 @@ public class PolygonDrawer extends Drawer {
         }
     }
 
+    @SuppressWarnings("unchecked")
     @Override
-    public EventType<MouseEvent> getEventType() {
-        return MouseEvent.MOUSE_CLICKED;
+    public EventType<MouseEvent>[] getEventType() {
+        return new EventType[] {MouseEvent.MOUSE_CLICKED};
     }
     
 }
