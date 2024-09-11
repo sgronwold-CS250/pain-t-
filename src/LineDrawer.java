@@ -1,3 +1,4 @@
+import javafx.event.EventType;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.control.Labeled;
 import javafx.scene.input.MouseEvent;
@@ -7,7 +8,6 @@ public class LineDrawer extends Drawer {
     boolean gotStartPoint = false;
 
     public LineDrawer(Canvas c, Labeled ilabel) {
-
         super(c, ilabel);
         instructionLabel.setText("Click where you want the line to start");
     }
@@ -32,9 +32,14 @@ public class LineDrawer extends Drawer {
             canvas.getGraphicsContext2D().strokeLine(startX, startY, endX, endY);
 
             // deregister ourselves
-            canvas.removeEventHandler(MouseEvent.MOUSE_CLICKED, this);
+            super.stopCanvasListener();
 
             instructionLabel.setText("Line drawn!");
         }
+    }
+
+    @Override
+    public EventType<MouseEvent> getEventType() {
+        return MouseEvent.MOUSE_CLICKED;
     }   
 }

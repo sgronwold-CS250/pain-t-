@@ -1,16 +1,22 @@
+import javafx.event.EventType;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.control.Labeled;
 import javafx.scene.input.MouseEvent;
 
-public class TriangleDrawer extends Drawer {
+public class PolygonDrawer extends Drawer {
 
-    double[] xCoords = new double[3];
-    double[] yCoords = new double[xCoords.length];
+    int numSides;
+    double[] xCoords;
+    double[] yCoords;
 
     int numPointsCaptured = 0;
 
-    public TriangleDrawer(Canvas c, Labeled ilabel) {
+    public PolygonDrawer(Canvas c, Labeled ilabel, int nsides) {
         super(c, ilabel);
+        numSides = nsides;
+
+        xCoords = new double[numSides];
+        yCoords = new double[numSides];
 
         instructionLabel.setText("Click where you want Point #1 to be");
     }
@@ -27,17 +33,22 @@ public class TriangleDrawer extends Drawer {
 
         canvas.getGraphicsContext2D().setLineWidth(thickness);
         canvas.getGraphicsContext2D().setStroke(color);
-        if (numPointsCaptured >= xCoords.length) {
+        if (numPointsCaptured >= numSides) {
             // draw the triangle
-            for (int i = 0; i < xCoords.length; i++) {
+            for (int i = 0; i < numSides; i++) {
                 canvas.getGraphicsContext2D().strokeLine(xCoords[i], yCoords[i], xCoords[(i+1)%xCoords.length], yCoords[(i+1)%yCoords.length]);
             }
 
             // deregister ourselves
-            canvas.removeEventHandler(MouseEvent.MOUSE_CLICKED, this);
+            super.stopCanvasListener();
 
-            instructionLabel.setText("Triangle drawn!");
+            instructionLabel.setText(numSides+"-sided polygon drawn!");
         }
+    }
+
+    @Override
+    public EventType<MouseEvent> getEventType() {
+        return MouseEvent.MOUSE_CLICKED;
     }
     
 }

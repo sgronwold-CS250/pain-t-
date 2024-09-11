@@ -20,6 +20,11 @@ import javafx.stage.FileChooser;
 import javax.imageio.ImageIO;
 
 public class MenuActionListener implements EventHandler<ActionEvent> {
+    // drawing tools
+    Pencil pencil;
+    LineDrawer lineDrawer;
+    PolygonDrawer polygonDrawer;
+
     @Override
     public void handle(ActionEvent e) {
         System.out.println("Button clicked");
@@ -110,18 +115,29 @@ public class MenuActionListener implements EventHandler<ActionEvent> {
             }
             // end stack overflow code to save image
             break;
-            case "drawline":
-            canvas.addEventHandler(MouseEvent.MOUSE_CLICKED, new LineDrawer(canvas, instructionLabel));
-            break;
-            case "drawtriangle":
-            canvas.addEventHandler(MouseEvent.MOUSE_CLICKED, new TriangleDrawer(canvas, instructionLabel));
-            break;
             case "help":
             new HelpScreen();
             break;
+            case "drawline":
+            removeAllDrawers();
+            lineDrawer = new LineDrawer(canvas, instructionLabel);
+            break;
+            case "drawtriangle":
+            removeAllDrawers();
+            polygonDrawer = new PolygonDrawer(canvas, instructionLabel, 3);
+            break;
+            case "pencil":
+            removeAllDrawers();
+            pencil = new Pencil(canvas, instructionLabel);
+            break;
         }
-
-
     }
 
+
+
+    public void removeAllDrawers() {
+        if (lineDrawer != null) lineDrawer.stopCanvasListener();
+        if (polygonDrawer != null) polygonDrawer.stopCanvasListener();
+        if (pencil != null) pencil.stopCanvasListener();
+    }
 }

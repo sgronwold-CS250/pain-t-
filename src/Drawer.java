@@ -1,4 +1,5 @@
 import javafx.event.EventHandler;
+import javafx.event.EventType;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.control.Labeled;
 import javafx.scene.control.TextInputDialog;
@@ -23,6 +24,20 @@ public abstract class Drawer implements EventHandler<MouseEvent> {
 
         ColorPickerDialog cpd = new ColorPickerDialog();
         color = cpd.getColor();
+
+        startCanvasListener();
     }
 
+    public abstract EventType<MouseEvent> getEventType();
+
+    
+    // registers the event handler associated with this class
+    public void startCanvasListener() {
+        canvas.addEventHandler(getEventType(), this);
+    }
+    
+    // deregisters the event handler associated with this class
+    public void stopCanvasListener() {
+        canvas.removeEventHandler(getEventType(), this);
+    }
 }
