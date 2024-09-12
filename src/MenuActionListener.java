@@ -20,13 +20,13 @@ import javax.imageio.ImageIO;
 
 public class MenuActionListener implements EventHandler<ActionEvent> {
     // drawing tools
-    Pencil pencil;
-    LineDrawer lineDrawer;
-    PolygonDrawer polygonDrawer;
-    SquareDrawer squareDrawer;
+    Drawer currDrawer = null;
 
     @Override
     public void handle(ActionEvent e) {
+        // stop the current drawer's callback so it isn't callback chaos
+        if(currDrawer != null) currDrawer.stopCanvasListener();
+
         System.out.println("Button clicked");
         Button button;
         if (e.getSource() instanceof Button) {
@@ -124,30 +124,23 @@ public class MenuActionListener implements EventHandler<ActionEvent> {
             new HelpScreen();
             break;
             case "drawline":
-            removeAllDrawers();
-            lineDrawer = new LineDrawer(canvas, instructionLabel);
+            currDrawer = new LineDrawer(canvas, instructionLabel);
             break;
             case "drawtriangle":
-            removeAllDrawers();
-            polygonDrawer = new PolygonDrawer(canvas, instructionLabel, 3);
+            currDrawer = new PolygonDrawer(canvas, instructionLabel, 3);
             break;
             case "pencil":
-            removeAllDrawers();
-            pencil = new Pencil(canvas, instructionLabel);
+            currDrawer = new Pencil(canvas, instructionLabel);
             break;
             case "drawsquare":
-            removeAllDrawers();
-            squareDrawer = new SquareDrawer(canvas, instructionLabel);
+            currDrawer = new SquareDrawer(canvas, instructionLabel);
+            break;
+            case "drawellipse":
+            currDrawer = new EllipseDrawer(canvas, instructionLabel);
+            break;
+            case "drawrectangle":
+            currDrawer = new RectangleDrawer(canvas, instructionLabel);
             break;
         }
-    }
-
-
-
-    public void removeAllDrawers() {
-        if (lineDrawer != null) lineDrawer.stopCanvasListener();
-        if (polygonDrawer != null) polygonDrawer.stopCanvasListener();
-        if (pencil != null) pencil.stopCanvasListener();
-        if (squareDrawer != null) squareDrawer.stopCanvasListener();
     }
 }

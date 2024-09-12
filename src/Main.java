@@ -13,7 +13,7 @@ public class Main extends Application implements ChangeListener<Number> {
     GridPane grid;
     Canvas canvas;
 
-    Button menuButtons[] = new Button[7];
+    Button menuButtons[] = new Button[9];
 
     public static void main(String[] args) {
         System.out.println("Launching Pain(t)");
@@ -66,6 +66,14 @@ public class Main extends Application implements ChangeListener<Number> {
         menuButtons[6] = new Button("Draw square");
         menuButtons[6].setId("drawsquare");
         menuButtons[6].setOnAction(menuButtons[0].getOnAction());
+
+        menuButtons[7] = new Button("Draw ellipse");
+        menuButtons[7].setId("drawellipse");
+        menuButtons[7].setOnAction(menuButtons[0].getOnAction());
+
+        menuButtons[8] = new Button("Draw rectangle");
+        menuButtons[8].setId("drawrectangle");
+        menuButtons[8].setOnAction(menuButtons[0].getOnAction());
 
         for(int i = 0; i < menuButtons.length; i++) {
             grid.add(menuButtons[i], i, 2);

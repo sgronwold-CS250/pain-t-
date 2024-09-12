@@ -14,6 +14,8 @@ public class Pencil extends Drawer {
         canvas = c;
 
         super.startCanvasListener();
+
+        instructionLabel.setText("You're in pencil mode now");
     }
 
     @Override
