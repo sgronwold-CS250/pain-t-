@@ -100,6 +100,8 @@ public class Main extends Application implements ChangeListener<Number> {
         // grid.add(item, col, row, col-span, row-span);
         grid.add(title, 0, 0, menuButtons.length, 1);
 
+        refreshCanvasDims(canvas);
+
         stage.show();
     }
 

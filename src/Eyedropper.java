@@ -33,7 +33,7 @@ public class Eyedropper implements CanvasInterface, EventHandler<MouseEvent> {
         // end stack overflow code
 
         // set canvas value just to trigger the canvas resizing
-        canvas.widthProperty().setValue(canvas.widthProperty().getValue());
+        Main.refreshCanvasDims(canvas);
 
         // make sure all bits but the least significant 24 bits are cleared
         color &= 0xFFFFFF;

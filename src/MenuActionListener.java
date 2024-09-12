@@ -72,6 +72,8 @@ public class MenuActionListener implements EventHandler<ActionEvent> {
             canvas.setHeight(img.getHeight());
             gc.clearRect(0,0,img.getWidth(),img.getHeight());
             gc.drawImage(img, 0, 0);
+
+            Main.refreshCanvasDims(canvas);
             break;
 
             case "saveas":
