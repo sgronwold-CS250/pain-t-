@@ -106,33 +106,35 @@ public class Main extends Application implements ChangeListener<Number> {
 
     // called by the window resize callback
     // it's also a standalone function such that we can call it whenever we want
-    public void refreshCanvasDims() {
-        double availableCanvasWidth = scene.getWidth();
+    public static void refreshCanvasDims(Canvas c) {
+        Scene s = c.getScene();
+
+        double availableCanvasWidth = s.getWidth();
 
         // this is the height minus the y offset of the canvas; so this is the available height that we have for our canvas
-        double availableCanvasHeight = scene.getHeight() - canvas.getLayoutY();
+        double availableCanvasHeight = s.getHeight() - c.getLayoutY();
 
         // if width or height is nonpositive then we don't need to worry about this
         if (availableCanvasWidth <= 0 || availableCanvasHeight <= 0) return;
 
         // otherwise we have a legit window to work with
         // canvas width does NOT include scaling
-        double newScaleX = availableCanvasWidth/canvas.getWidth();
-        double newScaleY = availableCanvasHeight/canvas.getHeight();
+        double newScaleX = availableCanvasWidth/c.getWidth();
+        double newScaleY = availableCanvasHeight/c.getHeight();
 
         double newScale = Math.min(newScaleX, newScaleY);
         
-        canvas.setScaleX(newScale);
-        canvas.setScaleY(newScale);
+        c.setScaleX(newScale);
+        c.setScaleY(newScale);
 
         // translate the canvas such that it appears aligned within the window
-        canvas.setTranslateX((newScale-1)/2 * canvas.getWidth());
-        canvas.setTranslateY((newScale-1)/2 * canvas.getHeight());
+        c.setTranslateX((newScale-1)/2 * c.getWidth());
+        c.setTranslateY((newScale-1)/2 * c.getHeight());
     }
 
 
     @Override
     public void changed(ObservableValue<? extends Number> arg0, Number arg1, Number arg2) {
-        refreshCanvasDims();
+        refreshCanvasDims(canvas);
     }
 }

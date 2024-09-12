@@ -1,21 +1,24 @@
-import javafx.event.EventType;
+import javafx.event.EventHandler;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.control.Labeled;
 import javafx.scene.image.WritableImage;
 import javafx.scene.input.MouseEvent;
 
-public class Eyedropper extends Drawer {
+public class Eyedropper implements CanvasInterface, EventHandler<MouseEvent> {
+    Canvas canvas;
+    Labeled instructionLabel;
 
     public Eyedropper(Canvas c, Labeled ilabel) {
-        super(c, ilabel);
-        
-        super.startCanvasListener();
+        canvas = c;
+        instructionLabel = ilabel;
+
+        instructionLabel.setText("Click anywhere on the canvas to see the rgb value of it");
     }
 
     @Override
     public void handle(MouseEvent e) {
         // first we want to deregister ourselves because this might take a while
-        super.stopCanvasListener();
+        stopCanvasListener();
 
         // get colour
         int color;
@@ -39,10 +42,14 @@ public class Eyedropper extends Drawer {
         instructionLabel.setText("The colour is 0x"+String.format("%06X", color));
     }
 
-    @SuppressWarnings("unchecked")
     @Override
-    public EventType<MouseEvent>[] getEventTypes() {
-        return new EventType[] {MouseEvent.MOUSE_CLICKED};
+    public void stopCanvasListener() {
+        canvas.addEventHandler(MouseEvent.MOUSE_CLICKED, this);
+    }
+
+    @Override
+    public void startCanvasListener() {
+        canvas.removeEventHandler(MouseEvent.MOUSE_CLICKED, this);
     }
 
 }

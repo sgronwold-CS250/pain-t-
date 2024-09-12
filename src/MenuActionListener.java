@@ -20,7 +20,7 @@ import javax.imageio.ImageIO;
 
 public class MenuActionListener implements EventHandler<ActionEvent> {
     // drawing tools
-    Drawer currDrawer = null;
+    CanvasInterface currDrawer = null;
 
     @Override
     public void handle(ActionEvent e) {

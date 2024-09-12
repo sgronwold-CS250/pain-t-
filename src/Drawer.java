@@ -7,7 +7,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 
 
-public abstract class Drawer implements EventHandler<MouseEvent> {
+public abstract class Drawer implements EventHandler<MouseEvent>, CanvasInterface {
     Canvas canvas;
     Color color;
     double thickness;
