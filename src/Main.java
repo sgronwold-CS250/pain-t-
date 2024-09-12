@@ -13,7 +13,7 @@ public class Main extends Application implements ChangeListener<Number> {
     GridPane grid;
     Canvas canvas;
 
-    Button menuButtons[] = new Button[6];
+    Button menuButtons[] = new Button[7];
 
     public static void main(String[] args) {
         System.out.println("Launching Pain(t)");
@@ -63,6 +63,10 @@ public class Main extends Application implements ChangeListener<Number> {
         menuButtons[5].setId("pencil");
         menuButtons[5].setOnAction(menuButtons[0].getOnAction());
 
+        menuButtons[6] = new Button("Draw square");
+        menuButtons[6].setId("drawsquare");
+        menuButtons[6].setOnAction(menuButtons[0].getOnAction());
+
         for(int i = 0; i < menuButtons.length; i++) {
             grid.add(menuButtons[i], i, 2);
         }
@@ -73,7 +77,7 @@ public class Main extends Application implements ChangeListener<Number> {
         grid.add(canvas, 0, 3, menuButtons.length, 1);
 
         // title
-        Label title = new Label("Let Pain (t) be a strictly increasing function. The value of Pain at any given value t exceeds expectations.");
+        Label title = new Label("Buy me a Java at paypal.me/samuelgronwold");
         title.setId("title");
         title.setWrapText(true);
 

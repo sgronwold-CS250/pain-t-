@@ -18,6 +18,7 @@ public abstract class Drawer implements EventHandler<MouseEvent> {
 
         ColorPickerDialog cpd = new ColorPickerDialog();
         color = cpd.getColor();
+        canvas.getGraphicsContext2D().setStroke(color);
     }
 
     public Drawer(Canvas c, Labeled ilabel, Color col) {
@@ -28,21 +29,25 @@ public abstract class Drawer implements EventHandler<MouseEvent> {
         String response = tid.showAndWait().get();
 
         thickness = Double.parseDouble(response);
+        canvas.getGraphicsContext2D().setLineWidth(thickness);
+
+        color = col;
+        canvas.getGraphicsContext2D().setStroke(color);
     }
 
-    public abstract EventType<MouseEvent>[] getEventType();
+    public abstract EventType<MouseEvent>[] getEventTypes();
 
     
     // registers the event handler associated with this class
     public void startCanvasListener() {
-        for (EventType<MouseEvent> et: getEventType()) {
+        for (EventType<MouseEvent> et: getEventTypes()) {
             canvas.addEventHandler(et, this);
         }
     }
     
     // deregisters the event handler associated with this class
     public void stopCanvasListener() {
-        for (EventType<MouseEvent> et: getEventType()) {
+        for (EventType<MouseEvent> et: getEventTypes()) {
             canvas.removeEventHandler(et, this);
         }
     }

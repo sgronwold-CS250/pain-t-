@@ -29,8 +29,6 @@ public class LineDrawer extends Drawer {
             endX = e.getX();
             endY = e.getY();
 
-            canvas.getGraphicsContext2D().setLineWidth(thickness);
-            canvas.getGraphicsContext2D().setStroke(color);
             canvas.getGraphicsContext2D().strokeLine(startX, startY, endX, endY);
 
             // deregister ourselves
@@ -42,7 +40,7 @@ public class LineDrawer extends Drawer {
 
     @SuppressWarnings("unchecked")
     @Override
-    public EventType<MouseEvent>[] getEventType() {
+    public EventType<MouseEvent>[] getEventTypes() {
         return new EventType[] {MouseEvent.MOUSE_CLICKED};
     }   
 }

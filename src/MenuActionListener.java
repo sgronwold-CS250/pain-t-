@@ -23,6 +23,7 @@ public class MenuActionListener implements EventHandler<ActionEvent> {
     Pencil pencil;
     LineDrawer lineDrawer;
     PolygonDrawer polygonDrawer;
+    SquareDrawer squareDrawer;
 
     @Override
     public void handle(ActionEvent e) {
@@ -102,6 +103,9 @@ public class MenuActionListener implements EventHandler<ActionEvent> {
             System.out.println(extension);
             System.out.println(fname);
 
+            // scale the canvas to 100%
+            canvas.setScaleX(1);
+            canvas.setScaleY(1);
             // begin stack overflow code to save image
             WritableImage writableImage = new WritableImage((int) canvas.getWidth(), (int) canvas.getHeight());
             canvas.snapshot(null, writableImage);
@@ -113,6 +117,8 @@ public class MenuActionListener implements EventHandler<ActionEvent> {
                 e1.printStackTrace();
             }
             // end stack overflow code to save image
+            // finally trigger the canvas resize thingy
+            canvas.setWidth(canvas.getWidth()-1);
             break;
             case "help":
             new HelpScreen();
@@ -129,6 +135,10 @@ public class MenuActionListener implements EventHandler<ActionEvent> {
             removeAllDrawers();
             pencil = new Pencil(canvas, instructionLabel);
             break;
+            case "drawsquare":
+            removeAllDrawers();
+            squareDrawer = new SquareDrawer(canvas, instructionLabel);
+            break;
         }
     }
 
@@ -138,5 +148,6 @@ public class MenuActionListener implements EventHandler<ActionEvent> {
         if (lineDrawer != null) lineDrawer.stopCanvasListener();
         if (polygonDrawer != null) polygonDrawer.stopCanvasListener();
         if (pencil != null) pencil.stopCanvasListener();
+        if (squareDrawer != null) squareDrawer.stopCanvasListener();
     }
 }

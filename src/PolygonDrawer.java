@@ -50,7 +50,7 @@ public class PolygonDrawer extends Drawer {
 
     @SuppressWarnings("unchecked")
     @Override
-    public EventType<MouseEvent>[] getEventType() {
+    public EventType<MouseEvent>[] getEventTypes() {
         return new EventType[] {MouseEvent.MOUSE_CLICKED};
     }
     
