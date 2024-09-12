@@ -75,6 +75,10 @@ public class Main extends Application implements ChangeListener<Number> {
         menuButtons[8].setId("drawrectangle");
         menuButtons[8].setOnAction(menuButtons[0].getOnAction());
 
+        menuButtons[8] = new Button("Draw circle");
+        menuButtons[8].setId("drawcircle");
+        menuButtons[8].setOnAction(menuButtons[0].getOnAction());
+
         for(int i = 0; i < menuButtons.length; i++) {
             grid.add(menuButtons[i], i, 2);
         }

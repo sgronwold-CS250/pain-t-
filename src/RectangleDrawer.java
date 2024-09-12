@@ -38,6 +38,7 @@ public class RectangleDrawer extends Drawer {
         }
     }
 
+    @SuppressWarnings("unchecked")
     @Override
     public EventType<MouseEvent>[] getEventTypes() {
         return new EventType[] {MouseEvent.MOUSE_CLICKED};

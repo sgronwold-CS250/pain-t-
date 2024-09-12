@@ -141,6 +141,9 @@ public class MenuActionListener implements EventHandler<ActionEvent> {
             case "drawrectangle":
             currDrawer = new RectangleDrawer(canvas, instructionLabel);
             break;
+            case "drawcircle":
+            currDrawer = new CircleDrawer(canvas, instructionLabel);
+            break;
         }
     }
 }
