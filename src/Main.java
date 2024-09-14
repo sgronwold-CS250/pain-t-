@@ -1,6 +1,8 @@
 import javafx.application.Application;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.control.Button;
@@ -12,6 +14,8 @@ public class Main extends Application implements ChangeListener<Number> {
     Scene scene;
     GridPane grid;
     Canvas canvas;
+    static boolean UNSAVED_CHANGES = false;
+    MenuListener menuListener;
 
     Button menuButtons[] = new Button[11];
 
@@ -20,6 +24,7 @@ public class Main extends Application implements ChangeListener<Number> {
         launch(args);
     }
 
+    @SuppressWarnings("unchecked")
     @Override
     public void start(Stage stage) {
         // basic window things
@@ -52,50 +57,52 @@ public class Main extends Application implements ChangeListener<Number> {
 
         refreshCanvasDims(canvas);
 
+        menuListener = new MenuActionListener(canvas);
+
         // initialize buttons
         menuButtons[0] = new Button("Load image...");
         menuButtons[0].setId("open");
-        menuButtons[0].setOnAction(new MenuActionListener(canvas));
+        menuButtons[0].setOnAction((EventHandler<ActionEvent>) menuListener);
 
         menuButtons[1] = new Button("Save As...");
         menuButtons[1].setId("saveas");
-        menuButtons[1].setOnAction(menuButtons[0].getOnAction());
+        menuButtons[1].setOnAction((EventHandler<ActionEvent>) menuListener);
 
         menuButtons[2] = new Button("Help...");
         menuButtons[2].setId("help");
-        menuButtons[2].setOnAction(menuButtons[0].getOnAction());
+        menuButtons[2].setOnAction((EventHandler<ActionEvent>) menuListener);
 
         menuButtons[3] = new Button("Draw line...");
         menuButtons[3].setId("drawline");
-        menuButtons[3].setOnAction(menuButtons[0].getOnAction());
+        menuButtons[3].setOnAction((EventHandler<ActionEvent>) menuListener);
 
         menuButtons[4] = new Button("Draw triangle...");
         menuButtons[4].setId("drawtriangle");
-        menuButtons[4].setOnAction(menuButtons[0].getOnAction());
+        menuButtons[4].setOnAction((EventHandler<ActionEvent>) menuListener);
 
         menuButtons[5] = new Button("Pencil");
         menuButtons[5].setId("pencil");
-        menuButtons[5].setOnAction(menuButtons[0].getOnAction());
+        menuButtons[5].setOnAction((EventHandler<ActionEvent>) menuListener);
 
         menuButtons[6] = new Button("Draw square");
         menuButtons[6].setId("drawsquare");
-        menuButtons[6].setOnAction(menuButtons[0].getOnAction());
+        menuButtons[6].setOnAction((EventHandler<ActionEvent>) menuListener);
 
         menuButtons[7] = new Button("Draw ellipse");
         menuButtons[7].setId("drawellipse");
-        menuButtons[7].setOnAction(menuButtons[0].getOnAction());
+        menuButtons[7].setOnAction((EventHandler<ActionEvent>) menuListener);
 
         menuButtons[8] = new Button("Draw rectangle");
         menuButtons[8].setId("drawrectangle");
-        menuButtons[8].setOnAction(menuButtons[0].getOnAction());
+        menuButtons[8].setOnAction((EventHandler<ActionEvent>) menuListener);
 
         menuButtons[9] = new Button("Draw circle");
         menuButtons[9].setId("drawcircle");
-        menuButtons[9].setOnAction(menuButtons[0].getOnAction());
+        menuButtons[9].setOnAction((EventHandler<ActionEvent>) menuListener);
 
         menuButtons[10] = new Button("Eyedropper");
         menuButtons[10].setId("eyedropper");
-        menuButtons[10].setOnAction(menuButtons[0].getOnAction());
+        menuButtons[10].setOnAction((EventHandler<ActionEvent>) menuListener);
 
         for(int i = 0; i < menuButtons.length; i++) {
             grid.add(menuButtons[i], i, 2);
@@ -105,6 +112,21 @@ public class Main extends Application implements ChangeListener<Number> {
         scene.setOnKeyPressed(new MenuKeyListener(canvas));
 
         stage.show();
+    }
+
+    @Override
+    public void stop() {
+        SaveDialog sd = new SaveDialog();
+        String response = sd.getResponse();
+
+        switch(response) {
+            case "save":
+            menuListener.save();
+            break;
+            case "saveas":
+            menuListener.saveAs();
+            break;
+        }
     }
 
 

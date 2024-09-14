@@ -118,6 +118,8 @@ public abstract class MenuListener {
         // end stack overflow code to save image
         // finally trigger the canvas resize thingy
         Main.refreshCanvasDims(canvas);
+
+        Main.UNSAVED_CHANGES = false;
     }
 
     private GraphicsContext getGraphicsContext() {
