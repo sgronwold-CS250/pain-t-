@@ -1,22 +1,18 @@
-import java.io.File;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Button;
-import javafx.scene.image.Image;
-import javafx.stage.FileChooser;
 
-public class MenuActionListener extends CanvasModifier implements EventHandler<ActionEvent> {
+public class MenuActionListener extends MenuListener implements EventHandler<ActionEvent> {
     public MenuActionListener(Canvas c) {
         super(c);
     }
 
     @Override
     public void handle(ActionEvent e) {
-        // stop the current drawer's callback so it isn't callback chaos
-        if(currDrawer != null) currDrawer.stopCanvasListener();
+        super.clearAllDrawers();
 
         System.out.println("Button clicked");
         Button button;

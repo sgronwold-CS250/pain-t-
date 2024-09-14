@@ -101,6 +101,9 @@ public class Main extends Application implements ChangeListener<Number> {
             grid.add(menuButtons[i], i, 2);
         }
 
+        // finally listen for the key events
+        scene.setOnKeyPressed(new MenuKeyListener(canvas));
+
         stage.show();
     }
 

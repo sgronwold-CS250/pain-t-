@@ -16,15 +16,17 @@ import javafx.scene.image.WritableImage;
 import javafx.scene.layout.GridPane;
 import javafx.stage.FileChooser;
 
-public abstract class CanvasModifier {
+public abstract class MenuListener {
     Canvas canvas;
     Labeled instructionLabel;
+    File currPath;
+
 
     // drawing tools; this is the global "current" drawer. it would be chaos if
     // the user was drawing a line at the same time as an ellipse :0
     static CanvasInterface currDrawer;
 
-    public CanvasModifier(Canvas c) {
+    public MenuListener(Canvas c) {
         canvas = c;
 
         Scene scene = canvas.getScene();
@@ -61,10 +63,21 @@ public abstract class CanvasModifier {
         Scene scene = getScene();
 
         FileChooser fc = new FileChooser();
-        File file = fc.showSaveDialog(scene.getWindow());
+        currPath = fc.showSaveDialog(scene.getWindow());
+
+        save();
+    }
+
+    public void save() {
+        // save here if we haven't saved yet
+        if (currPath == null) {
+            saveAs();
+            return;
+        }
+
 
         // getting the file extension
-        String fname = file.getName();
+        String fname = currPath.getName();
         int i = fname.lastIndexOf(".");
         System.out.println(i);
         String extension;
@@ -98,13 +111,13 @@ public abstract class CanvasModifier {
                 BufferedImage.TYPE_INT_RGB);
         RenderedImage renderedImage = SwingFXUtils.fromFXImage(writableImage, bi);
         try {
-            ImageIO.write(renderedImage, extension, file);
+            ImageIO.write(renderedImage, extension, currPath);
         } catch (IOException e1) {
             e1.printStackTrace();
         }
         // end stack overflow code to save image
         // finally trigger the canvas resize thingy
-        canvas.setWidth(canvas.getWidth() - 1);
+        Main.refreshCanvasDims(canvas);
     }
 
     private GraphicsContext getGraphicsContext() {
@@ -113,5 +126,10 @@ public abstract class CanvasModifier {
 
     private Scene getScene() {
         return canvas.getScene();
+    }
+
+    public void clearAllDrawers() {
+        // stop the current drawer's callback so it isn't callback chaos
+        if(currDrawer != null) currDrawer.stopCanvasListener();
     }
 }

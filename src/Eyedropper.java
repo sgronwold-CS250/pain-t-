@@ -13,10 +13,14 @@ public class Eyedropper implements CanvasInterface, EventHandler<MouseEvent> {
         instructionLabel = ilabel;
 
         instructionLabel.setText("Click anywhere on the canvas to see the rgb value of it");
+
+        startCanvasListener();
     }
 
     @Override
     public void handle(MouseEvent e) {
+        System.out.println("drop drop drop drop drop drop drop drop drop drop drop drop drop drop drop");
+
         // first we want to deregister ourselves because this might take a while
         stopCanvasListener();
 
@@ -43,12 +47,12 @@ public class Eyedropper implements CanvasInterface, EventHandler<MouseEvent> {
     }
 
     @Override
-    public void stopCanvasListener() {
+    public void startCanvasListener() {
         canvas.addEventHandler(MouseEvent.MOUSE_CLICKED, this);
     }
 
     @Override
-    public void startCanvasListener() {
+    public void stopCanvasListener() {
         canvas.removeEventHandler(MouseEvent.MOUSE_CLICKED, this);
     }
 
