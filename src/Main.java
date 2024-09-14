@@ -38,10 +38,24 @@ public class Main extends Application implements ChangeListener<Number> {
         scene = new Scene(grid, 300, 400);
         stage.setScene(scene);
 
+        canvas = new Canvas(500, 500);
+        // grid.add(item, col, row, col-span, row-span);
+        grid.add(canvas, 0, 3, menuButtons.length, 1);
+
+        // title
+        Label title = new Label("Buy me a Java at paypal.me/samuelgronwold");
+        title.setId("title");
+        title.setWrapText(true);
+
+        // grid.add(item, col, row, col-span, row-span);
+        grid.add(title, 0, 0, menuButtons.length, 1);
+
+        refreshCanvasDims(canvas);
+
         // initialize buttons
         menuButtons[0] = new Button("Load image...");
         menuButtons[0].setId("open");
-        menuButtons[0].setOnAction(new MenuActionListener());
+        menuButtons[0].setOnAction(new MenuActionListener(canvas));
 
         menuButtons[1] = new Button("Save As...");
         menuButtons[1].setId("saveas");
@@ -86,21 +100,6 @@ public class Main extends Application implements ChangeListener<Number> {
         for(int i = 0; i < menuButtons.length; i++) {
             grid.add(menuButtons[i], i, 2);
         }
-
-
-        canvas = new Canvas(500, 500);
-        // grid.add(item, col, row, col-span, row-span);
-        grid.add(canvas, 0, 3, menuButtons.length, 1);
-
-        // title
-        Label title = new Label("Buy me a Java at paypal.me/samuelgronwold");
-        title.setId("title");
-        title.setWrapText(true);
-
-        // grid.add(item, col, row, col-span, row-span);
-        grid.add(title, 0, 0, menuButtons.length, 1);
-
-        refreshCanvasDims(canvas);
 
         stage.show();
     }
