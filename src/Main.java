@@ -116,6 +116,7 @@ public class Main extends Application implements ChangeListener<Number> {
 
     @Override
     public void stop() {
+        if (!UNSAVED_CHANGES) return;
         SaveDialog sd = new SaveDialog();
         String response = sd.getResponse();
 

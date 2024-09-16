@@ -19,7 +19,7 @@ import javafx.stage.FileChooser;
 public abstract class MenuListener {
     Canvas canvas;
     Labeled instructionLabel;
-    File currPath;
+    static File currPath;
 
 
     // drawing tools; this is the global "current" drawer. it would be chaos if
@@ -48,6 +48,9 @@ public abstract class MenuListener {
         // prompt the user for a file path
         FileChooser fc = new FileChooser();
         File file = fc.showOpenDialog(scene.getWindow());
+
+        // update the current filepath
+        currPath = file;
 
         Image img = new Image("file://" + file.getAbsolutePath());
 
