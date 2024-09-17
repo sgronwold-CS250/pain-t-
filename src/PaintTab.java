@@ -3,6 +3,7 @@ import java.util.Arrays;
 
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
@@ -50,22 +51,25 @@ public class PaintTab extends Canvas implements ChangeListener<Number> {
         }
 
         // step 2 re-add the buttons
-        // this is probably a gridpane
-        Parent parent = getCurrentTab().getCanvas().getParent();
-
-        GridPane grid;
-        if (parent instanceof GridPane) {
-            grid = (GridPane) parent;
-        } else {
-            System.err.println("ERROR: This canvas' parent is not a GridPane.");
-            return;
-        }
+        GridPane grid = getGridPane();
 
         // remove the "tab" buttons
-        for(Object n: Arrays.asList(grid.getChildren())) {
+        // but we need to add the things to remove to a list
+        ArrayList<Node> removeQueue = new ArrayList<Node>();
+        for(Node n: grid.getChildren()) {
             if (n instanceof Button) {
-                grid.getChildren().remove(n);
+                Button b = (Button) n;
+
+                // only the buttons whose ids begin with "tab" should be included here
+                if (b.getId().substring(0, 3).equalsIgnoreCase("tab")) {
+                    removeQueue.add(n);
+                }
             }
+        }
+
+        // now we act on our remove queue
+        for(Node n: removeQueue) {
+            grid.getChildren().remove(n);
         }
 
         // re-add the buttons
@@ -110,8 +114,98 @@ public class PaintTab extends Canvas implements ChangeListener<Number> {
     public static PaintTab getCurrentTab() {
         return tabs.get(currTabIndex);
     }
+    
+    public static void setCurrentTab(PaintTab pt) {
+        int i = tabs.indexOf(pt);
+
+        if (i == -1) {
+            System.err.println("This PaintTab object doesn't exist.");
+            return;
+        }
+
+        System.out.println(i);
+
+        GridPane grid = getGridPane();
+
+        // remove the current canvas
+        // but we need to add the things to remove to a list
+        ArrayList<Node> removeQueue = new ArrayList<Node>();
+        for(Node n: grid.getChildren()) {
+            if (n instanceof Canvas) {
+                removeQueue.add(n);
+            }
+        }
+
+        // now we act on our remove queue
+        for(Node n: removeQueue) {
+            grid.getChildren().remove(n);
+        }
+
+        // now that we've removed the canvas,
+        // we can add our new canvas
+        currTabIndex = i;
+
+        // add a new canvas
+        grid.add(getCurrentTab().getCanvas(), 0, CANVAS_ROW, Main.menuButtons.length, 1);
+
+
+        // now the buttons need to be refreshed
+        refreshButtons();
+    }
+
+    public static void setCurrentTab(int i) {
+        setCurrentTab(tabs.get(i));
+    }
 
     public static void add(PaintTab pt) {
         tabs.add(pt);
+
+        setCurrentTab(pt);
+    }
+
+    public static void remove() {
+        // this just removes the current paint tab
+        remove(getCurrentTab());
+    }
+
+    public static void remove(PaintTab pt) {
+        // make sure that there's actually a tab left
+        if (tabs.size() == 1) {
+            System.err.println("Cannot remove the only tab remaining!");
+            return;
+        }
+
+        int i = tabs.indexOf(pt);
+
+        // make sure that pt is actually one of our tabs
+        if (i == -1) {
+            System.err.println("Cannot remove tab that doesn't exist");
+            return;
+        }
+
+        // set the current tab to something that isn't going to be removed
+        if (i == 0) {
+            System.out.println("seting to 1");
+            setCurrentTab(1);
+        }
+        else setCurrentTab(0);
+
+        // finally, remove the tab and refresh the buttons
+        tabs.remove(pt);
+
+        refreshButtons();
+    }
+
+    public static GridPane getGridPane() {
+        // this is probably a gridpane
+        Parent parent = getCurrentTab().getCanvas().getParent();
+
+        if (parent instanceof GridPane) {
+            return (GridPane) parent;
+        } else {
+            System.err.println("ERROR: This canvas' parent is not a GridPane.");
+            System.err.println(parent);
+            return null;
+        }
     }
 }

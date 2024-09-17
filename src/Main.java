@@ -16,7 +16,7 @@ public class Main extends Application {
     static boolean UNSAVED_CHANGES = false;
     MenuListener menuListener;
 
-    Button menuButtons[] = new Button[11];
+    static Button menuButtons[] = new Button[13];
 
     public static void main(String[] args) {
         System.out.println("Launching Pain(t)");
@@ -102,6 +102,14 @@ public class Main extends Application {
         menuButtons[10] = new Button("Eyedropper");
         menuButtons[10].setId("eyedropper");
         menuButtons[10].setOnAction((EventHandler<ActionEvent>) menuListener);
+
+        menuButtons[11] = new Button("New Tab");
+        menuButtons[11].setId("newtab");
+        menuButtons[11].setOnAction((EventHandler<ActionEvent>) menuListener);
+
+        menuButtons[12] = new Button("Close this tab");
+        menuButtons[12].setId("closetab");
+        menuButtons[12].setOnAction((EventHandler<ActionEvent>) menuListener);
 
         for(int i = 0; i < menuButtons.length; i++) {
             grid.add(menuButtons[i], i, 2);

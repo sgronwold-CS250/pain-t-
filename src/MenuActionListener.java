@@ -1,8 +1,6 @@
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
-import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
-import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Button;
 
 public class MenuActionListener extends MenuListener implements EventHandler<ActionEvent> {
@@ -22,10 +20,6 @@ public class MenuActionListener extends MenuListener implements EventHandler<Act
             // otherwise there's nothing for us to do
             return;
         }
-
-        Scene scene = canvas.getScene();
-
-        GraphicsContext gc = canvas.getGraphicsContext2D();
 
         switch(button.getId()) {
             case "open":
@@ -60,6 +54,12 @@ public class MenuActionListener extends MenuListener implements EventHandler<Act
             break;
             case "eyedropper":
             currDrawer = new Eyedropper(canvas, instructionLabel);
+            break;
+            case "newtab":
+            PaintTab.add(new PaintTab());
+            break;
+            case "closetab":
+            PaintTab.remove(PaintTab.getCurrentTab());
             break;
         }
     }
