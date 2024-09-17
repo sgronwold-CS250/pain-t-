@@ -59,7 +59,7 @@ public abstract class MenuListener {
         gc.clearRect(0, 0, img.getWidth(), img.getHeight());
         gc.drawImage(img, 0, 0);
 
-        Main.refreshCanvasDims(canvas);
+        PaintTab.getCurrentTab().resize();
     }
 
     public void saveAs() {
@@ -120,7 +120,7 @@ public abstract class MenuListener {
         }
         // end stack overflow code to save image
         // finally trigger the canvas resize thingy
-        Main.refreshCanvasDims(canvas);
+        PaintTab.getCurrentTab().resize();
 
         Main.UNSAVED_CHANGES = false;
     }

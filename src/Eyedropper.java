@@ -36,8 +36,8 @@ public class Eyedropper implements CanvasInterface, EventHandler<MouseEvent> {
         color = snap.getPixelReader().getArgb((int) e.getX(), (int) e.getY()); //This just gets the color without assigning it.
         // end stack overflow code
 
-        // set canvas value just to trigger the canvas resizing
-        Main.refreshCanvasDims(canvas);
+        // trigger the canvas resizing
+        PaintTab.getCurrentTab().resize();
 
         // make sure all bits but the least significant 24 bits are cleared
         color &= 0xFFFFFF;

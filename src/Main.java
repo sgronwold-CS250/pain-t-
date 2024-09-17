@@ -1,6 +1,7 @@
+import java.util.ArrayList;
+
 import javafx.application.Application;
 import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Scene;
@@ -10,7 +11,7 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 
-public class Main extends Application implements ChangeListener<Number> {
+public class Main extends Application {
     Scene scene;
     GridPane grid;
     Canvas canvas;
@@ -35,10 +36,6 @@ public class Main extends Application implements ChangeListener<Number> {
         // we setup the grid as we go
         grid = new GridPane();
 
-        // setting the listener for window resizing
-        stage.widthProperty().addListener((ChangeListener<? super Number>) this);
-        stage.heightProperty().addListener((ChangeListener<? super Number>) this);
-
         // this scene is the default scene, will include the menu and canvas among other things
         scene = new Scene(grid, 300, 400);
         stage.setScene(scene);
@@ -47,6 +44,12 @@ public class Main extends Application implements ChangeListener<Number> {
         // grid.add(item, col, row, col-span, row-span);
         grid.add(canvas, 0, 3, menuButtons.length, 1);
 
+        PaintTab tab = new PaintTab(canvas);
+
+        // setting the listener for window resizing
+        stage.widthProperty().addListener((ChangeListener<? super Number>) tab);
+        stage.heightProperty().addListener((ChangeListener<? super Number>) tab);
+
         // title
         Label title = new Label("Buy me a Java at paypal.me/samuelgronwold");
         title.setId("title");
@@ -54,8 +57,6 @@ public class Main extends Application implements ChangeListener<Number> {
 
         // grid.add(item, col, row, col-span, row-span);
         grid.add(title, 0, 0, menuButtons.length, 1);
-
-        refreshCanvasDims(canvas);
 
         menuListener = new MenuActionListener(canvas);
 
@@ -111,6 +112,13 @@ public class Main extends Application implements ChangeListener<Number> {
         // finally listen for the key events
         scene.setOnKeyPressed(new MenuKeyListener(canvas));
 
+
+        // get the PaintTabs set up
+        PaintTab.add(tab);
+
+        PaintTab.getCurrentTab().resize();
+
+
         stage.show();
     }
 
@@ -128,40 +136,5 @@ public class Main extends Application implements ChangeListener<Number> {
             menuListener.saveAs();
             break;
         }
-    }
-
-
-    // called by the window resize callback
-    // it's also a standalone function such that we can call it whenever we want
-    public static void refreshCanvasDims(Canvas c) {
-        Scene s = c.getScene();
-
-        double availableCanvasWidth = s.getWidth();
-
-        // this is the height minus the y offset of the canvas; so this is the available height that we have for our canvas
-        double availableCanvasHeight = s.getHeight() - c.getLayoutY();
-
-        // if width or height is nonpositive then we don't need to worry about this
-        if (availableCanvasWidth <= 0 || availableCanvasHeight <= 0) return;
-
-        // otherwise we have a legit window to work with
-        // canvas width does NOT include scaling
-        double newScaleX = availableCanvasWidth/c.getWidth();
-        double newScaleY = availableCanvasHeight/c.getHeight();
-
-        double newScale = Math.min(newScaleX, newScaleY);
-        
-        c.setScaleX(newScale);
-        c.setScaleY(newScale);
-
-        // translate the canvas such that it appears aligned within the window
-        c.setTranslateX((newScale-1)/2 * c.getWidth());
-        c.setTranslateY((newScale-1)/2 * c.getHeight());
-    }
-
-
-    @Override
-    public void changed(ObservableValue<? extends Number> arg0, Number arg1, Number arg2) {
-        refreshCanvasDims(canvas);
     }
 }
