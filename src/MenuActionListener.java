@@ -10,8 +10,6 @@ public class MenuActionListener extends MenuListener implements EventHandler<Act
 
     @Override
     public void handle(ActionEvent e) {
-        super.clearAllDrawers();
-
         System.out.println("Button clicked");
         Button button;
         if (e.getSource() instanceof Button) {
@@ -24,43 +22,49 @@ public class MenuActionListener extends MenuListener implements EventHandler<Act
         switch(button.getId()) {
             case "open":
             super.open();
-            break;
+            return;
             case "saveas":
             super.saveAs();
-            break;
+            return;
             case "help":
             new HelpScreen();
-            break;
+            return;
+        }
+
+        super.clearAllDrawers();
+
+        switch(button.getId()) {
+            // now we're on to the drawers
             case "drawline":
             currDrawer = new LineDrawer(canvas, instructionLabel);
-            break;
+            return;
             case "drawtriangle":
             currDrawer = new PolygonDrawer(canvas, instructionLabel, 3);
-            break;
+            return;
             case "pencil":
             currDrawer = new Pencil(canvas, instructionLabel);
-            break;
+            return;
             case "drawsquare":
             currDrawer = new SquareDrawer(canvas, instructionLabel);
-            break;
+            return;
             case "drawellipse":
             currDrawer = new EllipseDrawer(canvas, instructionLabel);
-            break;
+            return;
             case "drawrectangle":
             currDrawer = new RectangleDrawer(canvas, instructionLabel);
-            break;
+            return;
             case "drawcircle":
             currDrawer = new CircleDrawer(canvas, instructionLabel);
-            break;
+            return;
             case "eyedropper":
             currDrawer = new Eyedropper(canvas, instructionLabel);
-            break;
+            return;
             case "newtab":
             PaintTab.add(new PaintTab());
-            break;
+            return;
             case "closetab":
             PaintTab.remove(PaintTab.getCurrentTab());
-            break;
+            return;
         }
     }
 }

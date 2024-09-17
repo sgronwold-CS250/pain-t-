@@ -32,6 +32,7 @@ public class Pencil extends Drawer {
             // ... then the mouse has been dragged and is clicked
             // so we put a dot on the canvas
             canvas.getGraphicsContext2D().strokeLine(oldX, oldY, e.getX(), e.getY());
+            PaintTab.getCurrentTab().UNSAVED_CHANGES = true;
 
             // update the former coordinates
             oldX = e.getX();

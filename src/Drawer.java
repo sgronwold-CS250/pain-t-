@@ -48,7 +48,7 @@ public abstract class Drawer implements EventHandler<MouseEvent>, CanvasInterfac
     // deregisters the event handler associated with this class
     public void stopCanvasListener() {
         for (EventType<MouseEvent> et: getEventTypes()) {
-            Main.UNSAVED_CHANGES = true;
+            PaintTab.getCurrentTab().UNSAVED_CHANGES = true;
             canvas.removeEventHandler(et, this);
         }
     }

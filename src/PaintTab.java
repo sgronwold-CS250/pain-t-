@@ -1,5 +1,5 @@
+import java.io.File;
 import java.util.ArrayList;
-import java.util.Arrays;
 
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -12,6 +12,11 @@ import javafx.scene.layout.GridPane;
 
 public class PaintTab extends Canvas implements ChangeListener<Number> {
     Canvas canvas;
+    
+    private static GridPane grid;
+    
+    boolean UNSAVED_CHANGES = false;
+    File currPath;
 
     static int currTabIndex = 0;
     static ArrayList<PaintTab> tabs = new ArrayList<PaintTab>();
@@ -45,13 +50,18 @@ public class PaintTab extends Canvas implements ChangeListener<Number> {
 
         for(int i = 0; i < tabs.size(); i++) {
             // make a button for each tab
-            Button b = new Button("Tab "+i);
+            Button b;
+            
+            if (currTabIndex == i) b = new Button("[Tab "+i+"]");
+            else b = new Button("Tab "+i);
+
             b.setId("tab"+i);
+            b.setOnAction(new TabSwitcher());
             buttons.add(b);
         }
 
         // step 2 re-add the buttons
-        GridPane grid = getGridPane();
+        grid = getGridPane();
 
         // remove the "tab" buttons
         // but we need to add the things to remove to a list
@@ -114,7 +124,23 @@ public class PaintTab extends Canvas implements ChangeListener<Number> {
     public static PaintTab getCurrentTab() {
         return tabs.get(currTabIndex);
     }
-    
+
+    public static void add(PaintTab pt) {
+        tabs.add(pt);
+
+        setCurrentTab(pt);
+    }
+
+    public static void setCurrentTab() {
+        // just refresh the current tab
+        // it'll eventually be set to the currTabIndex anyways
+        setCurrentTab(currTabIndex);
+    }
+
+    public static void setCurrentTab(int i) {
+        setCurrentTab(tabs.get(i));
+    }
+
     public static void setCurrentTab(PaintTab pt) {
         int i = tabs.indexOf(pt);
 
@@ -125,7 +151,7 @@ public class PaintTab extends Canvas implements ChangeListener<Number> {
 
         System.out.println(i);
 
-        GridPane grid = getGridPane();
+        grid = getGridPane();
 
         // remove the current canvas
         // but we need to add the things to remove to a list
@@ -148,19 +174,12 @@ public class PaintTab extends Canvas implements ChangeListener<Number> {
         // add a new canvas
         grid.add(getCurrentTab().getCanvas(), 0, CANVAS_ROW, Main.menuButtons.length, 1);
 
+        // change the action listeners over to the new canvas
+        Main.menuActionListener.setCanvas(getCurrentTab().getCanvas());
+        Main.menuKeyListener.setCanvas(getCurrentTab().getCanvas());
 
         // now the buttons need to be refreshed
         refreshButtons();
-    }
-
-    public static void setCurrentTab(int i) {
-        setCurrentTab(tabs.get(i));
-    }
-
-    public static void add(PaintTab pt) {
-        tabs.add(pt);
-
-        setCurrentTab(pt);
     }
 
     public static void remove() {
@@ -183,20 +202,19 @@ public class PaintTab extends Canvas implements ChangeListener<Number> {
             return;
         }
 
-        // set the current tab to something that isn't going to be removed
-        if (i == 0) {
-            System.out.println("seting to 1");
-            setCurrentTab(1);
-        }
-        else setCurrentTab(0);
+        // change the current tab to the previous one, if applicable
+        if (currTabIndex != 0) currTabIndex--;
 
-        // finally, remove the tab and refresh the buttons
+        // finally, remove the tab and refresh the current tab
         tabs.remove(pt);
 
-        refreshButtons();
+        setCurrentTab();
     }
 
     public static GridPane getGridPane() {
+        // if we already have a gridpane stored then we don't need to worry about this
+        if (grid != null) return grid;
+
         // this is probably a gridpane
         Parent parent = getCurrentTab().getCanvas().getParent();
 
@@ -207,5 +225,13 @@ public class PaintTab extends Canvas implements ChangeListener<Number> {
             System.err.println(parent);
             return null;
         }
+    }
+
+    public File getPath() {
+        return currPath;
+    }
+
+    public void setPath(File f) {
+        currPath = f;
     }
 }

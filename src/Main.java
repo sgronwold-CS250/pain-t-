@@ -13,8 +13,8 @@ public class Main extends Application {
     Scene scene;
     GridPane grid;
     Canvas canvas;
-    static boolean UNSAVED_CHANGES = false;
-    MenuListener menuListener;
+    static MenuActionListener menuActionListener;
+    static MenuKeyListener menuKeyListener;
 
     static Button menuButtons[] = new Button[13];
 
@@ -23,7 +23,6 @@ public class Main extends Application {
         launch(args);
     }
 
-    @SuppressWarnings("unchecked")
     @Override
     public void start(Stage stage) {
         // basic window things
@@ -56,67 +55,68 @@ public class Main extends Application {
         // grid.add(item, col, row, col-span, row-span);
         grid.add(title, 0, 0, menuButtons.length, 1);
 
-        menuListener = new MenuActionListener(canvas);
+        menuActionListener = new MenuActionListener(canvas);
 
         // initialize buttons
         menuButtons[0] = new Button("Load image...");
         menuButtons[0].setId("open");
-        menuButtons[0].setOnAction((EventHandler<ActionEvent>) menuListener);
+        menuButtons[0].setOnAction((EventHandler<ActionEvent>) menuActionListener);
 
         menuButtons[1] = new Button("Save As...");
         menuButtons[1].setId("saveas");
-        menuButtons[1].setOnAction((EventHandler<ActionEvent>) menuListener);
+        menuButtons[1].setOnAction((EventHandler<ActionEvent>) menuActionListener);
 
         menuButtons[2] = new Button("Help...");
         menuButtons[2].setId("help");
-        menuButtons[2].setOnAction((EventHandler<ActionEvent>) menuListener);
+        menuButtons[2].setOnAction((EventHandler<ActionEvent>) menuActionListener);
 
         menuButtons[3] = new Button("Draw line...");
         menuButtons[3].setId("drawline");
-        menuButtons[3].setOnAction((EventHandler<ActionEvent>) menuListener);
+        menuButtons[3].setOnAction((EventHandler<ActionEvent>) menuActionListener);
 
         menuButtons[4] = new Button("Draw triangle...");
         menuButtons[4].setId("drawtriangle");
-        menuButtons[4].setOnAction((EventHandler<ActionEvent>) menuListener);
+        menuButtons[4].setOnAction((EventHandler<ActionEvent>) menuActionListener);
 
         menuButtons[5] = new Button("Pencil");
         menuButtons[5].setId("pencil");
-        menuButtons[5].setOnAction((EventHandler<ActionEvent>) menuListener);
+        menuButtons[5].setOnAction((EventHandler<ActionEvent>) menuActionListener);
 
         menuButtons[6] = new Button("Draw square");
         menuButtons[6].setId("drawsquare");
-        menuButtons[6].setOnAction((EventHandler<ActionEvent>) menuListener);
+        menuButtons[6].setOnAction((EventHandler<ActionEvent>) menuActionListener);
 
         menuButtons[7] = new Button("Draw ellipse");
         menuButtons[7].setId("drawellipse");
-        menuButtons[7].setOnAction((EventHandler<ActionEvent>) menuListener);
+        menuButtons[7].setOnAction((EventHandler<ActionEvent>) menuActionListener);
 
         menuButtons[8] = new Button("Draw rectangle");
         menuButtons[8].setId("drawrectangle");
-        menuButtons[8].setOnAction((EventHandler<ActionEvent>) menuListener);
+        menuButtons[8].setOnAction((EventHandler<ActionEvent>) menuActionListener);
 
         menuButtons[9] = new Button("Draw circle");
         menuButtons[9].setId("drawcircle");
-        menuButtons[9].setOnAction((EventHandler<ActionEvent>) menuListener);
+        menuButtons[9].setOnAction((EventHandler<ActionEvent>) menuActionListener);
 
         menuButtons[10] = new Button("Eyedropper");
         menuButtons[10].setId("eyedropper");
-        menuButtons[10].setOnAction((EventHandler<ActionEvent>) menuListener);
+        menuButtons[10].setOnAction((EventHandler<ActionEvent>) menuActionListener);
 
         menuButtons[11] = new Button("New Tab");
         menuButtons[11].setId("newtab");
-        menuButtons[11].setOnAction((EventHandler<ActionEvent>) menuListener);
+        menuButtons[11].setOnAction((EventHandler<ActionEvent>) menuActionListener);
 
         menuButtons[12] = new Button("Close this tab");
         menuButtons[12].setId("closetab");
-        menuButtons[12].setOnAction((EventHandler<ActionEvent>) menuListener);
+        menuButtons[12].setOnAction((EventHandler<ActionEvent>) menuActionListener);
 
         for(int i = 0; i < menuButtons.length; i++) {
             grid.add(menuButtons[i], i, 2);
         }
 
         // finally listen for the key events
-        scene.setOnKeyPressed(new MenuKeyListener(canvas));
+        menuKeyListener = new MenuKeyListener(canvas);
+        scene.setOnKeyPressed(menuKeyListener);
 
 
         // get the PaintTabs set up
@@ -131,17 +131,21 @@ public class Main extends Application {
 
     @Override
     public void stop() {
-        if (!UNSAVED_CHANGES) return;
-        SaveDialog sd = new SaveDialog();
-        String response = sd.getResponse();
+        for(int i = 0; i < PaintTab.tabs.size(); i++) {
+            PaintTab tab = PaintTab.tabs.get(i);
 
-        switch(response) {
-            case "save":
-            menuListener.save();
-            break;
-            case "saveas":
-            menuListener.saveAs();
-            break;
+            if (!tab.UNSAVED_CHANGES) continue;
+            SaveDialog sd = new SaveDialog("Tab "+i+" not saved. Do you want to save it?");
+            String response = sd.getResponse();
+
+            switch(response) {
+                case "save":
+                menuActionListener.save();
+                break;
+                case "saveas":
+                menuActionListener.saveAs();
+                break;
+            }
         }
     }
 }

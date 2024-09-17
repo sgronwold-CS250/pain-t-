@@ -4,6 +4,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ButtonBar.ButtonData;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Dialog;
+import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
 import javafx.util.Callback;
 
@@ -12,11 +13,12 @@ public class SaveDialog implements Callback<ButtonType, String>, EventHandler<Ac
     Dialog<String> dialog;
     String response;
 
-    public SaveDialog() {
+    public SaveDialog(String msg) {
         // setting up a dialog box with:
         // color picker
         // button to close and finalise ur selection
         dialog = new Dialog<String>();
+
         GridPane grid = new GridPane();
 
         dialog.getDialogPane().setContent(grid);
@@ -36,10 +38,16 @@ public class SaveDialog implements Callback<ButtonType, String>, EventHandler<Ac
 
         for (int i = 0; i < buttons.length; i++) {
             buttons[i].setOnAction(this);
-            grid.add(buttons[i], i, 0);
+            grid.add(buttons[i], i, 1);
         }
 
+        grid.add(new Label(msg), 0, 0, buttons.length, 1);
+
         dialog.getDialogPane().getButtonTypes().add(new ButtonType("Enter", ButtonData.OK_DONE));
+    }
+
+    public SaveDialog() {
+        this("");
     }
 
     public String getResponse() {

@@ -11,9 +11,6 @@ public class MenuKeyListener extends MenuListener implements EventHandler<KeyEve
 
     @Override
     public void handle(KeyEvent e) {
-        // stop the current drawer's callback so it isn't callback chaos
-        super.clearAllDrawers();
-
         if (e.getCode() == KeyCode.S && e.isControlDown()) super.save();
     }
     

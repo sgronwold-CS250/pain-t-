@@ -19,7 +19,6 @@ import javafx.stage.FileChooser;
 public abstract class MenuListener {
     Canvas canvas;
     Labeled instructionLabel;
-    static File currPath;
 
 
     // drawing tools; this is the global "current" drawer. it would be chaos if
@@ -50,7 +49,7 @@ public abstract class MenuListener {
         File file = fc.showOpenDialog(scene.getWindow());
 
         // update the current filepath
-        currPath = file;
+        PaintTab.getCurrentTab().currPath = file;
 
         Image img = new Image("file://" + file.getAbsolutePath());
 
@@ -66,21 +65,21 @@ public abstract class MenuListener {
         Scene scene = getScene();
 
         FileChooser fc = new FileChooser();
-        currPath = fc.showSaveDialog(scene.getWindow());
+        PaintTab.getCurrentTab().currPath = fc.showSaveDialog(scene.getWindow());
 
         save();
     }
 
     public void save() {
         // save here if we haven't saved yet
-        if (currPath == null) {
+        if (PaintTab.getCurrentTab().currPath == null) {
             saveAs();
             return;
         }
 
 
         // getting the file extension
-        String fname = currPath.getName();
+        String fname = PaintTab.getCurrentTab().currPath.getName();
         int i = fname.lastIndexOf(".");
         System.out.println(i);
         String extension;
@@ -114,7 +113,7 @@ public abstract class MenuListener {
                 BufferedImage.TYPE_INT_RGB);
         RenderedImage renderedImage = SwingFXUtils.fromFXImage(writableImage, bi);
         try {
-            ImageIO.write(renderedImage, extension, currPath);
+            ImageIO.write(renderedImage, extension, PaintTab.getCurrentTab().currPath);
         } catch (IOException e1) {
             e1.printStackTrace();
         }
@@ -122,7 +121,7 @@ public abstract class MenuListener {
         // finally trigger the canvas resize thingy
         PaintTab.getCurrentTab().resize();
 
-        Main.UNSAVED_CHANGES = false;
+        PaintTab.getCurrentTab().UNSAVED_CHANGES = false;
     }
 
     private GraphicsContext getGraphicsContext() {
@@ -136,5 +135,9 @@ public abstract class MenuListener {
     public void clearAllDrawers() {
         // stop the current drawer's callback so it isn't callback chaos
         if(currDrawer != null) currDrawer.stopCanvasListener();
+    }
+
+    public void setCanvas(Canvas c) {
+        canvas = c;
     }
 }
