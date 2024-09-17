@@ -1,5 +1,3 @@
-import java.util.ArrayList;
-
 import javafx.application.Application;
 import javafx.beans.value.ChangeListener;
 import javafx.event.ActionEvent;
@@ -42,7 +40,7 @@ public class Main extends Application {
 
         canvas = new Canvas(500, 500);
         // grid.add(item, col, row, col-span, row-span);
-        grid.add(canvas, 0, 3, menuButtons.length, 1);
+        grid.add(canvas, 0, PaintTab.CANVAS_ROW, menuButtons.length, 1);
 
         PaintTab tab = new PaintTab(canvas);
 
@@ -118,6 +116,7 @@ public class Main extends Application {
 
         PaintTab.getCurrentTab().resize();
 
+        PaintTab.refreshButtons();
 
         stage.show();
     }
