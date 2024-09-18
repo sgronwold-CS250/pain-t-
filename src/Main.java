@@ -37,6 +37,10 @@ public class Main extends Application {
         stage.setScene(scene);
 
         canvas = new Canvas(500, 500);
+
+        // turn off anti aliasing, it hurts live draw
+        canvas.getGraphicsContext2D().setImageSmoothing(false);
+
         // grid.add(item, col, row, col-span, row-span);
         grid.add(canvas, 0, PaintTab.CANVAS_ROW, menuButtons.length, 1);
 

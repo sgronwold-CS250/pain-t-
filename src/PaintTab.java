@@ -44,6 +44,9 @@ public class PaintTab extends Canvas implements ChangeListener<Number> {
     }
 
     public PaintTab(Canvas c) {
+        // turn off anti aliasing
+        c.getGraphicsContext2D().setImageSmoothing(false);
+
         setCanvas(c);
 
         add(this);

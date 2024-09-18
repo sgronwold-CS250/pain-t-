@@ -40,12 +40,6 @@ public class EllipseDrawer extends Drawer {
             left[0] = e.getX();
             left[1] = e.getY();
 
-            // idiot proofing: is the left edge actually to the left of the top?
-            if (left[0] > top[0]) left[0] -= 2*Math.abs(left[0]-top[0]);
-
-            // idiot proofing: is the top edge actually above the left edge?
-            if (top[1] > left[1]) top[1] -= 2*Math.abs(top[1]-left[1]);
-
             predraw();
 
             draw();
@@ -65,6 +59,19 @@ public class EllipseDrawer extends Drawer {
 
     @Override
     public void draw() {
-        canvas.getGraphicsContext2D().strokeOval(left[0], top[1], 2 * Math.abs(top[0] - left[0]), 2 * Math.abs(left[1] - top[1]));
+        // make copies of our points
+        // so we don't clobber the original
+        double leftX = left[0];
+        double leftY = left[1];
+        double topX = top[0];
+        double topY = top[1];
+
+        // idiot proofing: is the left edge actually to the left of the top?
+        if (leftX > topX) leftX -= 2*Math.abs(leftX-topX);
+
+        // idiot proofing: is the top edge actually above the left edge?
+        if (topY > leftY) topY -= 2*Math.abs(topY-leftY);
+
+        canvas.getGraphicsContext2D().strokeOval(leftX, topY, 2 * Math.abs(topX - leftX), 2 * Math.abs(leftY - topY));
     }
 }
