@@ -60,7 +60,7 @@ public class MenuActionListener extends MenuListener implements EventHandler<Act
             currDrawer = new Eyedropper(canvas, instructionLabel);
             return;
             case "newtab":
-            PaintTab.add(new PaintTab());
+            new PaintTab();
             return;
             case "closetab":
             PaintTab.remove(PaintTab.getCurrentTab());

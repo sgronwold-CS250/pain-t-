@@ -41,12 +41,6 @@ public class Main extends Application {
         // grid.add(item, col, row, col-span, row-span);
         grid.add(canvas, 0, PaintTab.CANVAS_ROW, menuButtons.length, 1);
 
-        PaintTab tab = new PaintTab(canvas);
-
-        // setting the listener for window resizing
-        stage.widthProperty().addListener((ChangeListener<? super Number>) tab);
-        stage.heightProperty().addListener((ChangeListener<? super Number>) tab);
-
         // title
         Label title = new Label("Buy me a Java at paypal.me/samuelgronwold");
         title.setId("title");
@@ -120,8 +114,8 @@ public class Main extends Application {
 
 
         // get the PaintTabs set up
-        PaintTab.add(tab);
-
+        new PaintTab(canvas);
+        
         PaintTab.getCurrentTab().resize();
 
         PaintTab.refreshButtons();

@@ -1,5 +1,6 @@
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Stack;
 
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -9,9 +10,10 @@ import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.control.Button;
 import javafx.scene.layout.GridPane;
+import javafx.stage.Stage;
 
 public class PaintTab extends Canvas implements ChangeListener<Number> {
-    Canvas canvas;
+    Stack<Canvas> canvasStack = new Stack<Canvas>();
     
     private static GridPane grid;
     
@@ -36,11 +38,19 @@ public class PaintTab extends Canvas implements ChangeListener<Number> {
     }
 
     public PaintTab(Canvas c) {
-        canvas = c;
+        canvasStack.push(c);
+
+        add(this);
+
+        Stage stage = (Stage) getGridPane().getScene().getWindow();
+
+        // setting the listener for window resizing
+        stage.widthProperty().addListener((ChangeListener<? super Number>) this);
+        stage.heightProperty().addListener((ChangeListener<? super Number>) this);
     }
 
     public Canvas getCanvas() {
-        return canvas;
+        return canvasStack.peek();
     }
 
     public static void refreshButtons() {
@@ -91,29 +101,29 @@ public class PaintTab extends Canvas implements ChangeListener<Number> {
     // called by the window resize callback
     // it's also a standalone function such that we can call it whenever we want
     public void resize() {
-        Scene s = canvas.getScene();
+        Scene s = getCanvas().getScene();
 
         double availableCanvasWidth = s.getWidth();
 
         // this is the height minus the y offset of the canvas; so this is the available height that we have for our canvas
-        double availableCanvasHeight = s.getHeight() - canvas.getLayoutY();
+        double availableCanvasHeight = s.getHeight() - getCanvas().getLayoutY();
 
         // if width or height is nonpositive then we don't need to worry about this
         if (availableCanvasWidth <= 0 || availableCanvasHeight <= 0) return;
 
         // otherwise we have a legit window to work with
         // canvas width does NOT include scaling
-        double newScaleX = availableCanvasWidth/canvas.getWidth();
-        double newScaleY = availableCanvasHeight/canvas.getHeight();
+        double newScaleX = availableCanvasWidth/getCanvas().getWidth();
+        double newScaleY = availableCanvasHeight/getCanvas().getHeight();
 
         double newScale = Math.min(newScaleX, newScaleY);
         
-        canvas.setScaleX(newScale);
-        canvas.setScaleY(newScale);
+        getCanvas().setScaleX(newScale);
+        getCanvas().setScaleY(newScale);
 
         // translate the canvas such that it appears aligned within the window
-        canvas.setTranslateX((newScale-1)/2 * canvas.getWidth());
-        canvas.setTranslateY((newScale-1)/2 * canvas.getHeight());
+        getCanvas().setTranslateX((newScale-1)/2 * getCanvas().getWidth());
+        getCanvas().setTranslateY((newScale-1)/2 * getCanvas().getHeight());
     }
 
     @Override
@@ -125,7 +135,7 @@ public class PaintTab extends Canvas implements ChangeListener<Number> {
         return tabs.get(currTabIndex);
     }
 
-    public static void add(PaintTab pt) {
+    private static void add(PaintTab pt) {
         tabs.add(pt);
 
         setCurrentTab(pt);
