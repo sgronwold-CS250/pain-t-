@@ -1,5 +1,4 @@
 import javafx.application.Application;
-import javafx.beans.value.ChangeListener;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Scene;
@@ -115,7 +114,7 @@ public class Main extends Application {
 
         // get the PaintTabs set up
         new PaintTab(canvas);
-        
+
         PaintTab.getCurrentTab().resize();
 
         PaintTab.refreshButtons();

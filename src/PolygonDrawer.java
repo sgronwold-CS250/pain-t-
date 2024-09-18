@@ -3,6 +3,8 @@ import javafx.scene.canvas.Canvas;
 import javafx.scene.control.Labeled;
 import javafx.scene.input.MouseEvent;
 
+// TODO live draw
+
 public class PolygonDrawer extends Drawer {
 
     int numSides;
@@ -36,10 +38,9 @@ public class PolygonDrawer extends Drawer {
         canvas.getGraphicsContext2D().setLineWidth(thickness);
         canvas.getGraphicsContext2D().setStroke(color);
         if (numPointsCaptured >= numSides) {
-            // draw the triangle
-            for (int i = 0; i < numSides; i++) {
-                canvas.getGraphicsContext2D().strokeLine(xCoords[i], yCoords[i], xCoords[(i+1)%xCoords.length], yCoords[(i+1)%yCoords.length]);
-            }
+            // draw the polygon
+
+            draw();
 
             // deregister ourselves
             super.stopCanvasListener();
@@ -52,6 +53,13 @@ public class PolygonDrawer extends Drawer {
     @Override
     public EventType<MouseEvent>[] getEventTypes() {
         return new EventType[] {MouseEvent.MOUSE_CLICKED};
+    }
+
+    @Override
+    public void draw() {
+        for (int i = 0; i < numSides; i++) {
+            canvas.getGraphicsContext2D().strokeLine(xCoords[i], yCoords[i], xCoords[(i+1)%xCoords.length], yCoords[(i+1)%yCoords.length]);
+        }
     }
     
 }

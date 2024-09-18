@@ -21,32 +21,41 @@ public class SquareDrawer extends Drawer {
     @Override
     public void handle(MouseEvent e) {
         if (!gotCenter) {
-            center[0] = e.getX();
-            center[1] = e.getY();
+            if (e.getEventType() == MouseEvent.MOUSE_CLICKED) {
+                center[0] = e.getX();
+                center[1] = e.getY();
 
-            gotCenter = true;
-            instructionLabel.setText("Click where you want the corner to be");
+                gotCenter = true;
+                instructionLabel.setText("Click where you want the corner to be");
+
+                predraw(true);
+                draw();
+            }
         } else {
             // get the corner and deregister this listener
             corner[0] = e.getX();
             corner[1] = e.getY();
 
+            predraw();
             draw();
 
-            // deregister ourselves
-            super.stopCanvasListener();
+            if (e.getEventType() == MouseEvent.MOUSE_CLICKED) {
+                // deregister ourselves
+                super.stopCanvasListener();
 
-            instructionLabel.setText("Square drawn!");
+                instructionLabel.setText("Square drawn!");
+            }
         }
     }
 
     @SuppressWarnings("unchecked")
     @Override
     public EventType<MouseEvent>[] getEventTypes() {
-        return new EventType[] {MouseEvent.MOUSE_CLICKED};
+        return new EventType[] {MouseEvent.MOUSE_CLICKED, MouseEvent.MOUSE_MOVED};
     }
 
-    private void draw() {
+    @Override
+    public void draw() {
         // draw a square given the center and corner
         // suppose the center is the origin
         // then the points are:

@@ -19,28 +19,42 @@ public class LineDrawer extends Drawer {
         System.out.println("made a click to form a line");
 
         if(!gotStartPoint) {
-            // then we need to make the starting point of the line
-            startX = e.getX();
-            startY = e.getY();
-            gotStartPoint = true;
-            instructionLabel.setText("Click where you want the line to end");
+            if (e.getEventType() == MouseEvent.MOUSE_CLICKED) {
+                // then we need to make the starting point of the line
+                startX = endX = e.getX();
+                startY = endY = e.getY();
+                gotStartPoint = true;
+                instructionLabel.setText("Click where you want the line to end");
+
+                predraw(true);
+                draw();
+            }
         } else {
             // then we need to make the ending point of the line
             endX = e.getX();
             endY = e.getY();
 
-            canvas.getGraphicsContext2D().strokeLine(startX, startY, endX, endY);
+            
+            predraw();
+            draw();
 
-            // deregister ourselves
-            super.stopCanvasListener();
+            if (e.getEventType() == MouseEvent.MOUSE_CLICKED) {
+                // deregister ourselves
+                super.stopCanvasListener();
 
-            instructionLabel.setText("Line drawn!");
+                instructionLabel.setText("Line drawn!");
+            }
         }
     }
 
     @SuppressWarnings("unchecked")
     @Override
     public EventType<MouseEvent>[] getEventTypes() {
-        return new EventType[] {MouseEvent.MOUSE_CLICKED};
+        return new EventType[] {MouseEvent.MOUSE_CLICKED, MouseEvent.MOUSE_MOVED};
+    }
+
+    @Override
+    public void draw() {
+        canvas.getGraphicsContext2D().strokeLine(startX, startY, endX, endY);
     }   
 }

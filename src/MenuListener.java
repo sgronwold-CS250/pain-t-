@@ -2,6 +2,7 @@ import java.awt.image.BufferedImage;
 import java.awt.image.RenderedImage;
 import java.io.File;
 import java.io.IOException;
+import java.util.Stack;
 
 import javax.imageio.ImageIO;
 
@@ -59,6 +60,33 @@ public abstract class MenuListener {
         gc.drawImage(img, 0, 0);
 
         PaintTab.getCurrentTab().resize();
+    }
+
+    public void undo() {
+        undoRedoController(PaintTab.getCurrentTab().getUndoStack(), PaintTab.getCurrentTab().getRedoStack());
+    }
+
+    public void redo() {
+        undoRedoController(PaintTab.getCurrentTab().getRedoStack(), PaintTab.getCurrentTab().getUndoStack());
+    }
+
+    private void undoRedoController(Stack<Canvas> stackToPopFrom, Stack<Canvas> stackToPushTo) {
+        System.out.println("Trying to undo/redo");
+
+        // we can't undo if there's no action to undo
+        if (stackToPopFrom.isEmpty()) return;
+
+        System.out.println("and we succeeded");
+
+        // if there's another canvas then we pop the canvas,
+        // switch it over to the redo stack
+        Canvas popped = stackToPopFrom.pop();
+        stackToPushTo.push(PaintTab.getCurrentTab().getCanvas());
+
+        // refresh the tab
+        PaintTab.getCurrentTab().setCanvas(popped);
+        PaintTab.refreshCanvas();
+        setCanvas(popped);
     }
 
     public void saveAs() {
@@ -135,6 +163,10 @@ public abstract class MenuListener {
     public void clearAllDrawers() {
         // stop the current drawer's callback so it isn't callback chaos
         if(currDrawer != null) currDrawer.stopCanvasListener();
+    }
+
+    public void setCanvas() {
+        setCanvas(PaintTab.getCurrentTab().getCanvas());
     }
 
     public void setCanvas(Canvas c) {

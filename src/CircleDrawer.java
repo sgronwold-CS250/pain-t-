@@ -21,27 +21,39 @@ public class CircleDrawer extends Drawer {
     @Override
     public void handle(MouseEvent e) {
         if (!gotCenter) {
-            center[0] = e.getX();
-            center[1] = e.getY();
+            if (e.getEventType() == MouseEvent.MOUSE_CLICKED) {
+                center[0] = e.getX();
+                center[1] = e.getY();
 
-            gotCenter = true;
+                gotCenter = true;
 
-            instructionLabel.setText("Click on a point on the circle");
+                instructionLabel.setText("Click on a point on the circle");
+
+                predraw(true);
+                draw();
+            }
         } else {
             radius = Math.sqrt( Math.pow(center[0] - e.getX(), 2) + Math.pow(center[1] - e.getY(), 2) );
 
-            canvas.getGraphicsContext2D().strokeOval(center[0] - radius, center[1] - radius, 2*radius, 2*radius);
+            predraw();
+            draw();
 
-            super.stopCanvasListener();
-
-            instructionLabel.setText("Circle drawn!");
+            if (e.getEventType() == MouseEvent.MOUSE_CLICKED) {
+                super.stopCanvasListener();
+                instructionLabel.setText("Circle drawn!");
+            }
         }
     }
 
     @SuppressWarnings("unchecked")
     @Override
     public EventType<MouseEvent>[] getEventTypes() {
-        return new EventType[] {MouseEvent.MOUSE_CLICKED};
+        return new EventType[] {MouseEvent.MOUSE_CLICKED, MouseEvent.MOUSE_MOVED};
+    }
+
+    @Override
+    public void draw() {
+        canvas.getGraphicsContext2D().strokeOval(center[0] - radius, center[1] - radius, 2*radius, 2*radius);
     }
 
 }

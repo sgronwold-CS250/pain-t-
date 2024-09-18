@@ -8,6 +8,9 @@ public class Pencil extends Drawer {
     Double oldX = null;
     Double oldY = null;
 
+    Double newX = null;
+    Double newY = null;
+
     public Pencil(Canvas c, Labeled ilabel) {
         super(c, ilabel);
 
@@ -31,7 +34,10 @@ public class Pencil extends Drawer {
 
             // ... then the mouse has been dragged and is clicked
             // so we put a dot on the canvas
-            canvas.getGraphicsContext2D().strokeLine(oldX, oldY, e.getX(), e.getY());
+            newX = e.getX();
+            newY = e.getY();
+
+            draw();
             PaintTab.getCurrentTab().UNSAVED_CHANGES = true;
 
             // update the former coordinates
@@ -48,5 +54,10 @@ public class Pencil extends Drawer {
     @Override
     public EventType<MouseEvent>[] getEventTypes() {
         return new EventType[] {MouseEvent.MOUSE_DRAGGED, MouseEvent.MOUSE_CLICKED};
+    }
+
+    @Override
+    public void draw() {
+        canvas.getGraphicsContext2D().strokeLine(oldX, oldY, newX, newY);
     }
 }

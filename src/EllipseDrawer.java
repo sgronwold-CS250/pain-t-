@@ -21,14 +21,21 @@ public class EllipseDrawer extends Drawer {
     @Override
     public void handle(MouseEvent e) {
         if (!gotTop) {
-            // get the upper edge
-            top[0] = e.getX();
-            top[1] = e.getY();
+            if (e.getEventType() == MouseEvent.MOUSE_CLICKED) {
+                // get the upper edge
+                top[0] = e.getX();
+                top[1] = e.getY();
 
-            instructionLabel.setText("Click the leftmost part of the ellipse");
+                instructionLabel.setText("Click the leftmost part of the ellipse");
 
-            gotTop = true;
+                gotTop = true;
+
+                predraw(true);
+                draw();
+            }
         } else {
+            System.out.println("drawing");
+            
             // get the left edge
             left[0] = e.getX();
             left[1] = e.getY();
@@ -39,17 +46,25 @@ public class EllipseDrawer extends Drawer {
             // idiot proofing: is the top edge actually above the left edge?
             if (top[1] > left[1]) top[1] -= 2*Math.abs(top[1]-left[1]);
 
-            canvas.getGraphicsContext2D().strokeOval(left[0], top[1], 2 * Math.abs(top[0] - left[0]), 2 * Math.abs(left[1] - top[1]));
+            predraw();
 
-            instructionLabel.setText("Ellipse drawn!");
+            draw();
 
-            super.stopCanvasListener();
+            if (e.getEventType() == MouseEvent.MOUSE_CLICKED) {
+                super.stopCanvasListener();
+                instructionLabel.setText("Ellipse drawn!");
+            }
         }
     }
 
     @SuppressWarnings("unchecked")
     @Override
     public EventType<MouseEvent>[] getEventTypes() {
-        return new EventType[] {MouseEvent.MOUSE_CLICKED};
+        return new EventType[] {MouseEvent.MOUSE_CLICKED, MouseEvent.MOUSE_MOVED};
+    }
+
+    @Override
+    public void draw() {
+        canvas.getGraphicsContext2D().strokeOval(left[0], top[1], 2 * Math.abs(top[0] - left[0]), 2 * Math.abs(left[1] - top[1]));
     }
 }

@@ -26,22 +26,33 @@ public class RectangleDrawer extends Drawer {
             corner1Drawn = true;
 
             instructionLabel.setText("Click on the opposite corner of the rectangle");
+
+            predraw(true);
+            draw();
         } else {
             corner2[0] = e.getX();
             corner2[1] = e.getY();
 
-            instructionLabel.setText("Rectangle drawn!");
-            super.stopCanvasListener();
+            predraw();
+            draw();
 
-            // x, y, width, height
-            canvas.getGraphicsContext2D().strokeRect(Math.min(corner1[0], corner2[0]), Math.min(corner2[0], corner2[1]), Math.abs(corner1[0] - corner2[0]), Math.abs(corner1[1] - corner2[1]));
+            if (e.getEventType() == MouseEvent.MOUSE_CLICKED) {
+                instructionLabel.setText("Rectangle drawn!");
+                super.stopCanvasListener();
+            }
         }
     }
 
     @SuppressWarnings("unchecked")
     @Override
     public EventType<MouseEvent>[] getEventTypes() {
-        return new EventType[] {MouseEvent.MOUSE_CLICKED};
+        return new EventType[] {MouseEvent.MOUSE_CLICKED, MouseEvent.MOUSE_MOVED};
+    }
+
+    @Override
+    public void draw() {
+        // x, y, width, height
+        canvas.getGraphicsContext2D().strokeRect(Math.min(corner1[0], corner2[0]), Math.min(corner2[0], corner2[1]), Math.abs(corner1[0] - corner2[0]), Math.abs(corner1[1] - corner2[1]));
     }
 
 }

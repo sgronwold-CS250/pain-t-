@@ -7,13 +7,19 @@ import javafx.beans.value.ObservableValue;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.SnapshotParameters;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.control.Button;
+import javafx.scene.image.WritableImage;
 import javafx.scene.layout.GridPane;
+import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
 public class PaintTab extends Canvas implements ChangeListener<Number> {
-    Stack<Canvas> canvasStack = new Stack<Canvas>();
+    private Stack<Canvas> undoStack = new Stack<Canvas>();
+    private Stack<Canvas> redoStack = new Stack<Canvas>();
+
+    private Canvas canvas;
     
     private static GridPane grid;
     
@@ -38,7 +44,7 @@ public class PaintTab extends Canvas implements ChangeListener<Number> {
     }
 
     public PaintTab(Canvas c) {
-        canvasStack.push(c);
+        setCanvas(c);
 
         add(this);
 
@@ -50,7 +56,7 @@ public class PaintTab extends Canvas implements ChangeListener<Number> {
     }
 
     public Canvas getCanvas() {
-        return canvasStack.peek();
+        return canvas;
     }
 
     public static void refreshButtons() {
@@ -141,10 +147,11 @@ public class PaintTab extends Canvas implements ChangeListener<Number> {
         setCurrentTab(pt);
     }
 
-    public static void setCurrentTab() {
+    public static void refreshCanvas() {
         // just refresh the current tab
         // it'll eventually be set to the currTabIndex anyways
         setCurrentTab(currTabIndex);
+        getCurrentTab().resize();
     }
 
     public static void setCurrentTab(int i) {
@@ -218,7 +225,7 @@ public class PaintTab extends Canvas implements ChangeListener<Number> {
         // finally, remove the tab and refresh the current tab
         tabs.remove(pt);
 
-        setCurrentTab();
+        refreshCanvas();
     }
 
     public static GridPane getGridPane() {
@@ -243,5 +250,52 @@ public class PaintTab extends Canvas implements ChangeListener<Number> {
 
     public void setPath(File f) {
         currPath = f;
+    }
+
+    public Stack<Canvas> getUndoStack() {
+        return undoStack;
+    }
+
+    public Stack<Canvas> getRedoStack() {
+        return redoStack;
+    }
+
+    public void setCanvas(Canvas c) {
+        canvas = c;
+    }
+
+    // this backs up the current canvas
+    // should be called every time the canvas changes
+    public void backup() {
+        pushCanvas(getCanvas());
+    }
+
+    public void pushCanvas(Canvas c) {
+        Canvas newCanvas = new Canvas(c.getWidth(), c.getHeight());
+
+        // turn off anti aliasing for all canvas items
+        c.getGraphicsContext2D().setImageSmoothing(false);
+        newCanvas.getGraphicsContext2D().setImageSmoothing(false);
+
+        // need to scale the canvas at 100% to snapshot correctly
+        double oldScaleX, oldScaleY;
+        oldScaleX = c.getScaleX();
+        oldScaleY = c.getScaleY();
+
+        c.setScaleX(1);
+        c.setScaleY(1);
+
+        SnapshotParameters params = new SnapshotParameters();
+        params.setFill(Color.TRANSPARENT);         
+        WritableImage image = c.snapshot(params, null);
+        newCanvas.getGraphicsContext2D().drawImage(image, 0, 0);
+
+        // the new canvas is a clone of the old canvas
+        // so we'll push the new canvas to the stack
+        getUndoStack().push(newCanvas);
+
+        // now we need to change the canvas scale back to what it was before
+        c.setScaleX(oldScaleX);
+        c.setScaleY(oldScaleY);
     }
 }
