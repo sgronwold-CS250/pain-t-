@@ -71,6 +71,9 @@ public class MenuActionListener extends MenuListener implements EventHandler<Act
             case "drawhexagon":
             currDrawer = new PolygonDrawer(canvas, instructionLabel, 6);
             return;
+            case "drawtext":
+            currDrawer = new TextDrawer(canvas, instructionLabel);
+            return;
         }
     }
 }

@@ -81,10 +81,10 @@ public abstract class Drawer implements EventHandler<MouseEvent>, CanvasInterfac
     }
 
     public void predraw(boolean skipUndo) {
-        PaintTab currTab = PaintTab.getCurrentTab();
-
         // we need to pause the listeners
         stopCanvasListener();
+
+        PaintTab currTab = PaintTab.getCurrentTab();
 
         // we need to undo what has already been drawn
         // unless, of course, this is the first livedraw
