@@ -3,22 +3,21 @@ import javafx.scene.canvas.Canvas;
 import javafx.scene.control.Labeled;
 import javafx.scene.input.MouseEvent;
 
-// TODO live draw
-
 public class PolygonDrawer extends Drawer {
 
     int numSides;
-    double[] xCoords;
-    double[] yCoords;
+
+    // need this for last side of polygon
+    double[] initialPos = new double[2];
+
+    double[] oldPos = new double[2];
+    double[] newPos = new double[2];
 
     int numPointsCaptured = 0;
 
     public PolygonDrawer(Canvas c, Labeled ilabel, int nsides) {
         super(c, ilabel);
         numSides = nsides;
-
-        xCoords = new double[numSides];
-        yCoords = new double[numSides];
 
         instructionLabel.setText("Click where you want Point #1 to be");
 
@@ -27,39 +26,75 @@ public class PolygonDrawer extends Drawer {
 
     @Override
     public void handle(MouseEvent e) {
-        // write the x coords and ycoords of current location
-        xCoords[numPointsCaptured] = e.getX();
-        yCoords[numPointsCaptured] = e.getY();
+        // do we need to get the next point?
+        if (e.getEventType() == MouseEvent.MOUSE_CLICKED) {
+            if (numPointsCaptured == 0) {                
+                // first time only this gets run
+                oldPos[0]     = e.getX();
+                initialPos[0] = e.getX();
 
-        instructionLabel.setText("Click where you want Point #"+(numPointsCaptured+2)+" to be");
+                oldPos[1]     = oldPos[0];
+                initialPos[1] = oldPos[1];
 
-        numPointsCaptured++;
 
-        canvas.getGraphicsContext2D().setLineWidth(thickness);
-        canvas.getGraphicsContext2D().setStroke(color);
-        if (numPointsCaptured >= numSides) {
-            // draw the polygon
+                newPos[0] = oldPos[0];
+                newPos[1] = oldPos[1];
 
-            draw();
+                predraw(true);
+                draw();
+            } else {
+                // otherwise we actually draw something
+                newPos[0] = e.getX();
+                newPos[1] = e.getY();
 
-            // deregister ourselves
-            super.stopCanvasListener();
+                predraw(true);
+                draw();
 
-            instructionLabel.setText(numSides+"-sided polygon drawn!");
+                oldPos[0] = e.getX();
+                oldPos[1] = e.getY();
+            }
+
+            numPointsCaptured++;
+            System.out.println(numPointsCaptured);
+
+            // if we made all the corners, just autocomplete it
+            if (numPointsCaptured == numSides) {
+                predraw();
+                draw();
+
+                oldPos = initialPos;
+
+                draw();
+
+                super.stopCanvasListener();
+
+                System.out.println("done");
+
+                return;
+            }
         }
+
+        if (e.getEventType() == MouseEvent.MOUSE_MOVED && numPointsCaptured != 0) {
+            // just draw, don't do anything else
+            newPos[0] = e.getX();
+            newPos[1] = e.getY();
+
+            predraw();
+            draw();
+        }
+
+
+        instructionLabel.setText("Click where you want Point #"+(numPointsCaptured)+" to be");
     }
 
     @SuppressWarnings("unchecked")
     @Override
     public EventType<MouseEvent>[] getEventTypes() {
-        return new EventType[] {MouseEvent.MOUSE_CLICKED};
+        return new EventType[] {MouseEvent.MOUSE_CLICKED, MouseEvent.MOUSE_MOVED};
     }
 
     @Override
     public void draw() {
-        for (int i = 0; i < numSides; i++) {
-            canvas.getGraphicsContext2D().strokeLine(xCoords[i], yCoords[i], xCoords[(i+1)%xCoords.length], yCoords[(i+1)%yCoords.length]);
-        }
+        canvas.getGraphicsContext2D().strokeLine(oldPos[0], oldPos[1], newPos[0], newPos[1]);
     }
-    
 }

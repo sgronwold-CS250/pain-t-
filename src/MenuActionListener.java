@@ -45,7 +45,7 @@ public class MenuActionListener extends MenuListener implements EventHandler<Act
             currDrawer = new Pencil(canvas, instructionLabel);
             return;
             case "drawsquare":
-            currDrawer = new SquareDrawer(canvas, instructionLabel);
+            currDrawer = new RegularPolygonDrawer(canvas, instructionLabel, 5);
             return;
             case "drawellipse":
             currDrawer = new EllipseDrawer(canvas, instructionLabel);
@@ -64,6 +64,12 @@ public class MenuActionListener extends MenuListener implements EventHandler<Act
             return;
             case "closetab":
             PaintTab.remove(PaintTab.getCurrentTab());
+            return;
+            case "drawpentagon":
+            currDrawer = new PolygonDrawer(canvas, instructionLabel, 5);
+            return;
+            case "drawhexagon":
+            currDrawer = new PolygonDrawer(canvas, instructionLabel, 6);
             return;
         }
     }

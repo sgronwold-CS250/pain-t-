@@ -10,7 +10,7 @@ import javafx.scene.paint.Color;
 
 
 public abstract class Drawer implements EventHandler<MouseEvent>, CanvasInterface {
-    Canvas canvas;
+    protected Canvas canvas;
     Color color;
     double thickness;
     Labeled instructionLabel;
@@ -79,17 +79,24 @@ public abstract class Drawer implements EventHandler<MouseEvent>, CanvasInterfac
         predraw(false);
     }
 
-    public void predraw(boolean firstTime) {
+    public void predraw(boolean skipUndo) {
         PaintTab currTab = PaintTab.getCurrentTab();
+
+        // make the canvas not anti-alias
+        currTab.getCanvas().getGraphicsContext2D().setImageSmoothing(false);
 
         // we need to pause the listeners
         stopCanvasListener();
 
         // we need to undo what has already been drawn
         // unless, of course, this is the first livedraw
-        if (!firstTime) undoBeforeDrawing();
+        if (!skipUndo) undoBeforeDrawing();
+
         // then we need to back up the canvas without the drawing on it
         currTab.backup();
+
+        // make new canvas not anti-alias
+        currTab.getCanvas().getGraphicsContext2D().setImageSmoothing(false);
 
         // ok now we can start listening again
         startCanvasListener();

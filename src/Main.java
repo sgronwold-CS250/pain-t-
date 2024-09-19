@@ -15,7 +15,7 @@ public class Main extends Application {
     static MenuActionListener menuActionListener;
     static MenuKeyListener menuKeyListener;
 
-    static Button menuButtons[] = new Button[13];
+    static Button menuButtons[] = new Button[14];
 
     public static void main(String[] args) {
         System.out.println("Launching Pain(t)");
@@ -106,6 +106,14 @@ public class Main extends Application {
         menuButtons[12] = new Button("Close this tab");
         menuButtons[12].setId("closetab");
         menuButtons[12].setOnAction((EventHandler<ActionEvent>) menuActionListener);
+
+        menuButtons[13] = new Button("Draw pentagon");
+        menuButtons[13].setId("drawpentagon");
+        menuButtons[13].setOnAction((EventHandler<ActionEvent>) menuActionListener);
+
+        menuButtons[13] = new Button("Draw hexagon");
+        menuButtons[13].setId("drawhexagon");
+        menuButtons[13].setOnAction((EventHandler<ActionEvent>) menuActionListener);
 
         for(int i = 0; i < menuButtons.length; i++) {
             grid.add(menuButtons[i], i, 2);

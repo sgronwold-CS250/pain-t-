@@ -169,8 +169,6 @@ public class PaintTab extends Canvas implements ChangeListener<Number> {
             return;
         }
 
-        System.out.println(i);
-
         grid = getGridPane();
 
         // remove the current canvas

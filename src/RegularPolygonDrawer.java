@@ -3,17 +3,20 @@ import javafx.scene.canvas.Canvas;
 import javafx.scene.control.Labeled;
 import javafx.scene.input.MouseEvent;
 
-public class SquareDrawer extends Drawer {
+public class RegularPolygonDrawer extends Drawer {
+    int numSides;
 
     double[] center = new double[2];
     double[] corner = new double[2];
 
     boolean gotCenter = false;
 
-    public SquareDrawer(Canvas c, Labeled ilabel) {
+    public RegularPolygonDrawer(Canvas c, Labeled ilabel, int nsides) {
         super(c, ilabel);
 
         instructionLabel.setText("Click where you want the center to be");
+
+        numSides = nsides;
 
         super.startCanvasListener();
     }
@@ -56,33 +59,27 @@ public class SquareDrawer extends Drawer {
 
     @Override
     public void draw() {
-        // draw a square given the center and corner
+        // draw a regular polygon given the center and corner
         // suppose the center is the origin
-        // then the points are:
-        // (cx, cy), which is our first corner
-        // (cy, -cx)
-        // (-cx, -cy)
-        // (-cy, cx)
 
-        // normalize the corner w.r.t. the origin
-        for (int i = 0; i < corner.length; i++) {
-            corner[i] -= center[i];
+        // here is our list of points
+        double[][] theCorners = new double[2][numSides];
+
+        // distance of any given corner from the center of the regular polygon
+        double radius = Math.sqrt( Math.pow(corner[0] - center[0], 2) + Math.pow(corner[1] - center[1], 2) );
+
+        for(int i = 0; i < numSides; i++) {
+            double theta = 2 * Math.PI * i / numSides;
+
+            // x coord
+            theCorners[0][i] = radius * Math.cos(theta) + center[0];
+
+            // y coord
+            theCorners[1][i] = radius * Math.sin(theta) + center[1];
         }
 
-        // here is our list of points centered around the given center
-        double[][] theCorners = new double[][] {
-            {corner[0], corner[1], -corner[0], -corner[1]}, // x coords
-            {corner[1], -corner[0], -corner[1], corner[0]}  // y coords
-        };
-
-        // finally center the corners around the proper center
-        for (int i = 0; i < theCorners.length; i++) {
-            for (int j = 0; j < theCorners[i].length; j++) {
-                theCorners[i][j] += center[i];
-            }
-        }
-
-        canvas.getGraphicsContext2D().strokePolygon(theCorners[0], theCorners[1], theCorners[0].length);
+        canvas.getGraphicsContext2D().strokePolygon(theCorners[0], theCorners[1], numSides);
     }
+
     
 }
