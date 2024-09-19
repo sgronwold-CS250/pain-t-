@@ -271,6 +271,10 @@ public class PaintTab extends Canvas implements ChangeListener<Number> {
     public void pushCanvas(Canvas c) {
         Canvas newCanvas = new Canvas(c.getWidth(), c.getHeight());
 
+        // need to disable antialiasing on the canvases
+        c.getGraphicsContext2D().setImageSmoothing(false);
+        newCanvas.getGraphicsContext2D().setImageSmoothing(false);
+
         // need to scale the canvas at 100% to snapshot correctly
         double oldScaleX, oldScaleY;
         oldScaleX = c.getScaleX();
