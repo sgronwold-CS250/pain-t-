@@ -2,6 +2,7 @@ import java.util.Stack;
 
 import javafx.event.EventHandler;
 import javafx.event.EventType;
+import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.control.Labeled;
 import javafx.scene.control.TextInputDialog;
@@ -85,6 +86,9 @@ public abstract class Drawer implements EventHandler<MouseEvent>, CanvasInterfac
         stopCanvasListener();
 
         PaintTab currTab = PaintTab.getCurrentTab();
+
+        Scene s = currTab.getCanvas().getScene();
+        System.out.println(s.getWidth()+", "+s.getHeight());
 
         // we need to undo what has already been drawn
         // unless, of course, this is the first livedraw
