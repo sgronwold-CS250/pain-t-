@@ -44,8 +44,8 @@ public class MenuActionListener extends MenuListener implements EventHandler<Act
             case "pencil":
             currDrawer = new Pencil(canvas, instructionLabel);
             return;
-            case "drawsquare":
-            currDrawer = new RegularPolygonDrawer(canvas, instructionLabel, 5);
+            case "drawregularpolygon":
+            currDrawer = new RegularPolygonDrawer(canvas, instructionLabel);
             return;
             case "drawellipse":
             currDrawer = new EllipseDrawer(canvas, instructionLabel);

@@ -1,6 +1,7 @@
 import javafx.event.EventType;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.control.Labeled;
+import javafx.scene.control.TextInputDialog;
 import javafx.scene.input.MouseEvent;
 
 public class RegularPolygonDrawer extends Drawer {
@@ -10,6 +11,17 @@ public class RegularPolygonDrawer extends Drawer {
     double[] corner = new double[2];
 
     boolean gotCenter = false;
+
+    public RegularPolygonDrawer(Canvas c, Labeled ilabel) {
+        super(c, ilabel);
+
+        TextInputDialog tid = new TextInputDialog("How many sides");
+        String response = tid.showAndWait().get();
+
+        numSides = Integer.parseInt(response);
+
+        super.startCanvasListener();
+    }
 
     public RegularPolygonDrawer(Canvas c, Labeled ilabel, int nsides) {
         super(c, ilabel);
@@ -68,8 +80,13 @@ public class RegularPolygonDrawer extends Drawer {
         // distance of any given corner from the center of the regular polygon
         double radius = Math.sqrt( Math.pow(corner[0] - center[0], 2) + Math.pow(corner[1] - center[1], 2) );
 
+        double theta0 = Math.atan( (corner[1] - center[1]) / (corner[0] - center[0]) );
+
+        // sometimes theta0 is 180 degrees out of where it should be
+        if (corner[0] < center[0]) theta0 += Math.PI;
+
         for(int i = 0; i < numSides; i++) {
-            double theta = 2 * Math.PI * i / numSides;
+            double theta = theta0 + 2 * Math.PI * i / numSides;
 
             // x coord
             theCorners[0][i] = radius * Math.cos(theta) + center[0];
@@ -80,6 +97,4 @@ public class RegularPolygonDrawer extends Drawer {
 
         canvas.getGraphicsContext2D().strokePolygon(theCorners[0], theCorners[1], numSides);
     }
-
-    
 }

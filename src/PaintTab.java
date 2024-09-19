@@ -44,9 +44,6 @@ public class PaintTab extends Canvas implements ChangeListener<Number> {
     }
 
     public PaintTab(Canvas c) {
-        // turn off anti aliasing
-        c.getGraphicsContext2D().setImageSmoothing(false);
-
         setCanvas(c);
 
         add(this);
@@ -273,10 +270,6 @@ public class PaintTab extends Canvas implements ChangeListener<Number> {
 
     public void pushCanvas(Canvas c) {
         Canvas newCanvas = new Canvas(c.getWidth(), c.getHeight());
-
-        // turn off anti aliasing for all canvas items
-        c.getGraphicsContext2D().setImageSmoothing(false);
-        newCanvas.getGraphicsContext2D().setImageSmoothing(false);
 
         // need to scale the canvas at 100% to snapshot correctly
         double oldScaleX, oldScaleY;

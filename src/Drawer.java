@@ -43,6 +43,7 @@ public abstract class Drawer implements EventHandler<MouseEvent>, CanvasInterfac
         }
 
         // not only that we need to make sure we have the correct graphics context
+        canvas.getGraphicsContext2D().setImageSmoothing(false);
         canvas.getGraphicsContext2D().setStroke(color);
         canvas.getGraphicsContext2D().setLineWidth(thickness);
     }
@@ -82,9 +83,6 @@ public abstract class Drawer implements EventHandler<MouseEvent>, CanvasInterfac
     public void predraw(boolean skipUndo) {
         PaintTab currTab = PaintTab.getCurrentTab();
 
-        // make the canvas not anti-alias
-        currTab.getCanvas().getGraphicsContext2D().setImageSmoothing(false);
-
         // we need to pause the listeners
         stopCanvasListener();
 
@@ -94,9 +92,6 @@ public abstract class Drawer implements EventHandler<MouseEvent>, CanvasInterfac
 
         // then we need to back up the canvas without the drawing on it
         currTab.backup();
-
-        // make new canvas not anti-alias
-        currTab.getCanvas().getGraphicsContext2D().setImageSmoothing(false);
 
         // ok now we can start listening again
         startCanvasListener();

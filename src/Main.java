@@ -38,9 +38,6 @@ public class Main extends Application {
 
         canvas = new Canvas(500, 500);
 
-        // turn off anti aliasing, it hurts live draw
-        canvas.getGraphicsContext2D().setImageSmoothing(false);
-
         // grid.add(item, col, row, col-span, row-span);
         grid.add(canvas, 0, PaintTab.CANVAS_ROW, menuButtons.length, 1);
 
@@ -79,8 +76,8 @@ public class Main extends Application {
         menuButtons[5].setId("pencil");
         menuButtons[5].setOnAction((EventHandler<ActionEvent>) menuActionListener);
 
-        menuButtons[6] = new Button("Draw square");
-        menuButtons[6].setId("drawsquare");
+        menuButtons[6] = new Button("Draw RegPoly");
+        menuButtons[6].setId("drawregularpolygon");
         menuButtons[6].setOnAction((EventHandler<ActionEvent>) menuActionListener);
 
         menuButtons[7] = new Button("Draw ellipse");
