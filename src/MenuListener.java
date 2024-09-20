@@ -183,4 +183,22 @@ public abstract class MenuListener {
     public void setCanvas(Canvas c) {
         canvas = c;
     }
+
+    public void copy() {
+        clearAllDrawers();
+
+        currDrawer = new Copier(canvas, instructionLabel);
+    }
+
+    public void cut() {
+        clearAllDrawers();
+
+        currDrawer = new Copier(canvas, instructionLabel, true);
+    }
+
+    public void paste() {
+        clearAllDrawers();
+
+        currDrawer = new Paster(canvas, instructionLabel);
+    }
 }

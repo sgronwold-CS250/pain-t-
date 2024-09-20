@@ -6,11 +6,14 @@ import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.control.Labeled;
 import javafx.scene.control.TextInputDialog;
+import javafx.scene.image.WritableImage;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 
 
 public abstract class Drawer implements EventHandler<MouseEvent>, CanvasInterface {
+    protected static WritableImage clipboard;
+
     protected Canvas canvas;
     Color color;
     double thickness;
@@ -86,9 +89,6 @@ public abstract class Drawer implements EventHandler<MouseEvent>, CanvasInterfac
         stopCanvasListener();
 
         PaintTab currTab = PaintTab.getCurrentTab();
-
-        Scene s = currTab.getCanvas().getScene();
-        System.out.println(s.getWidth()+", "+s.getHeight());
 
         // we need to undo what has already been drawn
         // unless, of course, this is the first livedraw

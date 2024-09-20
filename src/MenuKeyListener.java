@@ -15,6 +15,10 @@ public class MenuKeyListener extends MenuListener implements EventHandler<KeyEve
 
         if (e.getCode() == KeyCode.Z && e.isControlDown()) super.undo();
         if (e.getCode() == KeyCode.Y && e.isControlDown()) super.redo();
+
+        if (e.getCode() == KeyCode.C && e.isControlDown()) super.copy();
+        if (e.getCode() == KeyCode.X && e.isControlDown()) super.cut();
+        if (e.getCode() == KeyCode.V && e.isControlDown()) super.paste();
     }
     
 }
