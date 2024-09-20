@@ -74,6 +74,9 @@ public class MenuActionListener extends MenuListener implements EventHandler<Act
             case "drawtext":
             currDrawer = new TextDrawer(canvas, instructionLabel);
             return;
+            case "clearcanvas":
+            super.clearCanvas();
+            return;
         }
     }
 }

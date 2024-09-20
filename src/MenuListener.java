@@ -12,6 +12,7 @@ import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Labeled;
+import javafx.scene.control.TextInputDialog;
 import javafx.scene.image.Image;
 import javafx.scene.image.WritableImage;
 import javafx.scene.layout.GridPane;
@@ -163,6 +164,16 @@ public abstract class MenuListener {
     public void clearAllDrawers() {
         // stop the current drawer's callback so it isn't callback chaos
         if(currDrawer != null) currDrawer.stopCanvasListener();
+    }
+
+    public void clearCanvas() {
+        TextInputDialog tid = new TextInputDialog("Type \"Steve Harvey\" to confirm that you want to clear the canvas");
+        String response = tid.showAndWait().get();
+        
+        if (response.equalsIgnoreCase("steve harvey")){
+            PaintTab.getCurrentTab().clear();
+            instructionLabel.setText("Canvas cleared");
+        }
     }
 
     public void setCanvas() {

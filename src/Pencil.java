@@ -37,6 +37,7 @@ public class Pencil extends Drawer {
             newX = e.getX();
             newY = e.getY();
 
+            predraw(true);
             draw();
             PaintTab.getCurrentTab().UNSAVED_CHANGES = true;
 

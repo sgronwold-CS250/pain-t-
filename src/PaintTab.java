@@ -300,4 +300,12 @@ public class PaintTab extends Canvas implements ChangeListener<Number> {
         c.setScaleX(oldScaleX);
         c.setScaleY(oldScaleY);
     }
+
+    public void clear() {
+        // make something in the undo stack
+        this.backup();
+
+        getCanvas().getGraphicsContext2D().setFill(Color.WHITE);
+        getCanvas().getGraphicsContext2D().fillRect(0,0,getCanvas().getWidth(), getCanvas().getHeight());
+    }
 }

@@ -15,7 +15,7 @@ public class Main extends Application {
     static MenuActionListener menuActionListener;
     static MenuKeyListener menuKeyListener;
 
-    static Button menuButtons[] = new Button[15];
+    static Button menuButtons[] = new Button[16];
 
     public static void main(String[] args) {
         System.out.println("Launching Pain(t)");
@@ -115,6 +115,10 @@ public class Main extends Application {
         menuButtons[14] = new Button("Draw text");
         menuButtons[14].setId("drawtext");
         menuButtons[14].setOnAction((EventHandler<ActionEvent>) menuActionListener);
+
+        menuButtons[15] = new Button("Clear canvas");
+        menuButtons[15].setId("clearcanvas");
+        menuButtons[15].setOnAction((EventHandler<ActionEvent>) menuActionListener);
 
         for(int i = 0; i < menuButtons.length; i++) {
             grid.add(menuButtons[i], i, 2);
