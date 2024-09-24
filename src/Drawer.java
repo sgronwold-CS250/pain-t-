@@ -2,7 +2,6 @@ import java.util.Stack;
 
 import javafx.event.EventHandler;
 import javafx.event.EventType;
-import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.control.Labeled;
 import javafx.scene.control.TextInputDialog;
