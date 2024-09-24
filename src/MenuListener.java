@@ -18,7 +18,7 @@ import javafx.scene.image.WritableImage;
 import javafx.scene.layout.GridPane;
 import javafx.stage.FileChooser;
 
-public abstract class MenuListener {
+public class MenuListener {
     Canvas canvas;
     Labeled instructionLabel;
 
@@ -97,6 +97,18 @@ public abstract class MenuListener {
         PaintTab.getCurrentTab().currPath = fc.showSaveDialog(scene.getWindow());
 
         save();
+    }
+
+    public void saveAs(File path, boolean clobberOldPath) {
+        File oldPath = PaintTab.getCurrentTab().currPath;
+
+        PaintTab.getCurrentTab().currPath = path;
+
+        save();
+
+        if (!clobberOldPath) {
+            PaintTab.getCurrentTab().currPath = oldPath;
+        }
     }
 
     public void save() {

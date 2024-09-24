@@ -136,6 +136,11 @@ public class Main extends Application {
 
         PaintTab.refreshButtons();
 
+        // scheduling the autosave to happen
+        // TODO
+        AutoSaver autoSaver = new AutoSaver(canvas, title);
+        autoSaver.start();
+
         stage.show();
     }
 
