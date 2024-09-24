@@ -43,7 +43,11 @@ public class Eyedropper implements CanvasInterface, EventHandler<MouseEvent> {
         color &= 0xFFFFFF;
 
         // put the rgb code in the instruction label
-        instructionLabel.setText("The colour is 0x"+String.format("%06X", color));
+        instructionLabel.setText("The colour is "+color2HexString(color));
+    }
+
+    public static String color2HexString(int c) {
+        return "0x"+String.format("%06X", c);
     }
 
     @Override
