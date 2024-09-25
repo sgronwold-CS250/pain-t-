@@ -33,16 +33,29 @@ public class PaintTab extends Canvas implements ChangeListener<Number> {
     static final int BUTTON_ROW = 3;
     static final int CANVAS_ROW = 4;
 
+    /**
+    * A tab in the Pain(t) program.
+    * Uses the default 500 by 500 canvas size.
+    */
     public PaintTab() {
         // should have nothing but call to other constructor
         this(500, 500);
     }
 
+    /**
+    * A tab in the Pain(t) program.
+    * @param  width  Width of the canvas
+    * @param  height Height of the canvas
+    */
     public PaintTab(int width, int height) {
         // should have nothing but call to other constructor
         this(new Canvas(width, height));
     }
 
+    /**
+    * A tab in the Pain(t) program.
+    * @param  canvas The canvas
+    */
     public PaintTab(Canvas c) {
         setCanvas(c);
 
