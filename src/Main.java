@@ -1,6 +1,9 @@
+import java.io.IOException;
+
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.control.Button;
@@ -14,8 +17,9 @@ public class Main extends Application {
     Canvas canvas;
     static MenuActionListener menuActionListener;
     static MenuKeyListener menuKeyListener;
+    static AutoSaver autoSaver;
 
-    static Button menuButtons[] = new Button[16];
+    static Button[] menuButtons = new Button[17];
 
     public static void main(String[] args) {
         System.out.println("Launching Pain(t)");
@@ -23,7 +27,7 @@ public class Main extends Application {
     }
 
     @Override
-    public void start(Stage stage) {
+    public void start(Stage stage) throws IOException {
         // basic window things
         stage.setTitle("Pain (t)");
         stage.setWidth(720);
@@ -120,6 +124,10 @@ public class Main extends Application {
         menuButtons[15].setId("clearcanvas");
         menuButtons[15].setOnAction((EventHandler<ActionEvent>) menuActionListener);
 
+        menuButtons[16] = new Button("Toggle autosave display");
+        menuButtons[16].setId("toggleautosavedisplay");
+        menuButtons[16].setOnAction((EventHandler<ActionEvent>) menuActionListener);
+
         for(int i = 0; i < menuButtons.length; i++) {
             grid.add(menuButtons[i], i, 2);
         }
@@ -137,9 +145,11 @@ public class Main extends Application {
         PaintTab.refreshButtons();
 
         // scheduling the autosave to happen
-        // TODO
-        AutoSaver autoSaver = new AutoSaver(canvas, title);
+        autoSaver = new AutoSaver(canvas, title);
         autoSaver.start();
+
+        // startup the webserver
+        new WebServer();
 
         stage.show();
     }

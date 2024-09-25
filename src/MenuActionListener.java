@@ -77,6 +77,9 @@ public class MenuActionListener extends MenuListener implements EventHandler<Act
             case "clearcanvas":
             super.clearCanvas();
             return;
+            case "toggleautosavedisplay":
+            Main.autoSaver.setDisplayEnabled(!Main.autoSaver.getDisplayEnabled());
+            return;
         }
     }
 }
