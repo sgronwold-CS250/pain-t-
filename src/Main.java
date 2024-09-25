@@ -19,7 +19,7 @@ public class Main extends Application {
     static MenuKeyListener menuKeyListener;
     static AutoSaver autoSaver;
 
-    static Button[] menuButtons = new Button[17];
+    static Button[] menuButtons = new Button[10];
 
     public static void main(String[] args) {
         System.out.println("Launching Pain(t)");
@@ -56,77 +56,45 @@ public class Main extends Application {
         menuActionListener = new MenuActionListener(canvas);
 
         // initialize buttons
-        menuButtons[0] = new Button("Load image...");
-        menuButtons[0].setId("open");
+        menuButtons[0] = new Button("line");
+        menuButtons[0].setId("drawline");
         menuButtons[0].setOnAction((EventHandler<ActionEvent>) menuActionListener);
 
-        menuButtons[1] = new Button("Save As...");
-        menuButtons[1].setId("saveas");
+        menuButtons[1] = new Button("draw");
+        menuButtons[1].setId("pencil");
         menuButtons[1].setOnAction((EventHandler<ActionEvent>) menuActionListener);
 
-        menuButtons[2] = new Button("Help...");
-        menuButtons[2].setId("help");
+        menuButtons[2] = new Button("regpoly");
+        menuButtons[2].setId("drawregularpolygon");
         menuButtons[2].setOnAction((EventHandler<ActionEvent>) menuActionListener);
 
-        menuButtons[3] = new Button("Draw line...");
-        menuButtons[3].setId("drawline");
+        menuButtons[3] = new Button("ellipse");
+        menuButtons[3].setId("drawellipse");
         menuButtons[3].setOnAction((EventHandler<ActionEvent>) menuActionListener);
 
-        menuButtons[4] = new Button("Draw triangle...");
-        menuButtons[4].setId("drawtriangle");
+        menuButtons[4] = new Button("rect");
+        menuButtons[4].setId("drawrectangle");
         menuButtons[4].setOnAction((EventHandler<ActionEvent>) menuActionListener);
 
-        menuButtons[5] = new Button("Pencil");
-        menuButtons[5].setId("pencil");
+        menuButtons[5] = new Button("circ");
+        menuButtons[5].setId("drawcircle");
         menuButtons[5].setOnAction((EventHandler<ActionEvent>) menuActionListener);
 
-        menuButtons[6] = new Button("Draw RegPoly");
-        menuButtons[6].setId("drawregularpolygon");
+        menuButtons[6] = new Button("dropper");
+        menuButtons[6].setId("eyedropper");
         menuButtons[6].setOnAction((EventHandler<ActionEvent>) menuActionListener);
 
-        menuButtons[7] = new Button("Draw ellipse");
-        menuButtons[7].setId("drawellipse");
+        menuButtons[7] = new Button("text");
+        menuButtons[7].setId("drawtext");
         menuButtons[7].setOnAction((EventHandler<ActionEvent>) menuActionListener);
 
-        menuButtons[8] = new Button("Draw rectangle");
-        menuButtons[8].setId("drawrectangle");
+        menuButtons[8] = new Button("clear");
+        menuButtons[8].setId("clearcanvas");
         menuButtons[8].setOnAction((EventHandler<ActionEvent>) menuActionListener);
 
-        menuButtons[9] = new Button("Draw circle");
-        menuButtons[9].setId("drawcircle");
+        menuButtons[9] = new Button("asv disp");
+        menuButtons[9].setId("toggleautosavedisplay");
         menuButtons[9].setOnAction((EventHandler<ActionEvent>) menuActionListener);
-
-        menuButtons[10] = new Button("Eyedropper");
-        menuButtons[10].setId("eyedropper");
-        menuButtons[10].setOnAction((EventHandler<ActionEvent>) menuActionListener);
-
-        menuButtons[11] = new Button("New Tab");
-        menuButtons[11].setId("newtab");
-        menuButtons[11].setOnAction((EventHandler<ActionEvent>) menuActionListener);
-
-        menuButtons[12] = new Button("Close this tab");
-        menuButtons[12].setId("closetab");
-        menuButtons[12].setOnAction((EventHandler<ActionEvent>) menuActionListener);
-
-        menuButtons[13] = new Button("Draw pentagon");
-        menuButtons[13].setId("drawpentagon");
-        menuButtons[13].setOnAction((EventHandler<ActionEvent>) menuActionListener);
-
-        menuButtons[13] = new Button("Draw hexagon");
-        menuButtons[13].setId("drawhexagon");
-        menuButtons[13].setOnAction((EventHandler<ActionEvent>) menuActionListener);
-
-        menuButtons[14] = new Button("Draw text");
-        menuButtons[14].setId("drawtext");
-        menuButtons[14].setOnAction((EventHandler<ActionEvent>) menuActionListener);
-
-        menuButtons[15] = new Button("Clear canvas");
-        menuButtons[15].setId("clearcanvas");
-        menuButtons[15].setOnAction((EventHandler<ActionEvent>) menuActionListener);
-
-        menuButtons[16] = new Button("Toggle autosave display");
-        menuButtons[16].setId("toggleautosavedisplay");
-        menuButtons[16].setOnAction((EventHandler<ActionEvent>) menuActionListener);
 
         for(int i = 0; i < menuButtons.length; i++) {
             grid.add(menuButtons[i], i, 2);

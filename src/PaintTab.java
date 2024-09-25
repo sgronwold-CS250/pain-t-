@@ -81,8 +81,8 @@ public class PaintTab extends Canvas implements ChangeListener<Number> {
             // make a button for each tab
             Button b;
             
-            if (currTabIndex == i) b = new Button("[Tab "+i+"]");
-            else b = new Button("Tab "+i);
+            if (currTabIndex == i) b = new Button("["+i+"]");
+            else b = new Button(""+i);
 
             b.setId("tab"+i);
             b.setOnAction(new TabSwitcher());
