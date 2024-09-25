@@ -11,7 +11,7 @@ then extract the files to the appropriate directory.
 
 You also need link:https://repo1.maven.org/maven2/junit/junit/4.13.2/[JUnit 4.13.2]
 in your `+lib+` directory.
-and link:https://repo1.maven.org/maven2/org/junit/platform/junit-platform-console-standalone/1.9.2/[the JUnit console jar v1.9.3]
+and link:https://repo1.maven.org/maven2/org/junit/platform/junit-platform-console-standalone/1.9.3/[the JUnit console jar v1.9.3]
 in your `+bin+` directory
 if you don't want the tests to autofail.
 
