@@ -121,13 +121,13 @@ public class MenuListener {
 
         // getting the file extension
         String fname = PaintTab.getCurrentTab().currPath.getName();
+        System.out.println(fname);
         int i = fname.lastIndexOf(".");
-        System.out.println(i);
         String extension;
         if (i == -1) {
             extension = "png";
         } else {
-            extension = fname.substring(i);
+            extension = fname.substring(i+1);
             switch (extension) {
                 case "jpg":
                 case "jpeg":
@@ -154,7 +154,22 @@ public class MenuListener {
                 BufferedImage.TYPE_INT_RGB);
         RenderedImage renderedImage = SwingFXUtils.fromFXImage(writableImage, bi);
         try {
+            switch(extension) {
+                case "jpg":
+                case "jpeg":
+                // warn about data loss
+                TextInputDialog tid = new TextInputDialog("WARNING: DATA LOSS! Type \"Steve Harvey\" if you want to continue");
+                String response = tid.showAndWait().get();
+                
+                if (!response.equalsIgnoreCase("steve harvey")){
+                    instructionLabel.setText("Didn't save because you're scared of data loss");
+                    return;
+                }
+                break;
+            }
             ImageIO.write(renderedImage, extension, PaintTab.getCurrentTab().currPath);
+
+            
         } catch (IOException e1) {
             e1.printStackTrace();
         }
