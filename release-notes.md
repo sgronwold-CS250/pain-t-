@@ -2,6 +2,24 @@
 
 GitHub: https://github.com/sgronwold-CS250/pain-t-
 
+## v0.5.0 (2024-09-29)
+
+### New features
+
+- UI cleanup
+- Save to png, bmp, jpg (You can check the image properties, .bmp, .jpg, .jpeg actually save with that encoding)
+  - Warning on data loss when saving to jpg
+- Autosaves to autosave.png (in the default directory)
+- Webserver on localhost:42069 serves the autosave image
+
+### Known issues
+
+- For some reason, canvas must be (even number) by (even number) otherwise live draw clobbers everything else
+
+### Expected next version
+
+- All features assigned in Sprint 6
+
 ## v0.4.0 (2024-09-20)
 
 ### New features
