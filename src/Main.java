@@ -3,6 +3,7 @@ import java.io.IOException;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.control.Button;
@@ -18,7 +19,7 @@ public class Main extends Application {
     static MenuKeyListener menuKeyListener;
     static AutoSaver autoSaver;
 
-    static Button[] menuButtons = new Button[10];
+    static Button[] menuButtons;
 
     public static void main(String[] args) {
         System.out.println("Launching Pain(t)");
@@ -27,22 +28,39 @@ public class Main extends Application {
 
     @Override
     public void start(Stage stage) throws IOException {
+        // grab the fxml
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("./thefxml.fxml"));
+        loader.load();
+
+        // and get the controller
+        FXMLController fxmlController = loader.getController();
+
+        // and get the stuff from the controller
+        grid = fxmlController.grid;
+
+        menuButtons = new Button[] {
+            fxmlController.lineDrawButton,
+            fxmlController.pencilButton,
+            fxmlController.regPolyButton,
+            fxmlController.ellipseButton,
+            fxmlController.rectangleButton,
+            fxmlController.circleButton,
+            fxmlController.eyedropperButton,
+            fxmlController.textButton,
+            fxmlController.clearCanvasButton,
+            fxmlController.autosaveTimerToggleButton
+        };
+
         // basic window things
         stage.setTitle("Pain (t)");
-        stage.setWidth(720);
+        stage.setWidth(1280);
         stage.setHeight(720);
 
-        // we setup the grid as we go
-        grid = new GridPane();
-
         // this scene is the default scene, will include the menu and canvas among other things
-        scene = new Scene(grid, 300, 400);
+        scene = new Scene(grid);
         stage.setScene(scene);
 
-        canvas = new Canvas(500, 500);
-
-        // grid.add(item, col, row, col-span, row-span);
-        grid.add(canvas, 0, PaintTab.CANVAS_ROW, menuButtons.length, 1);
+        canvas = fxmlController.canvas;
 
         // title
         Label title = new Label("Buy me a Java at paypal.me/samuelgronwold");
@@ -55,48 +73,8 @@ public class Main extends Application {
         menuActionListener = new MenuActionListener(canvas);
 
         // initialize buttons
-        menuButtons[0] = new Button("line");
-        menuButtons[0].setId("drawline");
-        menuButtons[0].setOnAction((EventHandler<ActionEvent>) menuActionListener);
-
-        menuButtons[1] = new Button("draw");
-        menuButtons[1].setId("pencil");
-        menuButtons[1].setOnAction((EventHandler<ActionEvent>) menuActionListener);
-
-        menuButtons[2] = new Button("regpoly");
-        menuButtons[2].setId("drawregularpolygon");
-        menuButtons[2].setOnAction((EventHandler<ActionEvent>) menuActionListener);
-
-        menuButtons[3] = new Button("ellipse");
-        menuButtons[3].setId("drawellipse");
-        menuButtons[3].setOnAction((EventHandler<ActionEvent>) menuActionListener);
-
-        menuButtons[4] = new Button("rect");
-        menuButtons[4].setId("drawrectangle");
-        menuButtons[4].setOnAction((EventHandler<ActionEvent>) menuActionListener);
-
-        menuButtons[5] = new Button("circ");
-        menuButtons[5].setId("drawcircle");
-        menuButtons[5].setOnAction((EventHandler<ActionEvent>) menuActionListener);
-
-        menuButtons[6] = new Button("dropper");
-        menuButtons[6].setId("eyedropper");
-        menuButtons[6].setOnAction((EventHandler<ActionEvent>) menuActionListener);
-
-        menuButtons[7] = new Button("text");
-        menuButtons[7].setId("drawtext");
-        menuButtons[7].setOnAction((EventHandler<ActionEvent>) menuActionListener);
-
-        menuButtons[8] = new Button("clear");
-        menuButtons[8].setId("clearcanvas");
-        menuButtons[8].setOnAction((EventHandler<ActionEvent>) menuActionListener);
-
-        menuButtons[9] = new Button("asv disp");
-        menuButtons[9].setId("toggleautosavedisplay");
-        menuButtons[9].setOnAction((EventHandler<ActionEvent>) menuActionListener);
-
-        for(int i = 0; i < menuButtons.length; i++) {
-            grid.add(menuButtons[i], i, 2);
+        for(Button b: menuButtons) {
+            b.setOnAction((EventHandler<ActionEvent>) menuActionListener);
         }
 
         // finally listen for the key events

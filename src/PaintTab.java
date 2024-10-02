@@ -12,6 +12,7 @@ import javafx.scene.canvas.Canvas;
 import javafx.scene.control.Button;
 import javafx.scene.image.WritableImage;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.RowConstraints;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
@@ -120,7 +121,7 @@ public class PaintTab extends Canvas implements ChangeListener<Number> {
     // called by the window resize callback
     // it's also a standalone function such that we can call it whenever we want
     public void resize() {
-        Scene s = getCanvas().getScene();
+        Scene s = getGridPane().getScene();
 
         double availableCanvasWidth = s.getWidth();
 
