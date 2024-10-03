@@ -1,5 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.*?>
+<?import javafx.scene.canvas.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.shape.*?>
+<?import javafx.scene.text.*?>
 <?import javafx.scene.canvas.Canvas?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.layout.ColumnConstraints?>
@@ -13,7 +19,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<GridPane fx:id="grid" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="FXMLController">
+<GridPane fx:id="grid" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="FXMLController">
   <columnConstraints>
     <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
       <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -33,16 +39,46 @@
     <RowConstraints maxHeight="1.7976931348623157E308" minHeight="-Infinity" />
   </rowConstraints>
    <children>
-      <Button id="drawline" fx:id="lineDrawButton" mnemonicParsing="false" text="Line" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="TOP" />
-      <Button id="pencil" fx:id="pencilButton" mnemonicParsing="false" text="Pencil" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER" />
-      <Button id="drawregularpolygon" fx:id="regPolyButton" mnemonicParsing="false" text="Reg. poly." GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="TOP" />
-      <Button id="drawellipse" fx:id="ellipseButton" mnemonicParsing="false" text="Ellipse" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="TOP" />
-      <Button id="drawrectangle" fx:id="rectangleButton" mnemonicParsing="false" text="Rectangle" GridPane.columnIndex="4" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="TOP" />
-      <Button id="drawcircle" fx:id="circleButton" mnemonicParsing="false" text="Circle" GridPane.columnIndex="5" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="TOP" />
-      <Button id="eyedropper" fx:id="eyedropperButton" mnemonicParsing="false" text="Eyedropper" GridPane.columnIndex="6" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER" />
-      <Button id="drawtext" fx:id="textButton" mnemonicParsing="false" text="Text" GridPane.columnIndex="7" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="TOP" />
-      <Button id="clearcanvas" fx:id="clearCanvasButton" mnemonicParsing="false" text="Clear canvas" GridPane.columnIndex="8" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER" />
-      <Button id="toggleautosavedisplay" fx:id="autosaveTimerToggleButton" mnemonicParsing="false" text="Display asv?" GridPane.columnIndex="9" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER" />
+      <Button id="drawline" fx:id="lineDrawButton" mnemonicParsing="false" text="Line" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="TOP">
+         <tooltip>
+            <Tooltip text="Draws a line" />
+         </tooltip></Button>
+      <Button id="pencil" fx:id="pencilButton" mnemonicParsing="false" text="Pencil" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
+         <tooltip>
+            <Tooltip text="Pencil/free draw mode" />
+         </tooltip></Button>
+      <Button id="drawregularpolygon" fx:id="regPolyButton" mnemonicParsing="false" text="Reg. poly." GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="TOP">
+         <tooltip>
+            <Tooltip text="Draws a regular polygon" />
+         </tooltip></Button>
+      <Button id="drawellipse" fx:id="ellipseButton" mnemonicParsing="false" text="Ellipse" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="TOP">
+         <tooltip>
+            <Tooltip text="Draws an ellipse" />
+         </tooltip></Button>
+      <Button id="drawrectangle" fx:id="rectangleButton" mnemonicParsing="false" text="Rectangle" GridPane.columnIndex="4" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="TOP">
+         <tooltip>
+            <Tooltip text="Draws a rectangle" />
+         </tooltip></Button>
+      <Button id="drawcircle" fx:id="circleButton" mnemonicParsing="false" text="Circle" GridPane.columnIndex="5" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="TOP">
+         <tooltip>
+            <Tooltip text="Draws a circle" />
+         </tooltip></Button>
+      <Button id="eyedropper" fx:id="eyedropperButton" mnemonicParsing="false" text="Eyedropper" GridPane.columnIndex="6" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
+         <tooltip>
+            <Tooltip text="Click anywhere and you get the rgb value" />
+         </tooltip></Button>
+      <Button id="drawtext" fx:id="textButton" mnemonicParsing="false" text="Text" GridPane.columnIndex="7" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="TOP">
+         <tooltip>
+            <Tooltip text="Draws text of your choosing" />
+         </tooltip></Button>
+      <Button id="clearcanvas" fx:id="clearCanvasButton" mnemonicParsing="false" text="Clear canvas" GridPane.columnIndex="8" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
+         <tooltip>
+            <Tooltip text="Clears the canvas (paints it white)" />
+         </tooltip></Button>
+      <Button id="toggleautosavedisplay" fx:id="autosaveTimerToggleButton" mnemonicParsing="false" text="Display asv?" GridPane.columnIndex="9" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
+         <tooltip>
+            <Tooltip text="Toggles the autosave timer display" />
+         </tooltip></Button>
       <Canvas fx:id="canvas" height="500.0" width="500.0" GridPane.rowIndex="3" GridPane.rowSpan="2147483647" />
       <Line endX="-23.970579147338867" endY="58.37868118286133" startX="4.32231330871582" startY="46.416690826416016" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="BOTTOM" />
       <Polygon fill="DODGERBLUE" points="-10, 0, 10, 0, 0, -17.3205" stroke="BLACK" strokeType="INSIDE" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="BOTTOM" />

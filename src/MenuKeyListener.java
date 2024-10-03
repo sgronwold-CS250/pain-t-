@@ -33,6 +33,9 @@ public class MenuKeyListener extends MenuListener implements EventHandler<KeyEve
         // tabbing ctrl+t and ctrl+w
         if (e.getCode() == KeyCode.T && e.isControlDown()) new PaintTab();
         if (e.getCode() == KeyCode.W && e.isControlDown()) PaintTab.remove(PaintTab.getCurrentTab());
+
+        // ctrl+k to rotate 90 degs clockwise
+        if (e.getCode() == KeyCode.K && e.isControlDown()) super.rotate();
     }
     
 }
