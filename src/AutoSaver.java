@@ -2,6 +2,8 @@ import java.io.File;
 
 import javafx.animation.AnimationTimer;
 import javafx.scene.canvas.Canvas;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Labeled;
 
 public class AutoSaver extends AnimationTimer {
@@ -10,7 +12,9 @@ public class AutoSaver extends AnimationTimer {
     Canvas canvas;
     int timer;
     long nextAutoSave = 0;
+    long lastAlert = 0;
     boolean displayEnabled = false;
+    Alert alert = new Alert(AlertType.INFORMATION);
 
     final int AUTOSAVE_INTERVAL = 5; // seconds
 
@@ -19,14 +23,23 @@ public class AutoSaver extends AnimationTimer {
         timerDisplay = l;
 
         timer = AUTOSAVE_INTERVAL;
+
+        alert.setHeaderText("I AUTOSAVED YOUR PHOTO TO autosave.png");
     }
 
     @Override
     public void handle(long tick) {
+        // wait one second to hide the alert
+        if (tick - lastAlert >= 1000000000L && alert.isShowing()) {
+            alert.close();
+        }
+
         if (nextAutoSave - tick <= 0) {
             nextAutoSave = tick + AUTOSAVE_INTERVAL*1000000000L;
 
             Main.menuActionListener.saveAs(new File("../autosave.png"), false);
+            alert.show();
+            lastAlert = tick;
         }
 
         if (displayEnabled) {

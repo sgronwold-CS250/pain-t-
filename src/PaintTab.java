@@ -120,7 +120,7 @@ public class PaintTab extends Canvas implements ChangeListener<Number> {
     // called by the window resize callback
     // it's also a standalone function such that we can call it whenever we want
     public void resize() {
-        Scene s = getCanvas().getScene();
+        Scene s = getGridPane().getScene();
 
         double availableCanvasWidth = s.getWidth();
 

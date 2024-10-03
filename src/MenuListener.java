@@ -228,4 +228,16 @@ public class MenuListener {
 
         currDrawer = new Paster(canvas, instructionLabel);
     }
+
+    public void rotate() {
+        // first add to the undo stack
+        PaintTab.getCurrentTab().backup();
+
+        // rotate
+        canvas.setRotate(canvas.getRotate()+90);
+        
+        // and normalise/round to the nearest 90degs
+        canvas.setRotate(canvas.getRotate()%360);
+        canvas.setRotate((int) canvas.getRotate());
+    }
 }
