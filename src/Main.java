@@ -18,6 +18,7 @@ public class Main extends Application {
     static MenuActionListener menuActionListener;
     static MenuKeyListener menuKeyListener;
     static AutoSaver autoSaver;
+    static final LogController LOGGER = new LogController();
 
     static Button[] menuButtons;
 
