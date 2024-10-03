@@ -61,13 +61,19 @@ public class MenuListener {
         gc.drawImage(img, 0, 0);
 
         PaintTab.getCurrentTab().resize();
+
+        Main.LOGGER.log("Opened new image");
     }
 
     public void undo() {
+        Main.LOGGER.log("Undo");
+
         undoRedoController(PaintTab.getCurrentTab().getUndoStack(), PaintTab.getCurrentTab().getRedoStack());
     }
 
     public void redo() {
+        Main.LOGGER.log("Redo");
+
         undoRedoController(PaintTab.getCurrentTab().getRedoStack(), PaintTab.getCurrentTab().getUndoStack());
     }
 
@@ -91,6 +97,7 @@ public class MenuListener {
     }
 
     public void saveAs() {
+
         Scene scene = getScene();
 
         FileChooser fc = new FileChooser();
@@ -178,6 +185,9 @@ public class MenuListener {
         PaintTab.getCurrentTab().resize();
 
         PaintTab.getCurrentTab().UNSAVED_CHANGES = false;
+
+        
+        Main.LOGGER.log("Saved");
     }
 
     private GraphicsContext getGraphicsContext() {
@@ -201,6 +211,8 @@ public class MenuListener {
             PaintTab.getCurrentTab().clear();
             instructionLabel.setText("Canvas cleared");
         }
+
+        Main.LOGGER.log("Cleared the canvas");
     }
 
     public void setCanvas() {
@@ -212,24 +224,32 @@ public class MenuListener {
     }
 
     public void copy() {
+        Main.LOGGER.log("Copying portion of the image");
+
         clearAllDrawers();
 
         currDrawer = new Copier(canvas, instructionLabel);
     }
 
     public void cut() {
+        Main.LOGGER.log("Cutting portion of the image");
+        
         clearAllDrawers();
 
         currDrawer = new Copier(canvas, instructionLabel, true);
     }
 
     public void paste() {
+        Main.LOGGER.log("Pasting");
+
         clearAllDrawers();
 
         currDrawer = new Paster(canvas, instructionLabel);
     }
 
     public void rotate() {
+        Main.LOGGER.log("Rotated the image by 90 degs");
+
         // first add to the undo stack
         PaintTab.getCurrentTab().backup();
 

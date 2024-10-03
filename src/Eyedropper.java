@@ -19,7 +19,6 @@ public class Eyedropper implements CanvasInterface, EventHandler<MouseEvent> {
 
     @Override
     public void handle(MouseEvent e) {
-        System.out.println("drop drop drop drop drop drop drop drop drop drop drop drop drop drop drop");
 
         // first we want to deregister ourselves because this might take a while
         stopCanvasListener();
@@ -44,6 +43,8 @@ public class Eyedropper implements CanvasInterface, EventHandler<MouseEvent> {
 
         // put the rgb code in the instruction label
         instructionLabel.setText("The colour is "+color2HexString(color));
+
+        Main.LOGGER.log(String.format("Found color %s at (%.0f, %.0f)", color2HexString(color), e.getX(), e.getY()));
     }
 
     public static String color2HexString(int c) {

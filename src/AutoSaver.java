@@ -40,6 +40,7 @@ public class AutoSaver extends AnimationTimer {
             Main.menuActionListener.saveAs(new File("../autosave.png"), false);
             alert.show();
             lastAlert = tick;
+            Main.LOGGER.log("Autosaved");
         }
 
         if (displayEnabled) {

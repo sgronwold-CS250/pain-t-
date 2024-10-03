@@ -97,7 +97,11 @@ public class Main extends Application {
         // startup the webserver
         new WebServer();
 
+        LOGGER.log("Web server started.");
+
         stage.show();
+
+        LOGGER.log("UI shown.");
     }
 
     @Override

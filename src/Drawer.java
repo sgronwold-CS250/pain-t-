@@ -34,6 +34,8 @@ public abstract class Drawer implements EventHandler<MouseEvent>, CanvasInterfac
 
         thickness = Double.parseDouble(response);
         color = col;
+
+        Main.LOGGER.log(String.format("%s started.", this.getClass().getName()));
     }
 
     public abstract EventType<MouseEvent>[] getEventTypes();
@@ -101,6 +103,6 @@ public abstract class Drawer implements EventHandler<MouseEvent>, CanvasInterfac
     }
 
     // this method is called when you want to actually draw the thing to the canvas
-    public abstract void draw();
+    protected abstract void draw();
 
 }
