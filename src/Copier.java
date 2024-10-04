@@ -55,24 +55,29 @@ public class Copier extends Drawer {
             // but to snapshot, we need to set the scale to 1 for the canvas to export properly
             double oldScaleX = canvas.getScaleX();
             double oldScaleY = canvas.getScaleY();
+            double oldTranslateX = canvas.getTranslateX();
+            double oldTranslateY = canvas.getTranslateY();
 
             canvas.setScaleX(1);
             canvas.setScaleY(1);
+            canvas.setTranslateX(0);
+            canvas.setTranslateY(0);
 
             int viewPortWidth = (int) (lowerRightCorner[0] - upperLeftCorner[0]);
             int viewPortHeight = (int) (lowerRightCorner[1] - upperLeftCorner[1]);
 
             // dy and dx for the viewport
-            int dy = (int) (canvas.getScene().getHeight() - canvas.getHeight() - canvas.getTranslateY()); //(canvas.getTranslateY() - canvas.getScene().getHeight() + canvas.getHeight());
-            int dx = (int) canvas.getTranslateX();
+            int dy = (int) (canvas.getScene().getHeight() - canvas.getHeight());
 
             SnapshotParameters sp = new SnapshotParameters();
-            sp.setViewport(new Rectangle2D(upperLeftCorner[0] + dx, upperLeftCorner[1] + dy, viewPortWidth, viewPortHeight));
+            sp.setViewport(new Rectangle2D(upperLeftCorner[0], upperLeftCorner[1] + dy, viewPortWidth, viewPortHeight));
             clipboard = new WritableImage(viewPortWidth, viewPortHeight);
             canvas.snapshot(sp, clipboard);
 
             canvas.setScaleX(oldScaleX);
             canvas.setScaleY(oldScaleY);
+            canvas.setTranslateX(oldTranslateX);
+            canvas.setTranslateY(oldTranslateY);
 
             instructionLabel.setText("Done copying");
             stopCanvasListener();

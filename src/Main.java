@@ -49,7 +49,8 @@ public class Main extends Application {
             fxmlController.eyedropperButton,
             fxmlController.textButton,
             fxmlController.clearCanvasButton,
-            fxmlController.autosaveTimerToggleButton
+            fxmlController.autosaveTimerToggleButton,
+            fxmlController.imageRotateButton
         };
 
         // basic window things
@@ -92,7 +93,7 @@ public class Main extends Application {
 
         // scheduling the autosave to happen
         autoSaver = new AutoSaver(canvas, title);
-        autoSaver.start();
+        //autoSaver.start();
 
         // startup the webserver
         new WebServer();

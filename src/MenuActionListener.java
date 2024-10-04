@@ -80,6 +80,9 @@ public class MenuActionListener extends MenuListener implements EventHandler<Act
             case "toggleautosavedisplay":
             Main.autoSaver.setDisplayEnabled(!Main.autoSaver.getDisplayEnabled());
             return;
+            case "rotateimage":
+            currDrawer = new ImageRotater(canvas, instructionLabel);
+            return;
         }
     }
 }
