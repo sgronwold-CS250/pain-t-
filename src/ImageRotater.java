@@ -72,13 +72,6 @@ public class ImageRotater extends Drawer {
 
     @Override
     protected void draw() {
-        // this is the vector for new x-axis
-        double[] newXAxis = new double[] {
-            mouseCoords[0] - Math.abs(corner1[0] - corner2[0])/2,
-            mouseCoords[1] - Math.abs(corner1[1] - corner2[1])/2
-        };
-        double angle = Math.atan(newXAxis[1]/newXAxis[0])*180/Math.PI;
-
         // some more parameters for ease of doing everything else
         double[] upperLeftCorner = new double[] {
             Math.min(corner1[0], corner2[0]),
@@ -93,10 +86,15 @@ public class ImageRotater extends Drawer {
         double viewPortWidth = lowerRightCorner[0] - upperLeftCorner[0];
         double viewPortHeight = lowerRightCorner[1] - upperLeftCorner[1];
 
-        double oldScaleX = canvas.getScaleX();
-        double oldScaleY = canvas.getScaleY();
-        double oldTranslateX = canvas.getTranslateX();
-        double oldTranslateY = canvas.getTranslateY();
+        // this is the vector for new x-axis
+        double[] newXAxis = new double[] {
+            mouseCoords[0] - (corner1[0] + corner2[0])/2,
+            mouseCoords[1] - (corner1[1] + corner2[1])/2
+        };
+        // and the associated angle
+        double angle = Math.atan(newXAxis[1]/newXAxis[0])*180/Math.PI;
+        // what if we get the wrong atan
+        if (newXAxis[0] < 0) angle += 180;
 
         canvas.setScaleX(1);
         canvas.setScaleY(1);
@@ -106,6 +104,7 @@ public class ImageRotater extends Drawer {
         // i.e. other ui stuff
         int dy = (int) (canvas.getScene().getHeight() - canvas.getHeight());
 
+        clipboard = new WritableImage((int) viewPortWidth, (int) viewPortHeight);
         SnapshotParameters params = new SnapshotParameters();
         params.setViewport(new Rectangle2D(
             upperLeftCorner[0],
@@ -113,7 +112,7 @@ public class ImageRotater extends Drawer {
             viewPortWidth,
             viewPortHeight
         ));
-        clipboard = canvas.snapshot(params, null);
+        canvas.snapshot(params, clipboard);
 
         GraphicsContext gc = canvas.getGraphicsContext2D();
 
@@ -128,13 +127,9 @@ public class ImageRotater extends Drawer {
             0,
             0
         );
-        //super.stopCanvasListener();
         gc.restore();
 
-        canvas.setScaleX(oldScaleX);
-        canvas.setScaleY(oldScaleY);
-        canvas.setTranslateX(oldTranslateX);
-        canvas.setTranslateY(oldTranslateY);
+        PaintTab.getCurrentTab().resize();
 
         System.out.println("drew image");
     }
