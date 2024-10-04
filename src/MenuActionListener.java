@@ -89,6 +89,8 @@ public class MenuActionListener extends MenuListener implements EventHandler<Act
             case "vflip":
             super.vflip();
             return;
+            case "drawstar":
+            currDrawer = new StarDrawer(canvas, instructionLabel);
         }
     }
 }

@@ -52,7 +52,8 @@ public class Main extends Application {
             fxmlController.autosaveTimerToggleButton,
             fxmlController.imageRotateButton,
             fxmlController.hFlipButton,
-            fxmlController.vFlipButton
+            fxmlController.vFlipButton,
+            fxmlController.starButton
         };
 
         // basic window things
