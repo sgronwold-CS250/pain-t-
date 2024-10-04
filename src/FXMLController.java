@@ -6,7 +6,8 @@ import javafx.scene.layout.GridPane;
 public class FXMLController {
     @FXML GridPane grid;
     @FXML Button lineDrawButton, pencilButton, regPolyButton, ellipseButton, rectangleButton,
-        circleButton, eyedropperButton, textButton, clearCanvasButton, autosaveTimerToggleButton, imageRotateButton;
+        circleButton, eyedropperButton, textButton, clearCanvasButton, autosaveTimerToggleButton,
+        imageRotateButton, hFlipButton, vFlipButton;
     @FXML Canvas canvas;
 
     public FXMLController() {

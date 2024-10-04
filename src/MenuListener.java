@@ -260,4 +260,40 @@ public class MenuListener {
         canvas.setRotate(canvas.getRotate()%360);
         canvas.setRotate((int) canvas.getRotate());
     }
+
+    public void hflip() {
+        WritableImage wi = new WritableImage((int) canvas.getWidth(), (int) canvas.getHeight());
+
+        // first scale it
+        canvas.setScaleX(-1);
+        canvas.setScaleY(1);
+        canvas.setTranslateX(-canvas.getWidth());
+
+        // then snapshot it
+        canvas.snapshot(null, wi);
+
+        // backup
+        PaintTab.getCurrentTab().backup();
+        canvas.getGraphicsContext2D().drawImage(wi, 0,0);
+
+        PaintTab.getCurrentTab().resize();
+    }
+
+    public void vflip() {
+        WritableImage wi = new WritableImage((int) canvas.getWidth(), (int) canvas.getHeight());
+
+        // first scale it
+        canvas.setScaleX(1);
+        canvas.setScaleY(-1);
+        canvas.setTranslateY(-canvas.getHeight());
+
+        // then snapshot it
+        canvas.snapshot(null, wi);
+
+        // backup
+        PaintTab.getCurrentTab().backup();
+        canvas.getGraphicsContext2D().drawImage(wi, 0,0);
+
+        PaintTab.getCurrentTab().resize();
+    }
 }

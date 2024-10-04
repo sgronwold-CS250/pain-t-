@@ -83,6 +83,12 @@ public class MenuActionListener extends MenuListener implements EventHandler<Act
             case "rotateimage":
             currDrawer = new ImageRotater(canvas, instructionLabel);
             return;
+            case "hflip":
+            super.hflip();
+            return;
+            case "vflip":
+            super.vflip();
+            return;
         }
     }
 }

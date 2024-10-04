@@ -83,6 +83,14 @@
          <tooltip>
             <Tooltip text="Rotates The Image" />
          </tooltip></Button>
+      <Button id="hflip" fx:id="hFlipButton" mnemonicParsing="false" text="HFlip" GridPane.columnIndex="11" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
+         <tooltip>
+            <Tooltip text="Horizontally flips The Image" />
+         </tooltip></Button>
+      <Button id="vflip" fx:id="vFlipButton" mnemonicParsing="false" text="VFlip" GridPane.columnIndex="12" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
+         <tooltip>
+            <Tooltip text="Vertically flips The Image" />
+         </tooltip></Button>
       <Canvas fx:id="canvas" height="500.0" width="500.0" GridPane.rowIndex="3" GridPane.rowSpan="2147483647" />
       <Line endX="-23.970579147338867" endY="58.37868118286133" startX="4.32231330871582" startY="46.416690826416016" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="BOTTOM" />
       <Polygon fill="DODGERBLUE" points="-10, 0, 10, 0, 0, -17.3205" stroke="BLACK" strokeType="INSIDE" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="BOTTOM" />
