@@ -95,7 +95,7 @@ public class Main extends Application {
 
         // scheduling the autosave to happen
         autoSaver = new AutoSaver(canvas, title);
-        //autoSaver.start();
+        autoSaver.start();
 
         // startup the webserver
         new WebServer();
