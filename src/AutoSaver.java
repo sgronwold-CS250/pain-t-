@@ -35,6 +35,10 @@ public class AutoSaver extends AnimationTimer {
     }
 
     @Override
+    /**
+     * The callback that fires once per tick. It will saveAs to autosave.png.
+     * @param tick How many nanoseconds have passed.
+     */
     public void handle(long tick) {
         // wait one second to hide the alert
         if (tick - lastAlert >= 1000000000L && alert.isShowing()) {
@@ -56,14 +60,24 @@ public class AutoSaver extends AnimationTimer {
         }
     }
 
+    /**
+     * Turns off/on the autosave countdown display.
+     * @param newDisplayEnabled Whether or not the autosave countdown display is enabled.
+     */
     public void setDisplayEnabled(boolean newDisplayEnabled) {
         displayEnabled = newDisplayEnabled;
     }
 
+    /**
+     * @return Whether the autosave countdown display is enabled.
+     */
     public boolean getDisplayEnabled() {
         return displayEnabled;
     }
 
+    /**
+     * @return The JavaFX object that contains the autosave countdown timer.
+     */
     public Labeled getTimerDisplay() {
         return timerDisplay;
     }
