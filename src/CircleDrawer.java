@@ -5,11 +5,14 @@ import javafx.scene.input.MouseEvent;
 
 public class CircleDrawer extends Drawer {
 
-    double[] center = new double[2];
-    double radius;
+    private double[] center = new double[2];
+    private double radius;
+    private boolean gotCenter = false;
 
-    boolean gotCenter = false;
-
+    /**
+     * @param c The canvas we're drawing the circle on.
+     * @param ilabel The object we write the instructions to.
+     */
     public CircleDrawer(Canvas c, Labeled ilabel) {
         super(c, ilabel);
         
@@ -19,6 +22,10 @@ public class CircleDrawer extends Drawer {
     }
 
     @Override
+    /**
+     * Callback that handles the MouseEvents specified by getEventTypes().
+     * @param e The event that triggered this callback.
+     */
     public void handle(MouseEvent e) {
         if (!gotCenter) {
             if (e.getEventType() == MouseEvent.MOUSE_CLICKED) {
@@ -47,12 +54,18 @@ public class CircleDrawer extends Drawer {
 
     @SuppressWarnings("unchecked")
     @Override
+    /**
+     * @return The EventType's that trigger the callback.
+     */
     public EventType<MouseEvent>[] getEventTypes() {
         return new EventType[] {MouseEvent.MOUSE_CLICKED, MouseEvent.MOUSE_MOVED};
     }
 
     @Override
-    public void draw() {
+    /**
+     * Draws a circle with specified center and radius.
+     */
+    protected void draw() {
         canvas.getGraphicsContext2D().strokeOval(center[0] - radius, center[1] - radius, 2*radius, 2*radius);
     }
 
