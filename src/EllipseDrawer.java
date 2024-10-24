@@ -5,10 +5,10 @@ import javafx.scene.input.MouseEvent;
 
 public class EllipseDrawer extends Drawer {
     // coords
-    double[] left = new double[2];
-    double[] top = new double[2];
+    private double[] left = new double[2];
+    private double[] top = new double[2];
 
-    boolean gotTop = false;
+    private boolean gotTop = false;
 
     public EllipseDrawer(Canvas c, Labeled ilabel) {
         super(c, ilabel);
