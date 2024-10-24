@@ -127,10 +127,6 @@ public class PaintTab extends Canvas implements ChangeListener<Number> {
         // this is the height minus the y offset of the canvas; so this is the available height that we have for our canvas
         double availableCanvasHeight = s.getHeight() - getCanvas().getLayoutY();
 
-        // TODO both scene width and height must be even, make sure this is truly the case
-        if (availableCanvasWidth%2 == 1) availableCanvasWidth--;
-        if (availableCanvasHeight%2 == 1) availableCanvasHeight--;
-
         // if width or height is nonpositive then we don't need to worry about this
         if (availableCanvasWidth <= 0 || availableCanvasHeight <= 0) return;
 
@@ -147,6 +143,8 @@ public class PaintTab extends Canvas implements ChangeListener<Number> {
         // translate the canvas such that it appears aligned within the window
         getCanvas().setTranslateX((newScale-1)/2 * getCanvas().getWidth());
         getCanvas().setTranslateY((newScale-1)/2 * getCanvas().getHeight());
+
+        System.out.println("Effective canvas width/height: "+getCanvas().getWidth()*getCanvas().getScaleX()+" by "+getCanvas().getHeight()*getCanvas().getScaleY());
     }
 
     @Override
