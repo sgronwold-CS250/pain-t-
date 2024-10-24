@@ -158,7 +158,7 @@ public class PaintTab extends Canvas implements ChangeListener<Number> {
             newScaleX = 1.0/Math.ceil(1/newScale);
             newScaleY = 1.0/Math.ceil(1/newScale);
         }
-
+        
         getCanvas().setScaleX(newScaleX);
         getCanvas().setScaleY(newScaleY);
 
