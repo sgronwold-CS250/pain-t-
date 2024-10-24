@@ -6,6 +6,9 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
 import javafx.util.Callback;
 
+/**
+ * JavaFX Dialog box that lets the user pick a color.
+ */
 public class ColorPickerDialog implements Callback<ButtonType, Color> {
     Dialog<Color> dialog;
     ColorPicker cp;
@@ -27,11 +30,18 @@ public class ColorPickerDialog implements Callback<ButtonType, Color> {
         dialog.getDialogPane().getButtonTypes().add(new ButtonType("Enter", ButtonData.OK_DONE));
     }
 
+    /**
+     * Shows the dialog box, waits for the user to select a color.
+     * @return The color object, as a JavaFX Color object.
+     */
     public Color getColor() {
         return dialog.showAndWait().get();
     }
 
-    // this is how the dialog knows how to get the colour
+    /**
+     * this is how the dialog knows how to get the colour
+     * @return The Color value of the on-board ColorPicker object.
+     */
     @Override
     public Color call(ButtonType arg0) {
         return cp.getValue();
