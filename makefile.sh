@@ -1,5 +1,7 @@
 clear
 
+javadoc --module-path ./lib --add-modules javafx.controls,javafx.swing,javafx.fxml -cp ./lib/junit-4.13.2.jar -d ./javadoc ./src/*.java
+
 cd ./src
 javac --module-path ../lib --add-modules javafx.controls,javafx.swing,javafx.fxml -cp ../lib/junit-4.13.2.jar ./*.java -d ../bin/
 cd ..

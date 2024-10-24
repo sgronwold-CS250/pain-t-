@@ -6,8 +6,6 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Labeled;
 import javafx.scene.image.WritableImage;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.transform.Rotate;
-import javafx.scene.transform.Transform;
 
 public class ImageRotater extends Drawer {
 

@@ -1,30 +1,37 @@
 import java.io.File;
 
 import javafx.animation.AnimationTimer;
-import javafx.scene.canvas.Canvas;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Labeled;
 
 public class AutoSaver extends AnimationTimer {
 
-    Labeled timerDisplay;
-    Canvas canvas;
-    int timer;
-    long nextAutoSave = 0;
-    long lastAlert = 0;
-    boolean displayEnabled = false;
-    Alert alert = new Alert(AlertType.INFORMATION);
+    private Labeled timerDisplay;
+    private long nextAutoSave = 0;
+    private long lastAlert = 0;
+    private boolean displayEnabled = false;
+    private Alert alert = new Alert(AlertType.INFORMATION);
 
-    final int AUTOSAVE_INTERVAL = 5; // seconds
+    private int AUTOSAVE_INTERVAL = 5; // seconds
 
-    public AutoSaver(Canvas c, Labeled l) {
-        canvas = c;
+    /**
+     * Constructs a AutoSaver object with the default autosave interval of five seconds.
+     * @param l The Labeled object, the display for the autosave timer.
+     */
+    public AutoSaver(Labeled l) {
         timerDisplay = l;
-
-        timer = AUTOSAVE_INTERVAL;
-
         alert.setHeaderText("I AUTOSAVED YOUR PHOTO TO autosave.png");
+    }
+
+
+    /**
+     * @param l The Labeled object, the display for the autosave timer.
+     * @param autosaveInterval The autosave interval, in seconds.
+     */
+    public AutoSaver(Labeled l, int autosaveInterval) {
+        this(l);
+        AUTOSAVE_INTERVAL = autosaveInterval;
     }
 
     @Override
@@ -45,7 +52,7 @@ public class AutoSaver extends AnimationTimer {
 
         if (displayEnabled) {
             double timerOutput = (nextAutoSave - tick)/1000000000.0;
-            timerDisplay.setText(String.format("%.1f", timerOutput));
+            getTimerDisplay().setText(String.format("%.1f", timerOutput));
         }
     }
 
@@ -55,5 +62,9 @@ public class AutoSaver extends AnimationTimer {
 
     public boolean getDisplayEnabled() {
         return displayEnabled;
+    }
+
+    public Labeled getTimerDisplay() {
+        return timerDisplay;
     }
 }

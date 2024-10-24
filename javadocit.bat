@@ -1,0 +1,1 @@
+call javadoc --module-path ./lib --add-modules javafx.controls,javafx.swing,javafx.fxml -cp ./lib/junit-4.13.2.jar -d ./javadoc ./src/*.java
