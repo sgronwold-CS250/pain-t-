@@ -3,6 +3,9 @@ import javafx.scene.canvas.Canvas;
 import javafx.scene.control.Button;
 import javafx.scene.layout.GridPane;
 
+/**
+ * Container for all the FXML objects
+ */
 public class FXMLController {
     @FXML GridPane grid;
     @FXML Button lineDrawButton, pencilButton, regPolyButton, ellipseButton, rectangleButton,
@@ -11,6 +14,5 @@ public class FXMLController {
     @FXML Canvas canvas;
 
     public FXMLController() {
-        System.out.println("here");
     }
 }
