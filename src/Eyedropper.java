@@ -8,6 +8,10 @@ public class Eyedropper implements CanvasInterface, EventHandler<MouseEvent> {
     Canvas canvas;
     Labeled instructionLabel;
 
+    /**
+     * @param c canvas we're eyedropping
+     * @param ilabel label to write the instructions to
+     */
     public Eyedropper(Canvas c, Labeled ilabel) {
         canvas = c;
         instructionLabel = ilabel;
@@ -47,6 +51,11 @@ public class Eyedropper implements CanvasInterface, EventHandler<MouseEvent> {
         Main.LOGGER.log(String.format("Found color %s at (%.0f, %.0f)", color2HexString(color), e.getX(), e.getY()));
     }
 
+    /**
+     * Converts a color (represented as int) to a hex string
+     * @param c the color
+     * @return Hex string i.e. "0xFFFF00" for yellow
+     */
     public static String color2HexString(int c) {
         return "0x"+String.format("%06X", c);
     }

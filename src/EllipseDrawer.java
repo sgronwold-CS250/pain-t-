@@ -10,6 +10,10 @@ public class EllipseDrawer extends Drawer {
 
     private boolean gotTop = false;
 
+    /**
+     * @param c canvas we're eyedropping
+     * @param ilabel label to write the instructions to
+     */
     public EllipseDrawer(Canvas c, Labeled ilabel) {
         super(c, ilabel);
 
