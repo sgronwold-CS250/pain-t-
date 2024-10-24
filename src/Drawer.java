@@ -7,10 +7,14 @@ import javafx.scene.paint.Color;
 
 
 public abstract class Drawer extends CanvasModifier {
-    Color color;
-    double thickness;
+    protected Color color;
+    protected double thickness;
     
 
+    /**
+     * @param c The canvas object
+     * @param ilabel The label that will carry the instructions to the user
+     */
     public Drawer(Canvas c, Labeled ilabel) {
         this(c, ilabel, null);
         
@@ -18,6 +22,11 @@ public abstract class Drawer extends CanvasModifier {
         color = cpd.getColor();
     }
 
+    /**
+     * @param c The canvas object
+     * @param ilabel The label that will carry the instructions to the user
+     * @param col (Optional) the color of the object to be drawn
+     */
     public Drawer(Canvas c, Labeled ilabel, Color col) {
         super(c, ilabel);
 
@@ -36,8 +45,10 @@ public abstract class Drawer extends CanvasModifier {
         canvas.getGraphicsContext2D().setLineWidth(thickness);
     }
 
-    // draws something "tentatively",
-    // i.e. undo's before drawing what it wants to draw
+    /**
+     * Lets us draw something "tentatively".
+     * i.e. undo's before drawing what it wants to draw
+     */
     public void undoBeforeDrawing() {
         PaintTab currTab = PaintTab.getCurrentTab();
         Stack<Canvas> undoStack = currTab.getUndoStack();
@@ -56,10 +67,17 @@ public abstract class Drawer extends CanvasModifier {
         PaintTab.refreshCanvas();
     }
 
+    /**
+     * Routine to prepare the canvas to draw something.
+     */
     public void predraw() {
         predraw(false);
     }
 
+    /**
+     * Routine to prepare the canvas to draw something.
+     * @param skipUndo Skips the undo step 
+     */
     public void predraw(boolean skipUndo) {
         // we need to pause the listeners
         stopCanvasListener();
@@ -80,6 +98,8 @@ public abstract class Drawer extends CanvasModifier {
         startCanvasListener();
     }
 
-    // this method is called when you want to actually draw the thing to the canvas
+    /**
+     * Draws the thing that needs to be drawn.
+     */
     protected abstract void draw();
 }
