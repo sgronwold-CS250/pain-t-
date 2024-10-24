@@ -38,9 +38,14 @@ public class HelpScreen {
         grid.add(dropdown, 0, 1);
 
         // this is the body text where most of the text is going to be
-        String bodyText = "This is Pain (t) v0.2.0\n";
-        bodyText += "\"Line...\" draws a line.";
-        bodyText += "Choose a thickness and color through the dialogs that get summoned.";
+        String bodyText = "This is Pain (t) v1.0.0\n";
+        bodyText += "Keyboard shortcuts:\n";
+        bodyText += "Ctrl+S save\n";
+        bodyText += "Ctrl+Shift+S saveas\n";
+        bodyText += "Ctrl+O open\n";
+        bodyText += "Ctrl+C copy part of the canvas\n";
+        bodyText += "Ctrl+V paste part of the canvas\n";
+
 
         Label body = new Label(bodyText);
         body.setWrapText(true);
