@@ -53,7 +53,8 @@ public class MenuListener {
         // update the current filepath
         PaintTab.getCurrentTab().currPath = file;
 
-        Image img = new Image("file://" + file.getAbsolutePath());
+        //Image img = new Image("file://" + file.getAbsolutePath());
+        Image img = new Image(file.toURI().toString());
 
         canvas.setWidth(img.getWidth());
         canvas.setHeight(img.getHeight());

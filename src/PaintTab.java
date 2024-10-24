@@ -20,9 +20,9 @@ public class PaintTab extends Canvas implements ChangeListener<Number> {
     private Stack<Canvas> redoStack = new Stack<Canvas>();
 
     private Canvas canvas;
-    
+
     private static GridPane grid;
-    
+
     boolean UNSAVED_CHANGES = false;
     File currPath;
 
@@ -34,28 +34,30 @@ public class PaintTab extends Canvas implements ChangeListener<Number> {
     static final int CANVAS_ROW = 4;
 
     /**
-    * A tab in the Pain(t) program.
-    * Uses the default 500 by 500 canvas size.
-    */
+     * A tab in the Pain(t) program.
+     * Uses the default 500 by 500 canvas size.
+     */
     public PaintTab() {
         // should have nothing but call to other constructor
         this(500, 500);
     }
 
     /**
-    * A tab in the Pain(t) program.
-    * @param  width  Width of the canvas
-    * @param  height Height of the canvas
-    */
+     * A tab in the Pain(t) program.
+     * 
+     * @param width  Width of the canvas
+     * @param height Height of the canvas
+     */
     public PaintTab(int width, int height) {
         // should have nothing but call to other constructor
         this(new Canvas(width, height));
     }
 
     /**
-    * A tab in the Pain(t) program.
-    * @param  canvas The canvas
-    */
+     * A tab in the Pain(t) program.
+     * 
+     * @param canvas The canvas
+     */
     public PaintTab(Canvas c) {
         setCanvas(c);
 
@@ -77,14 +79,16 @@ public class PaintTab extends Canvas implements ChangeListener<Number> {
         // remove all buttons and start fresh
         buttons.clear();
 
-        for(int i = 0; i < tabs.size(); i++) {
+        for (int i = 0; i < tabs.size(); i++) {
             // make a button for each tab
             Button b;
-            
-            if (currTabIndex == i) b = new Button("["+i+"]");
-            else b = new Button(""+i);
 
-            b.setId("tab"+i);
+            if (currTabIndex == i)
+                b = new Button("[" + i + "]");
+            else
+                b = new Button("" + i);
+
+            b.setId("tab" + i);
             b.setOnAction(new TabSwitcher());
             buttons.add(b);
         }
@@ -95,7 +99,7 @@ public class PaintTab extends Canvas implements ChangeListener<Number> {
         // remove the "tab" buttons
         // but we need to add the things to remove to a list
         ArrayList<Node> removeQueue = new ArrayList<Node>();
-        for(Node n: grid.getChildren()) {
+        for (Node n : grid.getChildren()) {
             if (n instanceof Button) {
                 Button b = (Button) n;
 
@@ -107,12 +111,12 @@ public class PaintTab extends Canvas implements ChangeListener<Number> {
         }
 
         // now we act on our remove queue
-        for(Node n: removeQueue) {
+        for (Node n : removeQueue) {
             grid.getChildren().remove(n);
         }
 
         // re-add the buttons
-        for(int i = 0; i < buttons.size(); i++) {
+        for (int i = 0; i < buttons.size(); i++) {
             grid.add(buttons.get(i), i, BUTTON_ROW);
         }
     }
@@ -122,29 +126,48 @@ public class PaintTab extends Canvas implements ChangeListener<Number> {
     public void resize() {
         Scene s = getGridPane().getScene();
 
-        double availableCanvasWidth = s.getWidth();
+        double availableCanvasWidth = Math.floor(s.getWidth());
 
-        // this is the height minus the y offset of the canvas; so this is the available height that we have for our canvas
-        double availableCanvasHeight = s.getHeight() - getCanvas().getLayoutY();
+        // this is the height minus the y offset of the canvas; so this is the available
+        // height that we have for our canvas
+        double availableCanvasHeight = Math.floor(s.getHeight() - getCanvas().getLayoutY());
 
         // if width or height is nonpositive then we don't need to worry about this
-        if (availableCanvasWidth <= 0 || availableCanvasHeight <= 0) return;
+        if (availableCanvasWidth <= 0 || availableCanvasHeight <= 0)
+            return;
 
         // otherwise we have a legit window to work with
         // canvas width does NOT include scaling
-        double newScaleX = availableCanvasWidth/getCanvas().getWidth();
-        double newScaleY = availableCanvasHeight/getCanvas().getHeight();
+        double newScaleX = availableCanvasWidth / getCanvas().getWidth();
+        double newScaleY = availableCanvasHeight / getCanvas().getHeight();
 
+        // effective widths and heights
+        // heights must be integers
+        // so that live draw doesn't screw anything up
         double newScale = Math.min(newScaleX, newScaleY);
-        
-        getCanvas().setScaleX(newScale);
-        getCanvas().setScaleY(newScale);
+        double effectiveCanvasWidth = Math.floor(newScale * getCanvas().getWidth());
+        double effectiveCanvasHeight = Math.floor(newScale * getCanvas().getHeight());
+
+        newScaleX = effectiveCanvasWidth / getCanvas().getWidth();
+        newScaleY = effectiveCanvasHeight / getCanvas().getHeight();
+
+        if (newScale > 1) {
+            newScaleX = Math.floor(newScale);
+            newScaleY = Math.floor(newScale);
+        } else if (newScale < 1) {
+            newScaleX = 1.0/Math.ceil(1/newScale);
+            newScaleY = 1.0/Math.ceil(1/newScale);
+        }
+
+        getCanvas().setScaleX(newScaleX);
+        getCanvas().setScaleY(newScaleY);
 
         // translate the canvas such that it appears aligned within the window
-        getCanvas().setTranslateX((newScale-1)/2 * getCanvas().getWidth());
-        getCanvas().setTranslateY((newScale-1)/2 * getCanvas().getHeight());
+        getCanvas().setTranslateX((newScaleX - 1) / 2 * getCanvas().getWidth());
+        getCanvas().setTranslateY((newScaleY - 1) / 2 * getCanvas().getHeight());
 
-        System.out.println("Effective canvas width/height: "+getCanvas().getWidth()*getCanvas().getScaleX()+" by "+getCanvas().getHeight()*getCanvas().getScaleY());
+        System.out.println("Effective canvas width/height: " + getCanvas().getWidth() * getCanvas().getScaleX() + " by "
+                + getCanvas().getHeight() * getCanvas().getScaleY());
     }
 
     @Override
@@ -186,14 +209,14 @@ public class PaintTab extends Canvas implements ChangeListener<Number> {
         // remove the current canvas
         // but we need to add the things to remove to a list
         ArrayList<Node> removeQueue = new ArrayList<Node>();
-        for(Node n: grid.getChildren()) {
+        for (Node n : grid.getChildren()) {
             if (n instanceof Canvas) {
                 removeQueue.add(n);
             }
         }
 
         // now we act on our remove queue
-        for(Node n: removeQueue) {
+        for (Node n : removeQueue) {
             grid.getChildren().remove(n);
         }
 
@@ -233,7 +256,8 @@ public class PaintTab extends Canvas implements ChangeListener<Number> {
         }
 
         // change the current tab to the previous one, if applicable
-        if (currTabIndex != 0) currTabIndex--;
+        if (currTabIndex != 0)
+            currTabIndex--;
 
         // finally, remove the tab and refresh the current tab
         tabs.remove(pt);
@@ -243,7 +267,8 @@ public class PaintTab extends Canvas implements ChangeListener<Number> {
 
     public static GridPane getGridPane() {
         // if we already have a gridpane stored then we don't need to worry about this
-        if (grid != null) return grid;
+        if (grid != null)
+            return grid;
 
         // this is probably a gridpane
         Parent parent = getCurrentTab().getCanvas().getParent();
@@ -299,7 +324,7 @@ public class PaintTab extends Canvas implements ChangeListener<Number> {
         c.setScaleY(1);
 
         SnapshotParameters params = new SnapshotParameters();
-        params.setFill(Color.TRANSPARENT);         
+        params.setFill(Color.TRANSPARENT);
         WritableImage image = c.snapshot(params, null);
         newCanvas.getGraphicsContext2D().drawImage(image, 0, 0);
 
@@ -317,6 +342,6 @@ public class PaintTab extends Canvas implements ChangeListener<Number> {
         this.backup();
 
         getCanvas().getGraphicsContext2D().setFill(Color.WHITE);
-        getCanvas().getGraphicsContext2D().fillRect(0,0,getCanvas().getWidth(), getCanvas().getHeight());
+        getCanvas().getGraphicsContext2D().fillRect(0, 0, getCanvas().getWidth(), getCanvas().getHeight());
     }
 }
