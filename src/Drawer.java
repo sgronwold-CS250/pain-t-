@@ -1,64 +1,39 @@
 import java.util.Stack;
 
-import javafx.event.EventHandler;
-import javafx.event.EventType;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.control.Labeled;
 import javafx.scene.control.TextInputDialog;
-import javafx.scene.image.WritableImage;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 
 
-public abstract class Drawer implements EventHandler<MouseEvent>, CanvasInterface {
-    protected static WritableImage clipboard;
-
-    protected Canvas canvas;
+public abstract class Drawer extends CanvasModifier {
     Color color;
     double thickness;
-    Labeled instructionLabel;
+    
 
     public Drawer(Canvas c, Labeled ilabel) {
         this(c, ilabel, null);
-
+        
         ColorPickerDialog cpd = new ColorPickerDialog();
         color = cpd.getColor();
     }
 
     public Drawer(Canvas c, Labeled ilabel, Color col) {
-        canvas = c;
-        instructionLabel = ilabel;
+        super(c, ilabel);
 
         TextInputDialog tid = new TextInputDialog("Enter a thickness");
         String response = tid.showAndWait().get();
 
         thickness = Double.parseDouble(response);
         color = col;
-
-        Main.LOGGER.log(String.format("%s started.", this.getClass().getName()));
     }
 
-    public abstract EventType<MouseEvent>[] getEventTypes();
+    @Override
+    public void startCanvasListener(){
+        super.startCanvasListener();
 
-    
-    // registers the event handler associated with this class
-    public void startCanvasListener() {
-        for (EventType<MouseEvent> et: getEventTypes()) {
-            canvas.addEventHandler(et, this);
-        }
-
-        // not only that we need to make sure we have the correct graphics context
-        canvas.getGraphicsContext2D().setImageSmoothing(false);
         canvas.getGraphicsContext2D().setStroke(color);
         canvas.getGraphicsContext2D().setLineWidth(thickness);
-    }
-    
-    // deregisters the event handler associated with this class
-    public void stopCanvasListener() {
-        for (EventType<MouseEvent> et: getEventTypes()) {
-            PaintTab.getCurrentTab().UNSAVED_CHANGES = true;
-            canvas.removeEventHandler(et, this);
-        }
     }
 
     // draws something "tentatively",
@@ -107,5 +82,4 @@ public abstract class Drawer implements EventHandler<MouseEvent>, CanvasInterfac
 
     // this method is called when you want to actually draw the thing to the canvas
     protected abstract void draw();
-
 }

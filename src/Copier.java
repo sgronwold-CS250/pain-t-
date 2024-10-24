@@ -7,9 +7,17 @@ import javafx.scene.image.WritableImage;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 
-public class Copier extends Drawer {
+/**
+ * Copies a section of the canvas to another location.
+ */
+public class Copier extends CanvasModifier {
     boolean cutEnabled = false;
 
+    /**
+     * constructor
+     * @param c The canvas we're copying from
+     * @param ilabel The label we put the instructions on
+     */
     public Copier(Canvas c, Labeled ilabel) {
         super(c, ilabel);
 
@@ -17,16 +25,22 @@ public class Copier extends Drawer {
         startCanvasListener();
     }
 
+    /**
+     * constructor
+     * @param c The canvas we're copying from
+     * @param ilabel The label we put the instructions on
+     * @param cutMode if true, will delete the region you copied
+     */
     public Copier(Canvas c, Labeled ilabel, boolean cutMode) {
         this(c, ilabel);
 
         cutEnabled = cutMode;
     }
 
-    double[] corner1 = new double[2];
-    double[] corner2 = new double[2];
+    private double[] corner1 = new double[2];
+    private double[] corner2 = new double[2];
 
-    boolean gotCorner1 = false;
+    private boolean gotCorner1 = false;
 
     @Override
     public void handle(MouseEvent e) {
@@ -90,16 +104,13 @@ public class Copier extends Drawer {
         }
     }
 
+    /**
+     * @return List of event types that trigger the callback
+     */
     @SuppressWarnings("unchecked")
     @Override
     public EventType<MouseEvent>[] getEventTypes() {
         return new EventType[] {MouseEvent.MOUSE_CLICKED};
-    }
-
-    @Override
-    public void draw() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'draw'");
     }
     
 }
