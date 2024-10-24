@@ -98,6 +98,9 @@ public abstract class Drawer implements EventHandler<MouseEvent>, CanvasInterfac
         // then we need to back up the canvas without the drawing on it
         currTab.backup();
 
+        // resize it
+        currTab.resize();
+
         // ok now we can start listening again
         startCanvasListener();
     }
