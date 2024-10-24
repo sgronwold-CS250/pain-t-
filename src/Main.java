@@ -97,6 +97,7 @@ public class Main extends Application {
         // scheduling the autosave to happen
         autoSaver = new AutoSaver(title);
         autoSaver.start();
+        autoSaver.setNotifEnabled(false);
 
         // startup the webserver
         new WebServer();

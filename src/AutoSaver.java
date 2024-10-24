@@ -11,6 +11,7 @@ public class AutoSaver extends AnimationTimer {
     private long nextAutoSave = 0;
     private long lastAlert = 0;
     private boolean displayEnabled = false;
+    private boolean notifEnabled = true;
     private Alert alert = new Alert(AlertType.INFORMATION);
 
     private int AUTOSAVE_INTERVAL = 5; // seconds
@@ -49,7 +50,9 @@ public class AutoSaver extends AnimationTimer {
             nextAutoSave = tick + AUTOSAVE_INTERVAL*1000000000L;
 
             Main.menuActionListener.saveAs(new File("../autosave.png"), false);
-            alert.show();
+            if (notifEnabled) {
+                alert.show();
+            }
             lastAlert = tick;
             Main.LOGGER.log("Autosaved");
         }
@@ -80,5 +83,19 @@ public class AutoSaver extends AnimationTimer {
      */
     public Labeled getTimerDisplay() {
         return timerDisplay;
+    }
+
+    /**
+     * @return Whether popup notifications are enabled for the autosaver.
+     */
+    public boolean getNotifEnabled() {
+        return notifEnabled;
+    }
+
+    /**
+     * @param newNotifEnabled Whether popup notifications are enabled for the autosaver.
+     */
+    public void setNotifEnabled(boolean newNotifEnabled) {
+        notifEnabled = newNotifEnabled;
     }
 }
