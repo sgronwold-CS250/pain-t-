@@ -10,7 +10,7 @@ public class FXMLController {
     @FXML GridPane grid;
     @FXML Button lineDrawButton, pencilButton, regPolyButton, ellipseButton, rectangleButton,
         circleButton, eyedropperButton, textButton, clearCanvasButton, autosaveTimerToggleButton,
-        imageRotateButton, hFlipButton, vFlipButton, starButton;
+        hFlipButton, vFlipButton, starButton;
     @FXML Canvas canvas;
 
     public FXMLController() {

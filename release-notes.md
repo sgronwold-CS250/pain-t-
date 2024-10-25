@@ -2,6 +2,47 @@
 
 GitHub: https://github.com/sgronwold-CS250/pain-t-
 
+## v1.0.0 (2024-10-27)
+
+### New features
+
+> "Read my lips: no new features."
+
+-- George C.S. Bush
+
+### Known issues
+
+- For some reason, canvas must be (integer) by (integer) in effective (scaled)
+width x height
+
+### Expected next version
+
+> "Read my lips: no new features."
+
+-- George C.S. Bush
+
+## v0.6.0 (2024-10-04)
+
+### New features
+
+- you can rotate an image
+- added icons
+- tool tips
+- hotkeys
+- draw stars
+- added log at log.log
+
+### Known issues
+
+- For some reason, canvas must be (integer) by (integer) in effective (scaled)
+width x height
+
+### Expected next version
+
+> "Read my lips: no new features."
+
+-- George C.S. Bush
+
 ## v0.5.0 (2024-09-29)
 
 ### New features

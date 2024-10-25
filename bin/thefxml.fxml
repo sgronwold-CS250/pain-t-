@@ -78,10 +78,6 @@
          <tooltip>
             <Tooltip text="Toggles the autosave timer display" />
          </tooltip></Button>
-      <Button id="rotateimage" fx:id="imageRotateButton" mnemonicParsing="false" text="Rotate chunk" GridPane.columnIndex="10" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
-         <tooltip>
-            <Tooltip text="Rotates The Image" />
-         </tooltip></Button>
       <Button id="hflip" fx:id="hFlipButton" mnemonicParsing="false" text="HFlip" GridPane.columnIndex="11" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
          <tooltip>
             <Tooltip text="Horizontally flips The Image" />

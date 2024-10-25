@@ -56,8 +56,11 @@ public class MenuListener {
         //Image img = new Image("file://" + file.getAbsolutePath());
         Image img = new Image(file.toURI().toString());
 
-        canvas.setWidth(img.getWidth());
-        canvas.setHeight(img.getHeight());
+        // make the canvas width and height something that's a multiple of 12 so it scales nicely
+        canvas.setWidth(img.getWidth() + 12 - img.getWidth()%12);
+        canvas.setHeight(img.getHeight() + 12 - img.getHeight()%12);
+
+
         gc.clearRect(0, 0, img.getWidth(), img.getHeight());
         gc.drawImage(img, 0, 0);
 
