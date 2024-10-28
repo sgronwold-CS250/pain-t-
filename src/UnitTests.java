@@ -2,6 +2,9 @@ import org.junit.Test;
 
 import static org.junit.Assert.*;
 
+/**
+ * tests that run with the batch/bash scripts
+ */
 public class UnitTests {
     @Test
     public void testColor2Hex1() {

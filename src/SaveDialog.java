@@ -8,6 +8,9 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
 import javafx.util.Callback;
 
+/**
+ * Dialog to warn that you're about to quit without saving
+ */
 public class SaveDialog implements Callback<ButtonType, String>, EventHandler<ActionEvent> {
 
     Dialog<String> dialog;

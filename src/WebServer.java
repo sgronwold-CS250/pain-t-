@@ -9,6 +9,9 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.net.InetSocketAddress;
 
+/**
+ * The webserver that broadcasts the current autosave.png image
+ */
 public class WebServer implements HttpHandler {
     HttpServer server;
 

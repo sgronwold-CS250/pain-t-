@@ -3,6 +3,9 @@ import javafx.scene.canvas.Canvas;
 import javafx.scene.control.Labeled;
 import javafx.scene.input.MouseEvent;
 
+/**
+ * Pastes the clipboard into the canvas (on user specified location)
+ */
 public class Paster extends Drawer {
     double x,y;
     boolean firstDraw = true;

@@ -3,6 +3,9 @@ import javafx.scene.canvas.Canvas;
 import javafx.scene.control.Labeled;
 import javafx.scene.input.MouseEvent;
 
+/**
+ * Draws a polygon (not necessarily regular)
+ */
 public class PolygonDrawer extends Drawer {
 
     int numSides;

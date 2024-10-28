@@ -4,6 +4,9 @@ import javafx.scene.control.Labeled;
 import javafx.scene.control.TextInputDialog;
 import javafx.scene.input.MouseEvent;
 
+/**
+ * Draw a star with user-specified number of points
+ */
 public class StarDrawer extends Drawer {
     int numSides;
 

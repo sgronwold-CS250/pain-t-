@@ -3,6 +3,9 @@ import javafx.scene.canvas.Canvas;
 import javafx.scene.control.Labeled;
 import javafx.scene.input.MouseEvent;
 
+/**
+ * Free-draw (just like pencil mode in MS Paint)
+ */
 public class Pencil extends Drawer {
     Canvas canvas;
     Double oldX = null;

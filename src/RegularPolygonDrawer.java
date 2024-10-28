@@ -4,6 +4,9 @@ import javafx.scene.control.Labeled;
 import javafx.scene.control.TextInputDialog;
 import javafx.scene.input.MouseEvent;
 
+/**
+ * Draws a regular polygon from user-specified center and corner point
+ */
 public class RegularPolygonDrawer extends Drawer {
     int numSides;
 

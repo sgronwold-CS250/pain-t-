@@ -4,6 +4,9 @@ import javafx.scene.control.Button;
 
 public class TabSwitcher implements EventHandler<ActionEvent> {
 
+    /**
+     * EventHandler that switches tabs
+     */
     @Override
     public void handle(ActionEvent e) {
         System.out.println("Switching the tab");

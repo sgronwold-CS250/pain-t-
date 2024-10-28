@@ -3,6 +3,9 @@ import javafx.scene.canvas.Canvas;
 import javafx.scene.control.Labeled;
 import javafx.scene.input.MouseEvent;
 
+/**
+ * Draws a rectangle from user-specified corners
+ */
 public class RectangleDrawer extends Drawer {
     double[] corner1 = new double[2];
     double[] corner2 = new double[2];
@@ -19,7 +22,7 @@ public class RectangleDrawer extends Drawer {
 
     @Override
     public void handle(MouseEvent e) {
-        if (!corner1Drawn) {
+        if (!corner1Drawn && e.getEventType() == MouseEvent.MOUSE_CLICKED) {
             corner1[0] = e.getX();
             corner1[1] = e.getY();
 
@@ -29,7 +32,7 @@ public class RectangleDrawer extends Drawer {
 
             predraw(true);
             draw();
-        } else {
+        } else if (corner1Drawn) {
             corner2[0] = e.getX();
             corner2[1] = e.getY();
 
@@ -52,7 +55,6 @@ public class RectangleDrawer extends Drawer {
     @Override
     public void draw() {
         // x, y, width, height
-        canvas.getGraphicsContext2D().strokeRect(Math.min(corner1[0], corner2[0]), Math.min(corner2[0], corner2[1]), Math.abs(corner1[0] - corner2[0]), Math.abs(corner1[1] - corner2[1]));
+        canvas.getGraphicsContext2D().strokeRect(Math.min(corner1[0], corner2[0]), Math.min(corner1[1], corner2[1]), Math.abs(corner1[0] - corner2[0]), Math.abs(corner1[1] - corner2[1]));
     }
-
 }

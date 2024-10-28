@@ -4,6 +4,9 @@ import javafx.scene.control.Labeled;
 import javafx.scene.control.TextInputDialog;
 import javafx.scene.input.MouseEvent;
 
+/**
+ * Draw user-specified text with user-specified thickness and colour
+ */
 public class TextDrawer extends Drawer {
     String msg;
 
