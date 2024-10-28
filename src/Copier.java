@@ -81,7 +81,7 @@ public class Copier extends CanvasModifier {
             int viewPortHeight = (int) (lowerRightCorner[1] - upperLeftCorner[1]);
 
             // dy and dx for the viewport
-            int dy = (int) (canvas.getScene().getHeight() - canvas.getHeight());
+            int dy = 130;
 
             SnapshotParameters sp = new SnapshotParameters();
             sp.setViewport(new Rectangle2D(upperLeftCorner[0], upperLeftCorner[1] + dy, viewPortWidth, viewPortHeight));

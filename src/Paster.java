@@ -6,7 +6,7 @@ import javafx.scene.input.MouseEvent;
 /**
  * Pastes the clipboard into the canvas (on user specified location)
  */
-public class Paster extends Drawer {
+public class Paster extends CanvasModifier {
     double x,y;
     boolean firstDraw = true;
 
@@ -40,7 +40,6 @@ public class Paster extends Drawer {
         return new EventType[] {MouseEvent.MOUSE_CLICKED, MouseEvent.MOUSE_MOVED};
     }
 
-    @Override
     public void draw() {
         canvas.getGraphicsContext2D().drawImage(clipboard, x, y);
     }

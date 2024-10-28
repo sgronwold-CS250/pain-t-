@@ -47,7 +47,13 @@ public class HelpScreen {
         bodyText += "Ctrl+Shift+S saveas\n";
         bodyText += "Ctrl+O open\n";
         bodyText += "Ctrl+C copy part of the canvas\n";
+        bodyText += "Ctrl+X cut part of the canvas\n";
         bodyText += "Ctrl+V paste part of the canvas\n";
+        bodyText += "Ctrl+K rotate canvas 90 degs\n";
+        bodyText += "Ctrl+T new tab\n";
+        bodyText += "Ctrl+W close tab\n";
+        bodyText += "Webserver is on port 42069\n";
+
 
 
         Label body = new Label(bodyText);
