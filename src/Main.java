@@ -50,7 +50,6 @@ public class Main extends Application {
             fxmlController.textButton,
             fxmlController.clearCanvasButton,
             fxmlController.autosaveTimerToggleButton,
-            fxmlController.imageRotateButton,
             fxmlController.hFlipButton,
             fxmlController.vFlipButton,
             fxmlController.starButton

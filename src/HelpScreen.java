@@ -11,6 +11,9 @@ public class HelpScreen {
     GridPane grid;
     Scene scene;
 
+    /**
+     * Shows the help screen.
+     */
     public HelpScreen() {
         stage = new Stage();
 

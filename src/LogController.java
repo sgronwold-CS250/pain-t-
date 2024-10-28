@@ -8,14 +8,20 @@ import java.util.Date;
 
 import java.text.SimpleDateFormat;
 
+/**
+ * Writes the logs (stored in the file log.log)
+ */
 public class LogController {
     private final String URL = String.format("../log.log");
     private final File LOGFILE = new File(URL);
 
     private final SimpleDateFormat DATETIMEFORMAT = new SimpleDateFormat("[YYYY/MM/dd HH:mm:ss.SSS] ");
 
-    BufferedWriter writer;
+    private BufferedWriter writer;
 
+    /**
+     * Starts the log. Call the log method to write a message.
+     */
     public LogController() {
         System.out.println(URL);
         LOGFILE.setWritable(true);
@@ -34,7 +40,10 @@ public class LogController {
         log("Log started.");
     }
 
-
+    /**
+     * Writes a log message, formatted with the current tab name, date, time.
+     * @param msg The message to be added to the log.
+     */
     public void log(String msg) {
         
         try {

@@ -4,9 +4,14 @@ import javafx.scene.control.Labeled;
 import javafx.scene.input.MouseEvent;
 
 public class LineDrawer extends Drawer {
-    double startX, startY, endX, endY;
-    boolean gotStartPoint = false;
+    private double startX, startY, endX, endY;
+    private boolean gotStartPoint = false;
 
+    /**
+     * Starts the line-drawing process
+     * @param c the canvas we're drawing a line on
+     * @param ilabel the label we're projecting the instructions onto
+     */
     public LineDrawer(Canvas c, Labeled ilabel) {
         super(c, ilabel);
         instructionLabel.setText("Click where you want the line to start");

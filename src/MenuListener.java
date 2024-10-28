@@ -18,6 +18,9 @@ import javafx.scene.image.WritableImage;
 import javafx.scene.layout.GridPane;
 import javafx.stage.FileChooser;
 
+/**
+ * Methods for keyboard shortcut and button presses live here
+ */
 public class MenuListener {
     Canvas canvas;
     Labeled instructionLabel;

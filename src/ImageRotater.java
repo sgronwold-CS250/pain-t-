@@ -9,13 +9,13 @@ import javafx.scene.input.MouseEvent;
 
 public class ImageRotater extends Drawer {
 
-    double[] corner1 = new double[2];
-    double[] corner2 = new double[2];
+    private double[] corner1 = new double[2];
+    private double[] corner2 = new double[2];
 
-    double[] mouseCoords = new double[2];
+    private double[] mouseCoords = new double[2];
 
-    boolean gotUpperLeftCorner = false;
-    boolean gotLowerRightCorner = false;
+    private boolean gotUpperLeftCorner = false;
+    private boolean gotLowerRightCorner = false;
 
     public ImageRotater(Canvas c, Labeled ilabel) {
         super(c, ilabel, null);

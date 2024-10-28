@@ -3,6 +3,9 @@ import javafx.scene.canvas.Canvas;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 
+/**
+ * Listens to the key shortcuts
+ */
 public class MenuKeyListener extends MenuListener implements EventHandler<KeyEvent> {
 
     public MenuKeyListener(Canvas c) {

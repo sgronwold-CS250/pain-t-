@@ -15,6 +15,9 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
+/**
+ * Each tab in the Pain (t) program
+ */
 public class PaintTab extends Canvas implements ChangeListener<Number> {
     private Stack<Canvas> undoStack = new Stack<Canvas>();
     private Stack<Canvas> redoStack = new Stack<Canvas>();
@@ -74,6 +77,11 @@ public class PaintTab extends Canvas implements ChangeListener<Number> {
         return canvas;
     }
 
+    /**
+     * Refreshes the tab buttons.
+     * Each tab button is just a number,
+     * with brackets surrounding the current tab.
+     */
     public static void refreshButtons() {
         // step 1 refresh the button list
         // remove all buttons and start fresh
@@ -121,8 +129,9 @@ public class PaintTab extends Canvas implements ChangeListener<Number> {
         }
     }
 
-    // called by the window resize callback
-    // it's also a standalone function such that we can call it whenever we want
+    /**
+     * Resizes the current tab's canvas
+     */
     public void resize() {
         Scene s = getGridPane().getScene();
 
@@ -179,12 +188,19 @@ public class PaintTab extends Canvas implements ChangeListener<Number> {
         return tabs.get(currTabIndex);
     }
 
+    /**
+     * Adds a new PaintTab to the window's list of tabs.
+     * @param pt The new paint tab to be appended to the list
+     */
     private static void add(PaintTab pt) {
         tabs.add(pt);
 
         setCurrentTab(pt);
     }
 
+    /**
+     * Make sure the current tab is *actually* the current tab
+     */
     public static void refreshCanvas() {
         // just refresh the current tab
         // it'll eventually be set to the currTabIndex anyways
@@ -192,10 +208,18 @@ public class PaintTab extends Canvas implements ChangeListener<Number> {
         getCurrentTab().resize();
     }
 
+    /**
+     * Makes sure the current tab is the ith tab
+     * @param i index of new current tab
+     */
     public static void setCurrentTab(int i) {
         setCurrentTab(tabs.get(i));
     }
 
+    /**
+     * Makes sure the current tab is the tab specified by pt
+     * @param pt new current tab
+     */
     public static void setCurrentTab(PaintTab pt) {
         int i = tabs.indexOf(pt);
 
@@ -235,11 +259,18 @@ public class PaintTab extends Canvas implements ChangeListener<Number> {
         refreshButtons();
     }
 
+    /**
+     * close out of the current tab
+     */
     public static void remove() {
         // this just removes the current paint tab
         remove(getCurrentTab());
     }
 
+    /**
+     * close out of the tab specified by pt
+     * @param pt the PaintTab object to remove
+     */
     public static void remove(PaintTab pt) {
         // make sure that there's actually a tab left
         if (tabs.size() == 1) {
@@ -265,6 +296,10 @@ public class PaintTab extends Canvas implements ChangeListener<Number> {
         refreshCanvas();
     }
 
+    /**
+     * Get the GridPane object of the current PaintTab
+     * @return the GridPane object of the current PaintTab
+     */
     public static GridPane getGridPane() {
         // if we already have a gridpane stored then we don't need to worry about this
         if (grid != null)
@@ -302,12 +337,17 @@ public class PaintTab extends Canvas implements ChangeListener<Number> {
         canvas = c;
     }
 
-    // this backs up the current canvas
-    // should be called every time the canvas changes
+    /**
+     * Copies the current canvas to the undo stack
+     */
     public void backup() {
         pushCanvas(getCanvas());
     }
 
+    /**
+     * Copies the canvas to the undo stack
+     * @param c the canvas
+     */
     public void pushCanvas(Canvas c) {
         Canvas newCanvas = new Canvas(c.getWidth(), c.getHeight());
 
@@ -337,6 +377,9 @@ public class PaintTab extends Canvas implements ChangeListener<Number> {
         c.setScaleY(oldScaleY);
     }
 
+    /**
+     * Clears the canvas on the current tab.
+     */
     public void clear() {
         // make something in the undo stack
         this.backup();

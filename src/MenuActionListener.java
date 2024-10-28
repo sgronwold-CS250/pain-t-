@@ -3,6 +3,9 @@ import javafx.event.EventHandler;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.control.Button;
 
+/**
+ * Listens to the button presses.
+ */
 public class MenuActionListener extends MenuListener implements EventHandler<ActionEvent> {
     public MenuActionListener(Canvas c) {
         super(c);

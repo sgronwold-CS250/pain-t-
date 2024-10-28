@@ -13,7 +13,7 @@ GitHub: https://github.com/sgronwold-CS250/pain-t-
 ### Known issues
 
 - For some reason, canvas must be (integer) by (integer) in effective (scaled)
-width x height
+width x height. Otherwise, "live draw" gets messed up 
 
 ### Expected next version
 
